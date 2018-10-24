@@ -1,0 +1,74 @@
+﻿@model Sinem.Models.Horario
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Horario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.dia)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dia)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hora)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hora)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tiempoDuracion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tiempoDuracion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaRegistro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioCrea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioCrea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaModifica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaModifica)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioModifica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioModifica)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idHorario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

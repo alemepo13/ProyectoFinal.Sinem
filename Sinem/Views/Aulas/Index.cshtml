@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Sinem.Models.Aula>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.numeroAula)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipoAula)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaRegistro)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuarioCrea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fechaModifica)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuarioModifica)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.numeroAula)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tipoAula)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaRegistro)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuarioCrea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fechaModifica)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuarioModifica)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idAula }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idAula }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idAula })
+        </td>
+    </tr>
+}
+
+</table>
