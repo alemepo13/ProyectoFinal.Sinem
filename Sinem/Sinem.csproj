@@ -180,6 +180,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AulasController.cs" />
     <Compile Include="Controllers\CursosController.cs" />
+    <Compile Include="Controllers\GestionCursosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HorariosController.cs" />
     <Compile Include="Global.asax.cs">
@@ -187,6 +188,7 @@
     </Compile>
     <Compile Include="Models\Aula.cs" />
     <Compile Include="Models\Curso.cs" />
+    <Compile Include="Models\GestionCurso.cs" />
     <Compile Include="Models\Horario.cs" />
     <Compile Include="Models\SinemDBContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -245,6 +247,11 @@
     <Content Include="Views\Horarios\Details.cshtml" />
     <Content Include="Views\Horarios\Edit.cshtml" />
     <Content Include="Views\Horarios\Index.cshtml" />
+    <Content Include="Views\GestionCursos\Create.cshtml" />
+    <Content Include="Views\GestionCursos\Delete.cshtml" />
+    <Content Include="Views\GestionCursos\Details.cshtml" />
+    <Content Include="Views\GestionCursos\Edit.cshtml" />
+    <Content Include="Views\GestionCursos\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
