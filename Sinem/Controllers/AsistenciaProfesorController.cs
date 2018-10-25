@@ -17,7 +17,7 @@ namespace Sinem.Controllers
         // GET: AsistenciaProfesor
         public ActionResult Index()
         {
-            return View(db.AsistenciaProfesors.ToList());
+            return View(db.AsistenciaProfesores.ToList());
         }
 
         // GET: AsistenciaProfesor/Details/5
@@ -27,7 +27,7 @@ namespace Sinem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AsistenciaProfesor asistenciaProfesor = db.AsistenciaProfesors.Find(id);
+            AsistenciaProfesor asistenciaProfesor = db.AsistenciaProfesores.Find(id);
             if (asistenciaProfesor == null)
             {
                 return HttpNotFound();
@@ -50,7 +50,7 @@ namespace Sinem.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.AsistenciaProfesors.Add(asistenciaProfesor);
+                db.AsistenciaProfesores.Add(asistenciaProfesor);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +65,7 @@ namespace Sinem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AsistenciaProfesor asistenciaProfesor = db.AsistenciaProfesors.Find(id);
+            AsistenciaProfesor asistenciaProfesor = db.AsistenciaProfesores.Find(id);
             if (asistenciaProfesor == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace Sinem.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AsistenciaProfesor asistenciaProfesor = db.AsistenciaProfesors.Find(id);
+            AsistenciaProfesor asistenciaProfesor = db.AsistenciaProfesores.Find(id);
             if (asistenciaProfesor == null)
             {
                 return HttpNotFound();
@@ -109,8 +109,8 @@ namespace Sinem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            AsistenciaProfesor asistenciaProfesor = db.AsistenciaProfesors.Find(id);
-            db.AsistenciaProfesors.Remove(asistenciaProfesor);
+            AsistenciaProfesor asistenciaProfesor = db.AsistenciaProfesores.Find(id);
+            db.AsistenciaProfesores.Remove(asistenciaProfesor);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
