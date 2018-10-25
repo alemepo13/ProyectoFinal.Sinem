@@ -21,5 +21,6 @@ namespace Sinem.Models
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
 
+        public DbSet<GestionCurso> GestionCursos { get; set;}
     }
 }
