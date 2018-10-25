@@ -10,6 +10,7 @@ using Sinem.Models;
 
 namespace Sinem.Controllers
 {
+    [Authorize()]
     public class AulasController : Controller
     {
         private SinemDBContext db = new SinemDBContext();
