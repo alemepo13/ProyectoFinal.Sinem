@@ -19,5 +19,7 @@ namespace Sinem.Models
 
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Horario> Horarios { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+
     }
 }
