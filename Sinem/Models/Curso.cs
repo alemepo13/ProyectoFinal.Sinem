@@ -14,13 +14,19 @@ namespace Sinem.Models
         [Key()]
         public int idCurso { get; set; }
         [Required()]
-        [DisplayName("Nombre")]
+        [DisplayName("Nombre:")]
         public string nombre { get; set; }
+        [DisplayName("Descripción:")]
         public string descripcion { get; set; }
+        [DisplayName("Costo:")]
         public double costo { get; set; }
+        [DisplayName("Fecha de registro:")]
         public DateTime fechaRegistro { get; set; }
+        [DisplayName("Usuario crea:")]
         public string usuarioCrea { get; set; }
+        [DisplayName("Fecha modifica:")]
         public DateTime fechaModifica{ get; set; }
+        [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Sinem.Models
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class SinemDBContext : DbContext
     {
-        public SinemDBContext() : base("Server=localhost;Database=bd_sinem;Uid=root;Pwd=Zx8G7nT5f45000V*;")
+        public SinemDBContext() : base("Server=localhost;Database=bd_sinem;Uid=root;Pwd=1234;")
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
@@ -19,9 +19,8 @@ namespace Sinem.Models
 
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Horario> Horarios { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
-        public System.Data.Entity.DbSet<Sinem.Models.AsistenciaProfesor> AsistenciaProfesors { get; set; }
-
-        public System.Data.Entity.DbSet<Sinem.Models.AsistenciaEstudiante> AsistenciaEstudiantes { get; set; }
+        public DbSet<GestionCurso> GestionCursos { get; set;}
     }
 }
