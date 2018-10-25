@@ -178,6 +178,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AsistenciaEstudianteController.cs" />
+    <Compile Include="Controllers\AsistenciaProfesorController.cs" />
     <Compile Include="Controllers\AulasController.cs" />
     <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -185,6 +187,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AsistenciaEstudiante.cs" />
+    <Compile Include="Models\AsistenciaProfesor.cs" />
     <Compile Include="Models\Aula.cs" />
     <Compile Include="Models\Curso.cs" />
     <Compile Include="Models\Horario.cs" />
@@ -245,6 +249,16 @@
     <Content Include="Views\Horarios\Details.cshtml" />
     <Content Include="Views\Horarios\Edit.cshtml" />
     <Content Include="Views\Horarios\Index.cshtml" />
+    <Content Include="Views\AsistenciaProfesor\Create.cshtml" />
+    <Content Include="Views\AsistenciaProfesor\Delete.cshtml" />
+    <Content Include="Views\AsistenciaProfesor\Details.cshtml" />
+    <Content Include="Views\AsistenciaProfesor\Edit.cshtml" />
+    <Content Include="Views\AsistenciaProfesor\Index.cshtml" />
+    <Content Include="Views\AsistenciaEstudiante\Create.cshtml" />
+    <Content Include="Views\AsistenciaEstudiante\Delete.cshtml" />
+    <Content Include="Views\AsistenciaEstudiante\Details.cshtml" />
+    <Content Include="Views\AsistenciaEstudiante\Edit.cshtml" />
+    <Content Include="Views\AsistenciaEstudiante\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
