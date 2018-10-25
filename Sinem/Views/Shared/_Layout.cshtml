@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,6 +25,8 @@
                     <li>@Html.ActionLink("Aulas", "Index", "Aulas")</li>
                     <li>@Html.ActionLink("Cursos", "Index", "Cursos")</li>
                     <li>@Html.ActionLink("Horarios", "Index", "Horarios")</li>
+                    <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                    <li>@Html.ActionLink("Gestion de cursos", "Index", "GestionCursos")</li>
                 </ul>
             </div>
         </div>
@@ -38,6 +41,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
