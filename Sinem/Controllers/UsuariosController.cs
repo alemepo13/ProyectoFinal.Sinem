@@ -10,11 +10,13 @@ using Sinem.Models;
 
 namespace Sinem.Controllers
 {
+    [Authorize(Roles ="Administrador")]
     public class UsuariosController : Controller
     {
         private SinemDBContext db = new SinemDBContext();
 
         // GET: Usuarios
+        [Authorize (Roles ="Administrador,Empleado")]
         public ActionResult Index()
         {
             return View(db.Usuario.ToList());
@@ -83,6 +85,8 @@ namespace Sinem.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(usuario).State = EntityState.Modified;
+                usuario.fechaModifica = DateTime.Now;
+                usuario.usuarioModifica = User.Identity.Name;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

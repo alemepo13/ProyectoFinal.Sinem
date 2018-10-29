@@ -20,17 +20,17 @@ namespace Sinem.Models
             [DisplayName("Nombre:")]
             public string nombre { get; set; }
             [DisplayName("Apellidos:")]
-            public double apellido { get; set; }
+            public string apellido { get; set; }
             [DisplayName("Teléfono:")]
-            public double telefono { get; set; }
+            public int telefono { get; set; }
             [DisplayName("Correo:")]
-            public double correo { get; set; }
+            public string correo { get; set; }
             [DisplayName("Fecha de nacimiento:")]
-            public double fechaNacimiento { get; set; }
+            public DateTime fechaNacimiento { get; set; }
             [DisplayName("Usuario:")]
-            public double usuario { get; set; }
+            public string usuario { get; set; }
             [DisplayName("Contraseña:")]
-            public double contraseña { get; set; }
+            public string contraseña { get; set; }
             [DisplayName("Fecha de registro:")]
             public DateTime fechaRegistro { get; set; }
             [DisplayName("Usuario crea:")]
