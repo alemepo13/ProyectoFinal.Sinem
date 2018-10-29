@@ -25,5 +25,8 @@ namespace Sinem.Models
 
         public DbSet<Permiso>Permisos { get; set; }
         public DbSet<Rol> Roles { get; set; }
+        public DbSet<GestionCurso> GestionCursos { get; set; }
+        public DbSet<AsistenciaEstudiante> AsistenciaEstudiantes { get; set; }
+        public DbSet<AsistenciaProfesor> AsistenciaProfesores { get; set; }
     }
 }

@@ -10,108 +10,107 @@ using Sinem.Models;
 
 namespace Sinem.Controllers
 {
-    [Authorize()]
-    public class AulasController : Controller
+    public class AsistenciaEstudianteController : Controller
     {
         private SinemDBContext db = new SinemDBContext();
 
-        // GET: Aulas
+        // GET: AsistenciaEstudiante
         public ActionResult Index()
         {
-            return View(db.Aulas.ToList());
+            return View(db.AsistenciaEstudiantes.ToList());
         }
 
-        // GET: Aulas/Details/5
+        // GET: AsistenciaEstudiante/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Aula aula = db.Aulas.Find(id);
-            if (aula == null)
+            AsistenciaEstudiante asistenciaEstudiante = db.AsistenciaEstudiantes.Find(id);
+            if (asistenciaEstudiante == null)
             {
                 return HttpNotFound();
             }
-            return View(aula);
+            return View(asistenciaEstudiante);
         }
 
-        // GET: Aulas/Create
+        // GET: AsistenciaEstudiante/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Aulas/Create
+        // POST: AsistenciaEstudiante/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idAula,numeroAula,tipoAula,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Aula aula)
+        public ActionResult Create([Bind(Include = "idAsistenciaEstudiante,idGestionCurso,fecha,asistio,observaciones,fechaModifica,usuarioModifica,idUsuario")] AsistenciaEstudiante asistenciaEstudiante)
         {
             if (ModelState.IsValid)
             {
-                db.Aulas.Add(aula);
+                db.AsistenciaEstudiantes.Add(asistenciaEstudiante);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(aula);
+            return View(asistenciaEstudiante);
         }
 
-        // GET: Aulas/Edit/5
+        // GET: AsistenciaEstudiante/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Aula aula = db.Aulas.Find(id);
-            if (aula == null)
+            AsistenciaEstudiante asistenciaEstudiante = db.AsistenciaEstudiantes.Find(id);
+            if (asistenciaEstudiante == null)
             {
                 return HttpNotFound();
             }
-            return View(aula);
+            return View(asistenciaEstudiante);
         }
 
-        // POST: Aulas/Edit/5
+        // POST: AsistenciaEstudiante/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idAula,numeroAula,tipoAula,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Aula aula)
+        public ActionResult Edit([Bind(Include = "idAsistenciaEstudiante,idGestionCurso,fecha,asistio,observaciones,fechaModifica,usuarioModifica,idUsuario")] AsistenciaEstudiante asistenciaEstudiante)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(aula).State = EntityState.Modified;
+                db.Entry(asistenciaEstudiante).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(aula);
+            return View(asistenciaEstudiante);
         }
 
-        // GET: Aulas/Delete/5
+        // GET: AsistenciaEstudiante/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Aula aula = db.Aulas.Find(id);
-            if (aula == null)
+            AsistenciaEstudiante asistenciaEstudiante = db.AsistenciaEstudiantes.Find(id);
+            if (asistenciaEstudiante == null)
             {
                 return HttpNotFound();
             }
-            return View(aula);
+            return View(asistenciaEstudiante);
         }
 
-        // POST: Aulas/Delete/5
+        // POST: AsistenciaEstudiante/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Aula aula = db.Aulas.Find(id);
-            db.Aulas.Remove(aula);
+            AsistenciaEstudiante asistenciaEstudiante = db.AsistenciaEstudiantes.Find(id);
+            db.AsistenciaEstudiantes.Remove(asistenciaEstudiante);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
