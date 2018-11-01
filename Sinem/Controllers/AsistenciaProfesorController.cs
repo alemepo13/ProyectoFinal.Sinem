@@ -78,7 +78,7 @@ namespace Sinem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idAsistenciaProfesor,idGestionCurso,Fecha,asistio,observaciones,fechaModifica,usuarioModifica,idUsuario")] AsistenciaProfesor asistenciaProfesor)
+        public ActionResult Edit([Bind(Include = "idAsistenciaProfesor,idGestionCurso,Fecha,asistio,observaciones,fechaModifica,usuarioModifica,idUsuario")] AsistenciaProfesor teacherassistance)
         {
             if (ModelState.IsValid)
             {

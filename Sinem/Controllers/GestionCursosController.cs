@@ -80,7 +80,7 @@ namespace Sinem.Controllers
         [HttpPost]//realiza la peticion al servidor
         [ValidateAntiForgeryToken]
         //Metodo para mostrar los datos actualizados de gestion de curso, usa como parametros los datos ingresados por el usuario
-        public ActionResult Edit([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] GestionCurso gestionCurso)
+        public ActionResult Edit([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] GestionCurso gestionCur)
         {
             if (ModelState.IsValid)//si el post al servidor se hizo
             {

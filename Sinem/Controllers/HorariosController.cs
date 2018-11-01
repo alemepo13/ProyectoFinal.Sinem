@@ -81,7 +81,7 @@ namespace Sinem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idHorario,dia,hora,tiempoDuracion,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario horario)
+        public ActionResult Edit([Bind(Include = "idHorario,dia,hora,tiempoDuracion,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario schedule)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del horario,
             //lleva como parametros los datos a editar del horario, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo 

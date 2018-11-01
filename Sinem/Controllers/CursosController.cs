@@ -81,7 +81,7 @@ namespace Sinem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idCurso,nombre,descripcion,costo,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Curso curso)
+        public ActionResult Edit([Bind(Include = "idCurso,nombre,descripcion,costo,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Curso course)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del curso,
             //lleva como parametros los datos a editar del curso, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo
