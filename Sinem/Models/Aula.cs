@@ -20,12 +20,16 @@ namespace Sinem.Models
         public string numeroAula { get; set; }
         [DisplayName("Tipo de aula:")]
         public string tipoAula { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro:")]
         public DateTime fechaRegistro { get; set; }
         [DisplayName("Usuario crea:")]
         public string usuarioCrea { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Fecha modifica:")]//nombre que aparece en la pagina
         public DateTime fechaModifica { get; set; }
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; } 
     }
