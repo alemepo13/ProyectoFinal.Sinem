@@ -25,19 +25,24 @@ namespace Sinem.Models
             public int telefono { get; set; }
             [DisplayName("Correo:")]
             public string correo { get; set; }
-            [DisplayName("Fecha de nacimiento:")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [DisplayName("Fecha de nacimiento:")]
             public DateTime fechaNacimiento { get; set; }
             [DisplayName("Usuario:")]
             public string usuario { get; set; }
             [DisplayName("Contraseña:")]
             public string contraseña { get; set; }
-            [DisplayName("Fecha de registro:")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [DisplayName("Fecha de registro:")]
             public DateTime fechaRegistro { get; set; }
             [DisplayName("Usuario crea:")]
             public string usuarioCrea { get; set; }
-            [DisplayName("Fecha modifica:")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
+        [DisplayName("Fecha modifica:")]
             public DateTime fechaModifica { get; set; }
-            [DisplayName("Usuario modifica:")]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
+        [DisplayName("Usuario modifica:")]
             public string usuarioModifica { get; set; }
         }
 }
