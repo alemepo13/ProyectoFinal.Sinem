@@ -45,7 +45,6 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//realiza la peticion al servidor
-        [ValidateAntiForgeryToken]
         //Metodo para mostrar los nuevos datos de gestion de curso, usa como parametros los datos ingresados por el usuario
         public ActionResult Create([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] GestionCurso gestionCurso)
         {
@@ -78,7 +77,6 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//realiza la peticion al servidor
-        [ValidateAntiForgeryToken]
         //Metodo para mostrar los datos actualizados de gestion de curso, usa como parametros los datos ingresados por el usuario
         public ActionResult Edit([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] GestionCurso gestionCur)
         {
@@ -108,7 +106,6 @@ namespace Sinem.Controllers
 
         // POST: GestionCursos/Delete/5
         [HttpPost, ActionName("Delete")]//para realizar la peticion al servidor para eliminar 
-        [ValidateAntiForgeryToken]
         //metodo que recibe como parametro el id de la gestion de curso ingresada por el usuario para confirmar la eliminacion en la bd
         public ActionResult DeleteConfirmed(int id)
         {

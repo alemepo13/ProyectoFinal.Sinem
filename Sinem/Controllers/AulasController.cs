@@ -80,16 +80,16 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        public ActionResult Edit([Bind(Include = "idAula,numeroAula,tipoAula,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Aula class)
+        public ActionResult Edit([Bind(Include = "idAula,numeroAula,tipoAula,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Aula classes)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del aula,
             //lleva como parametros los datos a editar del aula, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo 
             {
-                db.Entry(aula).State = EntityState.Modified;//modifica los datos  del aula a la DB
+                db.Entry(classes).State = EntityState.Modified;//modifica los datos  del aula a la DB
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index");//lo devuelve al inicio
             }
-            return View(aula);//devuelve los datos de esa aula
+            return View(classes);//devuelve los datos de esa aula
         }
 
         // GET: Aulas/Delete/5

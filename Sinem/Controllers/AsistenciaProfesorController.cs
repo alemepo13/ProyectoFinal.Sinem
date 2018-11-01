@@ -46,7 +46,6 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost] //para realizar la peticion al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idAsistenciaProfesor,idGestionCurso,Fecha,asistio,observaciones,fechaModifica,usuarioModifica,idUsuario")] AsistenciaProfesor asistenciaProfesor)
         { //metodo para crear una pagina nueva en donde se van a mostrar los datos de la asistencia profesor,
             //lleva como parametros los datos de la asistencia profesor, ingresados por un usuario
@@ -79,17 +78,16 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost] //para realizar la peticion al servidor
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idAsistenciaProfesor,idGestionCurso,Fecha,asistio,observaciones,fechaModifica,usuarioModifica,idUsuario")] AsistenciaProfesor asistenciaProfesor)
+        public ActionResult Edit([Bind(Include = "idAsistenciaProfesor,idGestionCurso,Fecha,asistio,observaciones,fechaModifica,usuarioModifica,idUsuario")] AsistenciaProfesor profesorassistance)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados de la asistencia profesor,
             //lleva como parametros los datos a editar de la asistencia profesor, ingresados por un usuario
             if (ModelState.IsValid) //si el post al servidor se hizo
             {
-                db.Entry(asistenciaProfesor).State = EntityState.Modified; //modifica los datos  de la asistencia profesor a la DB
+                db.Entry(profesorassistance).State = EntityState.Modified; //modifica los datos  de la asistencia profesor a la DB
                 db.SaveChanges(); //guarda los cambios de la DB
                 return RedirectToAction("Index"); //lo devuelve al inicio
             }
-            return View(asistenciaProfesor); //devuelve los datos de esa asistencia profesor
+            return View(profesorassistance); //devuelve los datos de esa asistencia profesor
         }
 
         // GET: AsistenciaProfesor/Delete/5
@@ -109,7 +107,6 @@ namespace Sinem.Controllers
 
         // POST: AsistenciaProfesor/Delete/5
         [HttpPost, ActionName("Delete")] //para realizar la peticion de borrar al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id) //metodo que recibe como parametro un numero de la asistencia profesor para confirmar su eliminacion de DB
         {
             AsistenciaProfesor asistenciaProfesor = db.AsistenciaProfesores.Find(id);  //busca el numero de la asistencia profesor en la DB

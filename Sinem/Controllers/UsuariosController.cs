@@ -108,7 +108,6 @@ namespace Sinem.Controllers
 
         // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Usuario usuario = db.Usuario.Find(id);

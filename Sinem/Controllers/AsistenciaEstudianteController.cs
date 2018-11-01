@@ -47,7 +47,6 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost] //para realizar la peticion al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idAsistenciaEstudiante,idGestionCurso,fecha,asistio,observaciones,fechaModifica,usuarioModifica,idUsuario")] AsistenciaEstudiante asistenciaEstudiante)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos de la asistencia estudiante,
             //lleva como parametros los datos de la asistencia estudiante, ingresados por un usuario
@@ -80,17 +79,16 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost] //para realizar la peticion al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "idAsistenciaEstudiante,idGestionCurso,fecha,asistio,observaciones,fechaModifica,usuarioModifica,idUsuario")] AsistenciaEstudiante studentassistance)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados de la asistencia estudiante,
             //lleva como parametros los datos a editar de la asistencia estudiante, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo
             {
-                db.Entry(asistenciaEstudiante).State = EntityState.Modified; //modifica los datos  de la asistencia estudiante a la DB
+                db.Entry(studentassistance).State = EntityState.Modified; //modifica los datos  de la asistencia estudiante a la DB
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index"); //lo devuelve al inicio
             }
-            return View(asistenciaEstudiante); //devuelve los datos de esa asistencia estudiante
+            return View(studentassistance); //devuelve los datos de esa asistencia estudiante
         }
 
         // GET: AsistenciaEstudiante/Delete/5
@@ -110,7 +108,6 @@ namespace Sinem.Controllers
 
         // POST: AsistenciaEstudiante/Delete/5
         [HttpPost, ActionName("Delete")] //para realizar la peticion de borrar al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id) //metodo que recibe como parametro un numero de la asistencia estududiante para confirmar su eliminacion de DB
         {
             AsistenciaEstudiante asistenciaEstudiante = db.AsistenciaEstudiantes.Find(id); //busca el numero de la asistencia estudiante en la DB

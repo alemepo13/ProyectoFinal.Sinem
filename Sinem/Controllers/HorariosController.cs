@@ -47,7 +47,6 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idHorario,dia,hora,tiempoDuracion,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario horario)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos del nuevo horario,
             //lleva como parametros los datos del nuevo horario, ingresados por un usuario
@@ -80,17 +79,16 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "idHorario,dia,hora,tiempoDuracion,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario schedule)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del horario,
             //lleva como parametros los datos a editar del horario, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo 
             {
-                db.Entry(horario).State = EntityState.Modified;//modifica los datos  del horario a la DB
+                db.Entry(schedule).State = EntityState.Modified;//modifica los datos  del horario a la DB
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index");//lo devuelve al inicio
             }
-            return View(horario);//devuelve los datos de ese horario
+            return View(schedule);//devuelve los datos de ese horario
         }
 
         // GET: Horarios/Delete/5
@@ -110,7 +108,6 @@ namespace Sinem.Controllers
 
         // POST: Horarios/Delete/5
         [HttpPost, ActionName("Delete")]//para realizar la peticion de borrar al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)//metodo que recibe como parametro un numero de horario para confirmar su eliminacion
             //de la DB
         {
