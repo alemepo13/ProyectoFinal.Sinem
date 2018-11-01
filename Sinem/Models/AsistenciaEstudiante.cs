@@ -23,8 +23,11 @@ namespace Sinem.Models
         public string asistio { get; set; }
         [DisplayName("Observaciones")]//nombre que aparece en la pagina
         public string observaciones { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Fecha modifica:")]//nombre que aparece en la pagina
         public DateTime fechaModifica { get; set; }
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Usuario modifica:")]//nombre que aparece en la pagina
         public string usuarioModifica { get; set; }
         public int idUsuario { get; set; }

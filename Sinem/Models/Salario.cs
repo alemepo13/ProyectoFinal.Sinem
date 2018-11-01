@@ -16,11 +16,14 @@ namespace Sinem.Models
         public int idUsuario { get; set; }
         [Required()]
         [DisplayName("Monto:")]
-        public double monto { get; set; }     
+        public double monto { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro:")]
         public DateTime fechaRegistro { get; set; }
         [DisplayName("Usuario crea:")]
         public string usuarioCrea { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Fecha modifica:")]
         public DateTime fechaModifica { get; set; }
         [DisplayName("Usuario modifica:")]

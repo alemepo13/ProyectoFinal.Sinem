@@ -388,6 +388,11 @@
     <Content Include="Views\Salarios\Details.cshtml" />
     <Content Include="Views\Salarios\Edit.cshtml" />
     <Content Include="Views\Salarios\Index.cshtml" />
+    <Content Include="Views\Direccions\Create.cshtml" />
+    <Content Include="Views\Direccions\Delete.cshtml" />
+    <Content Include="Views\Direccions\Details.cshtml" />
+    <Content Include="Views\Direccions\Edit.cshtml" />
+    <Content Include="Views\Direccions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

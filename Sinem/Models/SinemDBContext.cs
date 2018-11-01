@@ -29,7 +29,7 @@ namespace Sinem.Models
         public DbSet<GestionCurso> GestionCursos { get; set; }
         public DbSet<Salario> Salarios { get; set; }
 
-
+        public DbSet<Direccion> Direcciones { get; set; }
      
     }
 }

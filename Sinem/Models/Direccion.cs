@@ -21,10 +21,13 @@ namespace Sinem.Models
         public string descripcion { get; set; }
         [DisplayName("Canton:")]
         public string canton { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro:")]
         public DateTime fechaRegistro { get; set; }
         [DisplayName("Usuario crea:")]//nombre que aparece en la pagina
         public string usuarioCrea { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Fecha modifica:")]
         public DateTime fechaModifica { get; set; }
     }
