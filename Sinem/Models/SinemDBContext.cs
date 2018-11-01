@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Sinem.Models
 {
-    [DbConfigurationType(typeof(MySqlEFConfiguration))]//especifica el tipo de conexion, en este caso mysql
+   [DbConfigurationType(typeof(MySqlEFConfiguration))]//especifica el tipo de conexion, en este caso mysql
     public class SinemDBContext : DbContext
     {//metodo para realizar la conexion con la base de datos
         public SinemDBContext() : base("Server=localhost;Database=bd_sinem;Uid=root;Pwd=1234;")//realiza la conexion
@@ -28,5 +28,8 @@ namespace Sinem.Models
         public DbSet<AsistenciaProfesor> AsistenciaProfesores { get; set; }
 
         public DbSet<Salario> Salarios { get; set; }
+
+
+     
     }
 }
