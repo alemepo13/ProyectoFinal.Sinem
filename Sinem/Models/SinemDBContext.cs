@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+//importaciones
 
 namespace Sinem.Models
 {
-    [DbConfigurationType(typeof(MySqlEFConfiguration))]
+    [DbConfigurationType(typeof(MySqlEFConfiguration))]//especifica el tipo de conexion, en este caso mysql
     public class SinemDBContext : DbContext
-    {
-        public SinemDBContext() : base("Server=localhost;Database=bd_sinem;Uid=root;Pwd=1234;")
+    {//metodo para realizar la conexion con la base de datos
+        public SinemDBContext() : base("Server=localhost;Database=bd_sinem;Uid=root;Pwd=1234;")//realiza la conexion
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
-        public DbSet<Aula> Aulas { get; set; }
-        //DbSets....
 
+        //selecciona las tablas de la DB
+        public DbSet<Aula> Aulas { get; set; }
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Horario> Horarios { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
