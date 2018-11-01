@@ -5,22 +5,24 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+//importaciones
 
 namespace Sinem.Models
 {
     [Table("Horario")]
     public class Horario
     {
-        [Key()]
+        //propiedades automaticas para cada uno de los campos de la tabla
+        [Key()]//indica que es la llave de la tabla
         public int idHorario { get; set; }
-        [Required()]
-        [DisplayName("Día::")]
+        [Required()]//indica que es un campo requerido
+        [DisplayName("Día:")]//nombre que aparece en la pagina
         public string dia { get; set; }
         [DisplayName("Hora:")]
         public System.TimeSpan hora { get; set; }
         [DisplayName("Tiempo de duración:")]
         public string tiempoDuracion { get; set; }
-        [DisplayName("Fecha de registro:")]
+        [DisplayName("Fecha de registro:")]//nombre que aparece en la pagina
         public DateTime fechaRegistro { get; set; }
         [DisplayName("Usuario crea:")]
         public string usuarioCrea { get; set; }
