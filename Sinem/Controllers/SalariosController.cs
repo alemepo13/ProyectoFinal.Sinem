@@ -12,7 +12,7 @@ namespace Sinem.Controllers
 {
     public class SalariosController : Controller
     {
-        private SinemDBContext db = new SinemDBContext();
+        private SinemDBContext db = new SinemDBContext(); 
 
         // GET: Salarios
         public ActionResult Index()
