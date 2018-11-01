@@ -86,11 +86,11 @@ namespace Sinem.Controllers
             //lleva como parametros los datos a editar del curso, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo
             {
-                db.Entry(curso).State = EntityState.Modified;//modifica los datos  del curso a la DB
+                db.Entry(course).State = EntityState.Modified;//modifica los datos  del curso a la DB
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index");//lo devuelve al inicio
             }
-            return View(curso);//devuelve los datos de ese curso
+            return View(course);//devuelve los datos de ese curso
         }
 
         // GET: Cursos/Delete/5

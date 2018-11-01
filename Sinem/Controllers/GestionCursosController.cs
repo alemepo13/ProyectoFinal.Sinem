@@ -84,11 +84,11 @@ namespace Sinem.Controllers
         {
             if (ModelState.IsValid)//si el post al servidor se hizo
             {
-                db.Entry(gestionCurso).State = EntityState.Modified;//se modifican los datos de la gestion de curso
+                db.Entry(gestionCur).State = EntityState.Modified;//se modifican los datos de la gestion de curso
                 db.SaveChanges();//y se guardan los cambios en la bd
                 return RedirectToAction("Index");//devuelve al usuario al inicio
             }
-            return View(gestionCurso);//devuelve los datos de la gestion de curso editada 
+            return View(gestionCur);//devuelve los datos de la gestion de curso editada 
         }
 
         // GET: GestionCursos/Delete/5
