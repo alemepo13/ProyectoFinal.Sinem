@@ -201,6 +201,7 @@
     <Compile Include="Controllers\GestionCursosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HorariosController.cs" />
+    <Compile Include="Controllers\SalariosController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -210,10 +211,12 @@
     <Compile Include="Models\Aula.cs" />
     <Compile Include="Models\AuthenticationService.cs" />
     <Compile Include="Models\Curso.cs" />
+    <Compile Include="Models\Direccion.cs" />
     <Compile Include="Models\GestionCurso.cs" />
     <Compile Include="Models\Horario.cs" />
     <Compile Include="Models\Permiso.cs" />
     <Compile Include="Models\Rol.cs" />
+    <Compile Include="Models\Salario.cs" />
     <Compile Include="Models\SinemDBContext.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -380,6 +383,16 @@
     <Content Include="Views\GestionCursos\Edit.cshtml" />
     <Content Include="Views\GestionCursos\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Salarios\Create.cshtml" />
+    <Content Include="Views\Salarios\Delete.cshtml" />
+    <Content Include="Views\Salarios\Details.cshtml" />
+    <Content Include="Views\Salarios\Edit.cshtml" />
+    <Content Include="Views\Salarios\Index.cshtml" />
+    <Content Include="Views\Direccions\Create.cshtml" />
+    <Content Include="Views\Direccions\Delete.cshtml" />
+    <Content Include="Views\Direccions\Details.cshtml" />
+    <Content Include="Views\Direccions\Edit.cshtml" />
+    <Content Include="Views\Direccions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

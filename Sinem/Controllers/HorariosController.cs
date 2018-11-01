@@ -120,7 +120,7 @@ namespace Sinem.Controllers
             return RedirectToAction("Index");//lo devuelve al inicio
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)//Metodo generado para liberar recursos no utilizados 
         {
             if (disposing)
             {

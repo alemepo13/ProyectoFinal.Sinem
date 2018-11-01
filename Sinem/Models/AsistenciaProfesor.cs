@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.ComponentModel;
+//importaciones
 
 namespace Sinem.Models
 {
@@ -11,16 +13,25 @@ namespace Sinem.Models
     [Table("AsistenciaProfesor")]
     public class AsistenciaProfesor
     {
+        //propiedades automaticas para cada uno de los campos de la tabla
+        [Key()]//indica que es la llave de la tabla
+        public int idAsistenciaProfesor { get; set; }
+        public int idGestionCurso { get; set; }
 
-        [Key()]
-            public int idAsistenciaProfesor { get; set; }
-            public int idGestionCurso { get; set; }
-            public DateTime Fecha { get; set; }
-            public string asistio { get; set; }
-            public string observaciones { get; set; }
-            public DateTime fechaModifica { get; set; }
-            public string usuarioModifica { get; set; }
-            public int idUsuario { get; set; }
+        [DisplayName("Fecha:")]//nombre que aparece en la pagina
+        public DateTime Fecha { get; set; }
+        [DisplayName("Asistio:")]//nombre que aparece en la pagina
+        public string asistio { get; set; }
+        [DisplayName("Observaciones")]//nombre que aparece en la pagina
+        public string observaciones { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
+        [DisplayName("Fecha modifica:")]//nombre que aparece en la pagina
+        public DateTime fechaModifica { get; set; }
+        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
+        [DisplayName("Usuario modifica:")]//nombre que aparece en la pagina
+        public string usuarioModifica { get; set; }
+        public int idUsuario { get; set; }
     }
 
  }

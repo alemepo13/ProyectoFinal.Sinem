@@ -1,0 +1,66 @@
+﻿@model Sinem.Models.Direccion
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Direccion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.canton)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.canton)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaRegistro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaRegistro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuarioCrea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuarioCrea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fechaModifica)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaModifica)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idDireccion }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -103,6 +103,7 @@ namespace Sinem.Controllers
             Curso curso = db.Cursos.Find(id);//busca el numero de curso en la DB
             if (curso == null)// si el numero es nulo
             {
+
                 return HttpNotFound();
             }
             return View(curso);//devuelve los datos de ese curso
@@ -120,7 +121,7 @@ namespace Sinem.Controllers
             return RedirectToAction("Index");//lo devuelve al inicio
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)//Metodo generado para liberar recursos no utilizados 
         {
             if (disposing)
             {

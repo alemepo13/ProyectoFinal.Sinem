@@ -48,7 +48,6 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idAula,numeroAula,tipoAula,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Aula aula)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos e la nueva aula,
             //lleva como parametros los datos de la nueva aula, ingresados por un usuario
@@ -81,7 +80,6 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "idAula,numeroAula,tipoAula,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Aula aula)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del aula,
             //lleva como parametros los datos a editar del aula, ingresados por un usuario
@@ -111,7 +109,6 @@ namespace Sinem.Controllers
 
         // POST: Aulas/Delete/5
         [HttpPost, ActionName("Delete")]//para realizar la peticion de borrar al servidor
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)//metodo que recibe como parametro un numero de aula para confirmar su eliminacion
             //de la DB
         {
@@ -121,7 +118,7 @@ namespace Sinem.Controllers
             return RedirectToAction("Index");//lo devuelve al inicio
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)//Metodo generado para liberar recursos no utilizados 
         {
             if (disposing)
             {
