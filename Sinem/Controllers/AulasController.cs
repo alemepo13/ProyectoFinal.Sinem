@@ -87,6 +87,7 @@ namespace Sinem.Controllers
             {
                 db.Entry(classes).State = EntityState.Modified;//modifica los datos  del aula a la DB
                 db.SaveChanges();//guarda los cambios de la DB
+                //aqui se debe agregar un manejo de error para los numeros de aula repetidos
                 return RedirectToAction("Index");//lo devuelve al inicio
             }
             return View(classes);//devuelve los datos de esa aula

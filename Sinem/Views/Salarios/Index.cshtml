@@ -17,18 +17,6 @@
         <th>
             @Html.DisplayNameFor(model => model.monto)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaRegistro)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.usuarioCrea)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaModifica)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.usuarioModifica)
-        </th>
         <th></th>
     </tr>
 
@@ -39,18 +27,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.monto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaRegistro)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.usuarioCrea)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaModifica)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.usuarioModifica)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.idSalario }) |

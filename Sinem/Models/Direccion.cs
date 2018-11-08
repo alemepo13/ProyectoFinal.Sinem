@@ -30,5 +30,7 @@ namespace Sinem.Models
         [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Fecha modifica:")]
         public DateTime fechaModifica { get; set; }
+        [DisplayName("Usuario modifica:")]
+        public string usuarioModifica { get; set; }
     }
 }
