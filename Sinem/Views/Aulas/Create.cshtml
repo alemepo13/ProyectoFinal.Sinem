@@ -32,8 +32,6 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.fechaRegistro, htmlAttributes: new { @class = "control-label col-md-2" })
-             
-
                 <div class="input-group date" id="fechaRegistro">
                     <input type="text" class="form-control" name="fechaRegistro"  />
                     <span class="input-group-addon">
@@ -41,7 +39,6 @@
                     </span>
                 </div>
                 @Html.ValidationMessageFor(model => model.fechaRegistro, "", new { @class = "text-danger" })
-            
         </div>
 
         <div class="form-group">
