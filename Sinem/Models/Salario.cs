@@ -16,7 +16,7 @@ namespace Sinem.Models
         public int idSalario { get; set; }
         public int idUsuario { get; set; }
         [Required()]//indica que es un campo requerido 
-        [DisplayName("Monto:")]//indica 
+        [DisplayName("Monto:")]//indica el nombre que aparece en la pagina 
         public double monto { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro:")]

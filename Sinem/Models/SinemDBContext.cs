@@ -11,7 +11,7 @@ namespace Sinem.Models
    [DbConfigurationType(typeof(MySqlEFConfiguration))]//especifica el tipo de conexion, en este caso mysql
     public class SinemDBContext : DbContext
     {//metodo para realizar la conexion con la base de datos
-        public SinemDBContext() : base("Server=localhost;Database=bd_sinem;Uid=root;Pwd=1234; port=3307")//realiza la conexion
+        public SinemDBContext() : base("Server=localhost;Database=bd_sinem;Uid=root;Pwd=1234;")//realiza la conexion
         {
             this.Configuration.LazyLoadingEnabled = false;
         }
