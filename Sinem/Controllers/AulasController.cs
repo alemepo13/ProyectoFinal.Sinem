@@ -83,12 +83,17 @@ namespace Sinem.Controllers
         public ActionResult Edit([Bind(Include = "idAula,numeroAula,tipoAula,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Aula classes)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del aula,
             //lleva como parametros los datos a editar del aula, ingresados por un usuario
-            if (ModelState.IsValid)//si el post al servidor se hizo 
+            var NumerosAula = db.Aulas.Where(x => x.numeroAula == classes.numeroAula).Count();
+
+            if (ModelState.IsValid && NumerosAula==0)//si el post al servidor se hizo 
             {
                 db.Entry(classes).State = EntityState.Modified;//modifica los datos  del aula a la DB
                 db.SaveChanges();//guarda los cambios de la DB
                 //aqui se debe agregar un manejo de error para los numeros de aula repetidos
                 return RedirectToAction("Index");//lo devuelve al inicio
+            }
+            if (NumerosAula > 0) {
+                ModelState.AddModelError("numeroAula", "El numero de aula ya existe");
             }
             return View(classes);//devuelve los datos de esa aula
         }

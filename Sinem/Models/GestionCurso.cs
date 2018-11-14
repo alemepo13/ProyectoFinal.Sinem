@@ -32,6 +32,14 @@ namespace Sinem.Models
         public DateTime fechaModifica { get; set; }
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
+        [DisplayName("Aula")]
+        public int idAula { get; set; }
+        [DisplayName("curso")]
+        public int idCurso { get; set; }
+        [DisplayName("horario")]
+        public int idHorario { get; set; }
+        [DisplayName("profesor")]
+        public int idUsuario { get; set; }
 
     }
 }

@@ -16,9 +16,9 @@ namespace Sinem.Models
         public int idDireccion { get; set; }
         [Required()]//indica que es un campo requerido
         [DisplayName("Provincia:")]//nombre que aparece en la pagina
-        public string nombre { get; set; }
+        public string provincia { get; set; }
         [DisplayName("Distrito:")]
-        public string descripcion { get; set; }
+        public string distrito { get; set; }
         [DisplayName("Canton:")]
         public string canton { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
@@ -32,5 +32,7 @@ namespace Sinem.Models
         public DateTime fechaModifica { get; set; }
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
+        [NotMapped()]
+        public string descripcion { get { return $"{provincia}, {canton}, {distrito}"; } }
     }
 }

@@ -16,6 +16,10 @@ namespace Sinem.Controllers
     {
         private SinemDBContext db = new SinemDBContext();
 
+        private void ListaDeDirecciones(object direccion=null) {
+            ViewBag.ListaDirecciones = new SelectList(db.Direcciones.ToList(), "idDireccion", "descripcion",direccion);
+        }
+        
         // GET: Usuarios
         [Authorize (Roles ="Administrador,Empleado")]
         public ActionResult Index()
@@ -41,6 +45,7 @@ namespace Sinem.Controllers
         // GET: Usuarios/Create
         public ActionResult Create()
         {
+            ListaDeDirecciones();
             return View();
         }
 
@@ -48,16 +53,16 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "idUsuario,idDireccion,cedula,nombre,apellido,telefono,correo,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Usuario usuario)
+        public ActionResult Create([Bind(Include = "idDireccion,cedula,nombre,apellido,telefono,correo,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Usuario U)
         {
             if (ModelState.IsValid)
             {
-                db.Usuario.Add(usuario);
+                db.Usuario.Add(U);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(usuario);
+            return View(U);
         }
 
         // GET: Usuarios/Edit/5
@@ -72,6 +77,7 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();
             }
+            ListaDeDirecciones(usuario.idDireccion);
             return View(usuario);
         }
 

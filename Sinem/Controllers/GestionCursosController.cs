@@ -10,9 +10,71 @@ using Sinem.Models;
 
 namespace Sinem.Controllers
 {
+    
     public class GestionCursosController : Controller
     {
         private SinemDBContext db = new SinemDBContext();//Conexion a la base de datos 
+
+        [Authorize(Roles = "Estudiante")]
+        public ActionResult Matricula() {
+            var Usuario = (from U in db.Usuario where U.usuario == User.Identity.Name select U).FirstOrDefault();
+            var l = from dm in db.DetalleMatriculas.ToList()
+                    join gc in db.GestionCursos.ToList() on dm.idgestionCurso equals gc.idGestionCurso
+                    join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
+                    join a in db.Aulas.ToList() on gc.idAula equals a.idAula
+                    join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
+                    where gc.idUsuario == Usuario.idUsuario
+                    select new
+                    {
+                        FechaInicio = gc.fechaInicio,
+                        FechaFinal = gc.fechaFinal,
+                        Aula = a.numeroAula + " " + a.tipoAula,
+                        Horario = h.descripcion,
+                        Curso = c.nombre,
+                        idGC = gc.idGestionCurso
+                    };
+
+            return View(l.ToList());
+        }
+
+        [Authorize(Roles = "Estudiante")]
+        public ActionResult Matricular(int idGestionCurso) {
+
+            var Usuario = (from U in db.Usuario where U.usuario == User.Identity.Name select U).FirstOrDefault();
+            var gc = db.GestionCursos.Find(idGestionCurso);
+            var dm = new DetalleMatricula();
+            dm.fechaModifica = DateTime.Today;
+            dm.fechaRegistro = DateTime.Today;
+            dm.usuarioCrea = User.Identity.Name;
+            dm.usuarioModifica = User.Identity.Name;
+            dm.idgestionCurso = idGestionCurso;
+            dm.idEstudiante = Usuario.idUsuario;
+            dm.idHorario = gc.idHorario;
+            dm.idProfesor = gc.idUsuario;
+            dm.idCurso = gc.idCurso;
+            db.DetalleMatriculas.Add(dm);
+            db.SaveChanges();
+            return RedirectToAction("IndexEstudiante","Cursos");
+        }
+        private void ListaDeAulas(object o = null)
+        {
+            ViewBag.ListaAulas = new SelectList(db.Aulas.ToList(), "idAula", "numeroAula", o);
+        }
+
+        private void ListaDeHorarios(object o = null)
+        {
+            ViewBag.ListaHorarios = new SelectList(db.Horarios.ToList(), "idHorario", "descripcion", o);
+        }
+
+        private void ListaDeCursos(object o = null)
+        {
+            ViewBag.ListaCursos = new SelectList(db.Cursos.ToList(), "idCurso", "nombre", o);
+        }
+
+        private void ListaDeUsuarios(object o = null)
+        {
+            ViewBag.ListaUsuarios = new SelectList(db.Usuario.ToList(), "idUsuario", "nombrecompleto", o);
+        }
 
         // GET: GestionCursos
         public ActionResult Index()//Metodo que permite visualizar la lista de gestion de cursos desde el menu principal
@@ -38,6 +100,10 @@ namespace Sinem.Controllers
         // GET: GestionCursos/Create
         public ActionResult Create()//metodo para crear una nueva pagina con los campos para manejar una nueva gestion de curso
         {
+            ListaDeAulas();
+            ListaDeCursos();
+            ListaDeHorarios();
+            ListaDeUsuarios();
             return View();//devuelve la vista 
         }
 
@@ -70,6 +136,11 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();//devuelve una pantalla de error si no encuentra la gestion de curso
             }
+
+            ListaDeAulas(gestionCurso.idAula);
+            ListaDeCursos(gestionCurso.idCurso);
+            ListaDeHorarios(gestionCurso.idHorario);
+            ListaDeUsuarios(gestionCurso.idUsuario);
             return View(gestionCurso);//devuelve la vista de los datos de la gestion de curso
         }
 

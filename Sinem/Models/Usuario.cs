@@ -47,6 +47,10 @@ namespace Sinem.Models
             [System.Web.Mvc.HiddenInput(DisplayValue = false)]
             [DisplayName("Usuario modifica:")]
             public string usuarioModifica { get; set; }
-        }
+
+
+        [NotMapped()]
+        public string nombrecompleto { get { return $"{nombre}, {apellido}"; } }
+    }
 }
 
