@@ -1,39 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-//importaciones
 
 namespace Sinem.Models
 {
-    [Table("Horario")]
-    public class Horario
+    [Table("DetalleMatricula")]
+    public class DetalleMatricula
     {
         //propiedades automaticas para cada uno de los campos de la tabla
         [Key()]//indica que es la llave de la tabla
-        public int idHorario { get; set; }
-        [Required()]//indica que es un campo requerido
-        [DisplayName("Día:")]//nombre que aparece en la pagina
-        public string dia { get; set; }
-        [DisplayName("Hora:")]
-        public System.TimeSpan hora { get; set; }
-        [DisplayName("Tiempo de duración:")]
-        public string tiempoDuracion { get; set; }
+        [DisplayName("Id gestion curso: ")]//nombre que aparece en la pagina
+        public int idDetalleMatricula { get; set; }
+        public double costo { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        [DisplayName("Fecha de registro:")]//nombre que aparece en la pagina
+        [DisplayName("Fecha de registro: ")]//nombre que aparece en la pagina
         public DateTime fechaRegistro { get; set; }
         [DisplayName("Usuario crea:")]
         public string usuarioCrea { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [System.Web.Mvc.HiddenInput(DisplayValue = false)]
-        [DisplayName("Fecha modifica:")]
+        [DisplayName("Fecha modifica: ")]//nombre que aparece en la pagina
         public DateTime fechaModifica { get; set; }
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
-        [NotMapped()]
-        public string descripcion { get { return $"{dia}, {hora}"; } }
+
+        [DisplayName("Estudiante")]
+        public int idEstudiante { get; set; }
+        [DisplayName("curso")]
+        public int idCurso { get; set; }
+
+
+        [DisplayName("Profesor")]
+        public int idProfesor { get; set; }
+        [DisplayName("Horario")]
+        public int idHorario { get; set; }
+
+
+        [DisplayName("GestionCurso")]
+        public int idgestionCurso { get; set; }
+
     }
 }

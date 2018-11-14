@@ -3,13 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <title>Matrícula SINEM</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/now-ui-kit.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse sinem-blue navbar-fixed-top " style="background-color: #6ab0da;border-width:0px;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,7 +23,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("SINEM", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" href="/Home">
+                    <img alt="Brand" src="~/Content/descarga.png" width="55">
+                </a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -28,21 +36,57 @@
                         {
                             <li>@Html.ActionLink("Aulas", "Index", "Aulas")</li>
 
-                        <li>@Html.ActionLink("Cursos", "Index", "Cursos")</li>
-                        <li>@Html.ActionLink("Horarios", "Index", "Horarios")</li>
-                        <li>@Html.ActionLink("Asistencia Estudiantes", "Index", "AsistenciaEstudiante")</li>
-                        <li>@Html.ActionLink("Asistencia Profesores", "Index", "AsistenciaProfesor")</li>
-                        <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
-                        <li>@Html.ActionLink("Gestion de cursos", "Index", "GestionCursos")</li>
-                        <li>@Html.ActionLink("Cerrar Sesion", "Logout", "Account")</li>
+                            <li>@Html.ActionLink("Cursos", "Index", "Cursos")</li>
+                            <li>@Html.ActionLink("Horarios", "Index", "Horarios")</li>
+                            <li>@Html.ActionLink("Asistencia Estudiantes", "Index", "AsistenciaEstudiante")</li>
+                            <li>@Html.ActionLink("Asistencia Profesores", "Index", "AsistenciaProfesor")</li>
+                            <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
+                            <li>@Html.ActionLink("Gestion de cursos", "Index", "GestionCursos")</li>
+                        }
+                        else if (User.IsInRole("Profesor"))
+                        {
+                            <li>@Html.ActionLink("Mis Cursos", "IndexProfesor", "Cursos")</li>
+
+                        }
+                        else if (User.IsInRole("Estudiante"))
+                        {
+
+                            <li>@Html.ActionLink("Mis Cursos", "IndexEstudiante", "Cursos")</li>
+
+                            <li>@Html.ActionLink("Matricular", "Matricula", "GestionCursos")</li>
+                        }
+                    }
+                    else
+                    {
+                    }
+
+                </ul>
+
+
+                <ul class="nav navbar-nav pull-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("Administrador"))
+                        {
+                            <li>@Html.ActionLink("Cerrar Sesion", "Logout", "Account")</li>
+                        }
+                        else if (User.IsInRole("Profesor"))
+                        {
+
+                            <li>@Html.ActionLink("Cerrar Sesion", "Logout", "Account")</li>
+                        }
+                        else if (User.IsInRole("Estudiante"))
+                        {
+
+                            <li>@Html.ActionLink("Cerrar Sesion", "Logout", "Account")</li>
                         }
                     }
                     else
                     {
                         <li>@Html.ActionLink("Iniciar Sesion", "Login", "Account")</li>
                     }
-                    
                 </ul>
+
             </div>
         </div>
     </div>
@@ -50,7 +94,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Sistema Nacional de Educacion Musical </p>
         </footer>
     </div>
 

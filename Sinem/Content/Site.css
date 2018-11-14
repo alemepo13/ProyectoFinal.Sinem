@@ -1,4 +1,10 @@
-﻿body {
+﻿#sinem {
+    background-image: url("unnamed.png");
+    background-size: cover;
+    min-height:200px;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -21,4 +27,10 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+
+.panel-primary > .panel-heading {
+    background-color: #6ab0da;
+    border-color: #6ab0da;
 }

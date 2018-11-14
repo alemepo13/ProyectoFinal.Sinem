@@ -17,6 +17,39 @@
         @Html.HiddenFor(model => model.idGestionCurso)
 
         <div class="form-group">
+            @Html.LabelFor(model => model.idCurso, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idCurso", ViewBag.ListaCursos as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idCurso, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idHorario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idHorario", ViewBag.ListaHorarios as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idHorario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idAula, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idAula", ViewBag.ListaAulas as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idAula, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.idUsuario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("idUsuario", ViewBag.ListaUsuarios as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.idUsuario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
             @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
@@ -39,8 +72,11 @@
         </div>
     </div>
 
-    @Html.Hidden("fechaModifica", Model.fechaModifica.ToShortDateString())
-    @Html.HiddenFor(model => model.usuarioModifica)
+
+    @Html.HiddenFor(model => model.usuarioCrea)
+    @Html.Hidden("fechaRegistro", Model.fechaRegistro.ToShortDateString())
+    @Html.Hidden("fechaModifica", DateTime.Today.ToShortDateString())
+    @Html.Hidden("usuarioModifica", User.Identity.Name)
 
 }
 

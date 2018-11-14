@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "";
+}
+
+<h2>Mis cursos</h2>
+
+<table class="table table-striped">
+    <tr>
+        <th>Curso</th>
+        <th>Aula</th>
+        <th>Horario</th>
+        <th>Fecha inicio</th>
+        <th>Fecha fin</th>
+
+    </tr>
+    @foreach (var i in Model)
+    {
+        <tr>
+            <td>@i.Curso</td>
+            <td>@i.Aula</td>
+            <td>@i.Horario</td>
+            <td>@i.FechaInicio</td>
+            <td>@i.FechaFin</td>
+
+        </tr>
+    }
+
+</table>
+

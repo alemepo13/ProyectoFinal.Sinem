@@ -15,6 +15,12 @@ namespace Sinem.Controllers
     {
         private SinemDBContext db = new SinemDBContext();//conexion a la base de datos
 
+        private void ListaDeDias(object eldia = null)
+        {
+            var l = new List<string> { "Lunes","Martes","Miercoles","Jueves","Viernes","Sabado" };
+            ViewBag.Listadias = new SelectList(l, eldia);
+        }
+
         // GET: Horarios
         public ActionResult Index()//metodo que muestra en la pagina principal una la lista de horarios que estan en la DB
         {
@@ -40,6 +46,7 @@ namespace Sinem.Controllers
         // GET: Horarios/Create
         public ActionResult Create()//metodo para crear una pagina, con los campos para crear un nuevo horario
         {
+            ListaDeDias();
             return View();//devuelve la vista
         }
 
@@ -63,6 +70,7 @@ namespace Sinem.Controllers
         // GET: Horarios/Edit/5
         public ActionResult Edit(int? id)//metodo que recibe como parametro un numero de horario para buscarlo en la DB
         {
+            ListaDeDias();
             if (id == null)// si el numero es nulo
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
