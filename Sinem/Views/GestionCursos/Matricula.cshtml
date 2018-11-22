@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Sinem.Models.Vista_CursoMatriculable>
 @{
     ViewBag.Title = "Matricula de cursos";
 }
@@ -22,7 +22,7 @@
         <td>@i.Aula</td>
         <td>@i.Horario</td>
         <td>@i.FechaInicio</td>
-        <td>@i.FechaFin</td>
+        <td>@i.FechaFinal</td>
 
         <td>@Html.ActionLink("Matricular", "Matricular", new { idGestionCurso = i.idGC }) </td>
 
