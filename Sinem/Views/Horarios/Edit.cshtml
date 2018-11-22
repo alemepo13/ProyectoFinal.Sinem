@@ -50,6 +50,9 @@
     @Html.Hidden("fechaModifica", Model.fechaModifica.ToShortDateString())
     @Html.HiddenFor(model => model.usuarioModifica)
 
+    @Html.HiddenFor(model => model.usuarioCrea)
+    @Html.Hidden("fechaRegistro", Model.fechaRegistro.ToShortDateString())
+
 }
 
 <div>

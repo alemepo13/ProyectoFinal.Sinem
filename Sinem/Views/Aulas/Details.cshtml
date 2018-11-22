@@ -47,7 +47,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.fechaModifica)
+            @Model.fechaModifica.ToString("yyyy/MM/dd")
         </dd>
 
         <dt>
@@ -55,7 +55,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.usuarioModifica)
+            @Model.usuarioModifica
         </dd>
 
     </dl>

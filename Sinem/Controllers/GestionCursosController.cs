@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using RazorPDF;
 using Sinem.Models;
 
 namespace Sinem.Controllers
 {
-    
     public class GestionCursosController : Controller
     {
         private SinemDBContext db = new SinemDBContext();//Conexion a la base de datos 
@@ -54,7 +54,8 @@ namespace Sinem.Controllers
             dm.idCurso = gc.idCurso;
             db.DetalleMatriculas.Add(dm);
             db.SaveChanges();
-            return RedirectToAction("IndexEstudiante","Cursos");
+            return new PdfResult(dm, "Comprobante");
+            //return RedirectToAction("IndexEstudiante","Cursos");
         }
         private void ListaDeAulas(object o = null)
         {

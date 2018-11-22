@@ -28,7 +28,6 @@ namespace Sinem.Models
         [DisplayName("Usuario crea:")]
         public string usuarioCrea { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Fecha modifica:")]
         public DateTime fechaModifica { get; set; }
         [DisplayName("Usuario modifica:")]

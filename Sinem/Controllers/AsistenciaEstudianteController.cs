@@ -10,6 +10,7 @@ using Sinem.Models;
 
 namespace Sinem.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class AsistenciaEstudianteController : Controller
     {
         private SinemDBContext db = new SinemDBContext(); //conexion a la base de datos
