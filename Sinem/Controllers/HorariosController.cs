@@ -11,6 +11,7 @@ using Sinem.Models;
 
 namespace Sinem.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class HorariosController : Controller
     {
         private SinemDBContext db = new SinemDBContext();//conexion a la base de datos

@@ -10,21 +10,23 @@ using System.Web;
 
 namespace Sinem.Models
 {
-        [Table("Usuario")]
-        public class Usuario
-        {
+    [Table("Usuario")]
+    public class Usuario
+    {
         //propiedades automaticas para cada uno de los campos de la tabla
-            [Key()]//indica que es la llave de la tabla
-            public int idUsuario { get; set; }
-            public int idDireccion { get; set; }
-            [Required()]//indica que es un campo requerido
-            [DisplayName("Cédula:")]//nombre que aparece en la pagina
-            public string cedula { get; set; }
-            [DisplayName("Nombre:")]
-            public string nombre { get; set; }
-            [DisplayName("Apellidos:")]
-            public string apellido { get; set; }
-            [DisplayName("Teléfono:")]//nombre que aparece en la pagina
+        [Key()]//indica que es la llave de la tabla
+        public int idUsuario { get; set; }
+        public int idDireccion { get; set; }
+        [Required()]//indica que es un campo requerido
+        [DisplayName("Cédula:")]//nombre que aparece en la pagina
+        public string cedula { get; set; }
+        [DisplayName("Nombre:")]
+        public string nombre { get; set; }
+        [DisplayName("Apellidos:")]
+        public string apellido { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [DisplayName("Teléfono:")]//nombre que aparece en la pagina
              public int telefono { get; set; }
             [DisplayName("Correo:")]
             public string correo { get; set; }

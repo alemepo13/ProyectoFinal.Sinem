@@ -6,11 +6,11 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using RazorPDF;
 using Sinem.Models;
 
 namespace Sinem.Controllers
 {
-    
     public class GestionCursosController : Controller
     {
         private SinemDBContext db = new SinemDBContext();//Conexion a la base de datos 
@@ -18,13 +18,13 @@ namespace Sinem.Controllers
         [Authorize(Roles = "Estudiante")]
         public ActionResult Matricula() {
             var Usuario = (from U in db.Usuario where U.usuario == User.Identity.Name select U).FirstOrDefault();
-            var l = from dm in db.DetalleMatriculas.ToList()
-                    join gc in db.GestionCursos.ToList() on dm.idgestionCurso equals gc.idGestionCurso
+            var l = //from dm in db.DetalleMatriculas.ToList()
+                    from gc in db.GestionCursos.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
                     join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
                     join a in db.Aulas.ToList() on gc.idAula equals a.idAula
                     join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
-                    where gc.idUsuario == Usuario.idUsuario
-                    select new
+                    //where gc.idUsuario == Usuario.idUsuario
+                    select new Vista_CursoMatriculable ()
                     {
                         FechaInicio = gc.fechaInicio,
                         FechaFinal = gc.fechaFinal,
@@ -40,7 +40,7 @@ namespace Sinem.Controllers
         [Authorize(Roles = "Estudiante")]
         public ActionResult Matricular(int idGestionCurso) {
 
-            var Usuario = (from U in db.Usuario where U.usuario == User.Identity.Name select U).FirstOrDefault();
+            var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             var gc = db.GestionCursos.Find(idGestionCurso);
             var dm = new DetalleMatricula();
             dm.fechaModifica = DateTime.Today;
@@ -54,7 +54,24 @@ namespace Sinem.Controllers
             dm.idCurso = gc.idCurso;
             db.DetalleMatriculas.Add(dm);
             db.SaveChanges();
-            return RedirectToAction("IndexEstudiante","Cursos");
+            var l = //from dm in db.DetalleMatriculas.ToList()
+                    from gc1 in db.GestionCursos.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
+                    join c in db.Cursos.ToList() on gc1.idCurso equals c.idCurso
+                    join a in db.Aulas.ToList() on gc1.idAula equals a.idAula
+                    join h in db.Horarios.ToList() on gc1.idHorario equals h.idHorario
+                    where gc1.idGestionCurso==idGestionCurso
+                    select new Vista_CursoMatriculable()
+                    {
+                        FechaInicio = gc1.fechaInicio,
+                        FechaFinal = gc1.fechaFinal,
+                        Aula = a.numeroAula + " " + a.tipoAula,
+                        Horario = h.descripcion,
+                        Curso = c.nombre,
+                        //idGC = gc.idGestionCurso
+                    };
+
+            return new PdfResult(l.FirstOrDefault(), "Comprobante");
+            //return RedirectToAction("IndexEstudiante","Cursos");
         }
         private void ListaDeAulas(object o = null)
         {
@@ -112,7 +129,7 @@ namespace Sinem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//realiza la peticion al servidor
         //Metodo para mostrar los nuevos datos de gestion de curso, usa como parametros los datos ingresados por el usuario
-        public ActionResult Create([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] GestionCurso gestionCurso)
+        public ActionResult Create([Bind(Include = "idGestionCurso,idAula,idHorario,idCurso,idUsuario,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] GestionCurso gestionCurso)
         {
             if (ModelState.IsValid)//si el post al servidor se hizo
             {

@@ -28,10 +28,8 @@ namespace Sinem.Models
         [DisplayName("Usuario crea:")]//nombre que aparece en la pagina
         public string usuarioCrea { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
-        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Fecha modifica:")]
         public DateTime fechaModifica{ get; set; }
-        [System.Web.Mvc.HiddenInput(DisplayValue = false)]
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
     }

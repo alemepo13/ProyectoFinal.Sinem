@@ -36,8 +36,9 @@
             </div>
         </div>
     </div>
-
-    @Html.Hidden("fechaRegistro", DateTime.Today.ToShortDateString())
+    <Input type="hidden" name="fechaRegistro" value="@DateTime.Today.ToShortDateString()" />
+    @*Html.Hidden("fechaRegistro", 
+    DateTime.Today.ToShortDateString())*@
     @Html.Hidden("usuarioCrea", User.Identity.Name)
 
     @Html.Hidden("fechaModifica", DateTime.Today.ToShortDateString())
