@@ -26,8 +26,8 @@ namespace Sinem.Controllers
                     //where gc.idUsuario == Usuario.idUsuario
                     select new Vista_CursoMatriculable ()
                     {
-                        FechaInicio = gc.fechaInicio,
-                        FechaFinal = gc.fechaFinal,
+                        FechaInicio = gc.fechaInicio.ToString(),
+                        FechaFinal = gc.fechaFinal.ToString(),
                         Aula = a.numeroAula + " " + a.tipoAula,
                         Horario = h.descripcion,
                         Curso = c.nombre,
@@ -62,8 +62,8 @@ namespace Sinem.Controllers
                     where gc1.idGestionCurso==idGestionCurso
                     select new Vista_CursoMatriculable()
                     {
-                        FechaInicio = gc1.fechaInicio,
-                        FechaFinal = gc1.fechaFinal,
+                        FechaInicio = gc1.fechaInicio.ToString(),
+                        FechaFinal = gc1.fechaFinal.ToString(),
                         Aula = a.numeroAula + " " + a.tipoAula,
                         Horario = h.descripcion,
                         Curso = c.nombre,

@@ -18,9 +18,11 @@ namespace Sinem.Models
         public int idGestionCurso { get; set; }
         [Required()]
         [DisplayName("Fecha de inicio: ")]
-        public String fechaInicio { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
+        public DateTime fechaInicio { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de finalizacion: ")]//nombre que aparece en la pagina
-        public String fechaFinal { get; set; }
+        public DateTime fechaFinal { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro: ")]//nombre que aparece en la pagina
         public DateTime fechaRegistro { get; set; }

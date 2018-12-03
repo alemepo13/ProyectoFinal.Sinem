@@ -51,18 +51,22 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fechaInicio, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <input type="text" class="form-control date-picker" value="" data-datepicker-color="primary" id="fechaInicio" name="fechaInicio">
             </div>
+
+            @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.fechaFinal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.fechaFinal, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.fechaFinal, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <input type="text" class="form-control date-picker" value="" data-datepicker-color="primary" id="fechaFinal" name="fechaFinal">
             </div>
+
+            @Html.ValidationMessageFor(model => model.fechaFinal, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
@@ -86,4 +90,23 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+    $('.date-picker').each(function () {
+        $(this).datepicker({
+            templates: {
+                leftArrow: '<i class="now-ui-icons arrows-1_minimal-left"></i>',
+                rightArrow: '<i class="now-ui-icons arrows-1_minimal-right"></i>'
+            }
+        }).on('show', function () {
+            $('.datepicker').addClass('open');
+
+            datepicker_color = $(this).data('datepicker-color');
+            if (datepicker_color.length != 0) {
+                $('.datepicker').addClass('datepicker-' + datepicker_color + '');
+            }
+        }).on('hide', function () {
+            $('.datepicker').removeClass('open');
+        });
+    });
+    </script>
 }

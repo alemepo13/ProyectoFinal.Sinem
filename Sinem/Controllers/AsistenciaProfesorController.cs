@@ -20,7 +20,7 @@ namespace Sinem.Controllers
         {
             var l = from dm in db.GestionCursos
                     join u in db.Usuario on dm.idUsuario equals u.idUsuario
-                   
+                    where dm.fechaInicio<= DateTime.Today && dm.fechaFinal>= DateTime.Today
                     select new Vista_Asistencia
                     {
                         nombre = u.nombre,
