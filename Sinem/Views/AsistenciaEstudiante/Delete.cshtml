@@ -1,79 +1,82 @@
 ﻿@model Sinem.Models.AsistenciaEstudiante
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Delete"; @*nombre titulo*@
 }
 
-<h2>Delete</h2>
+<h2>Delete</h2> @*Tamaño del titulo*@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>AsistenciaEstudiante</h4>
+    <h4>AsistenciaEstudiante</h4> @*Tamaño del titulo*@
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.idGestionCurso)
+        <dt>  @*descripcion de titulo*@
+            @Html.DisplayNameFor(model => model.idGestionCurso) @*muestra la etiqueta idGestionCurso *@
+        </dt>
+
+        <dd> @*descripcion de datos*@
+            @Html.DisplayFor(model => model.idGestionCurso) @*muestra el valor idGestionCurso *@
+        </dd>
+
+        <dt>  @*descripcion de titulo*@
+            @Html.DisplayNameFor(model => model.fecha) @*muestra la etiqueta fecha *@
+        </dt>
+
+        <dd>  @*descripcion de datos*@
+            @Html.DisplayFor(model => model.fecha) @*muestra el valor fecha *@
+        </dd>
+
+        <dt> @*descripcion de titulo*@
+            @Html.DisplayNameFor(model => model.asistio) @*muestra la etiqueta asistio *@
+        </dt>
+
+        <dd> @*descripcion de datos*@
+            @Html.DisplayFor(model => model.asistio) @*muestra el valor asistio *@
+        </dd>
+
+        <dt> @*descripcion de titulo*@
+            @Html.DisplayNameFor(model => model.observaciones) @*muestra la etiqueta observaciones *@
+        </dt>
+
+        <dd> @*descripcion de datos*@
+            @Html.DisplayFor(model => model.observaciones) @*muestra el valor  observaciones*@
+        </dd>
+
+        <dt>    @*descripcion de titulo*@
+            @Html.DisplayNameFor(model => model.fechaModifica) @*muestra la etiqueta fechaModifica *@
+        </dt>
+        
+        <dd>     @*descripcion de datos*@
+            @Html.DisplayFor(model => model.fechaModifica)  @*muestra el valor fechaModifica *@
+        </dd>
+       
+        <dt>    @*descripcion de titulo*@
+            @Html.DisplayNameFor(model => model.usuarioModifica) @*muestra la etiqueta .usuarioModifica *@
+        </dt>
+
+        <dd> @*descripcion de datos*@
+            @Html.DisplayFor(model => model.usuarioModifica) @*muestra el valor .usuarioModifica *@
+        </dd>
+       
+        <dt>   @*descripcion de titulo*@
+            @Html.DisplayNameFor(model => model.idUsuario) @*muestra la etiqueta idUsuario *@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.idGestionCurso)
-        </dd>
+            @Html.DisplayFor(model => model.idUsuario) @*muestra el valor idUsuario *@
+        </dd>  @*descripcion de datos*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.fecha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fecha)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.asistio)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.asistio)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.observaciones)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.observaciones)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.fechaModifica)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.fechaModifica)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.usuarioModifica)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.usuarioModifica)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.idUsuario)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.idUsuario)
-        </dd>
 
     </dl>
+    @* crea el boton para confirmar si se va a borrar *@
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-default" /> | @*boton delete*@
+        @Html.ActionLink("Back to List", "Index") @*boton regresar*@
+    </div>
     }
 </div>

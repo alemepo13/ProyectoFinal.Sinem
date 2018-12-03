@@ -18,7 +18,20 @@ namespace Sinem.Controllers
         // GET: AsistenciaProfesor
         public ActionResult Index() // esta esel metodo en que se muestra en la pagina principal la lista de asistencia profesor que esta en la base de datos
         {
-            return View(db.AsistenciaProfesores.ToList());  //Esta es la vista de la asistencia profesor en forma de lista
+            var l = from dm in db.GestionCursos
+                    join u in db.Usuario on dm.idUsuario equals u.idUsuario
+                   
+                    select new Vista_Asistencia
+                    {
+                        nombre = u.nombre,
+                        apellidos = u.apellido,
+                        asistio = false,
+                        observaciones = " ",
+                        idUsuario = u.idUsuario
+
+                    };
+            return View(l);
+           // return View(db.AsistenciaProfesores.ToList());  //Esta es la vista de la asistencia profesor en forma de lista
         }
 
         // GET: AsistenciaProfesor/Details/5

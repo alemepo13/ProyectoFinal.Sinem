@@ -49,10 +49,14 @@ namespace Sinem.Models
             
             [DisplayName("Usuario modifica:")]
             public string usuarioModifica { get; set; }
-
+            
 
         [NotMapped()]
         public string nombrecompleto { get { return $"{nombre}, {apellido}"; } }
+
+        [DisplayName ("Rol")]
+        [NotMapped()]
+        public int idRol { get; set;  }
     }
 }
 

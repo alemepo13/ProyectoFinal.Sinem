@@ -1,57 +1,49 @@
-﻿@model IEnumerable<Sinem.Models.AsistenciaEstudiante>
+﻿@model IEnumerable<Sinem.Models.Vista_Asistencia>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Index"; @*titulo llamado index*@
 }
 
-<h2>Index</h2>
+<h2>Asistencia @DateTime.Today.ToLongDateString()</h2> @*tamaño*@
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
-    <tr>
+    <tr>  
         <th>
-            @Html.DisplayNameFor(model => model.idGestionCurso)
+            @*encabezado de la tabla que lo pone en negrita *@
+
+        nombre
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.fecha)
+        apellidos
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.asistio)
+            asistencia @*muestra la etiqueta asistio *@
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.observaciones)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.idUsuario)
+            observaciones @*muestra la etiqueta observaciones *@
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.idGestionCurso)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fecha)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.asistio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.observaciones)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.idUsuario)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idAsistenciaEstudiante }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idAsistenciaEstudiante }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idAsistenciaEstudiante })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td> @*Es cada celda*@
+                @Html.DisplayFor(modelItem => item.nombre) @*muestra la etiqueta  idGestionCurso *@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.apellidos) @*muestra la etiqueta fecha *@
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => item.asistio) @*muestra la etiqueta asistio *@
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => item.observaciones) @*muestra la etiqueta observaciones *@
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.idUsuario) @*muestra la etiqueta idUsuario *@
+            </td>
+        </tr>
+    }
 
 </table>
