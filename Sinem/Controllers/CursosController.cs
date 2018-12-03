@@ -15,35 +15,35 @@ namespace Sinem.Controllers
     public class CursosController : Controller
     {
         private SinemDBContext db = new SinemDBContext();//conexion a la base de datos
-
+        [OverrideAuthorization()]
         [Authorize(Roles = "Profesor")]
         public ActionResult IndexProfesor() {
-            var Usuario = (from U in db.Usuario where U.usuario == User.Identity.Name select U).FirstOrDefault();
+            var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             var l = from gc in db.GestionCursos.ToList()
                     join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
-                    join a in db.Aulas.ToList() on gc.idAula equals a.idAula 
+                    join a in db.Aulas.ToList() on gc.idAula equals a.idAula
                     join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
-                    where gc.idUsuario == Usuario.idUsuario
-                    select new { FechaInicio=gc.fechaInicio,
-                        FechaFinal =gc.fechaFinal,
-                        Aula =a.numeroAula+" "+ a.tipoAula,
-                        Horario =h.descripcion,
-                        Curso =c.nombre, idGC=gc.idGestionCurso };
-                   
+                    where gc.idUsuario== Usuario.idUsuario
+                    select new Vista_CursoMatriculado { FechaInicio = gc.fechaInicio,
+                        FechaFinal = gc.fechaFinal,
+                        Aula = a.numeroAula + " " + a.tipoAula,
+                        Horario = h.descripcion,
+                        Curso = c.nombre, idGC = gc.idGestionCurso };
+
             return View(l.ToList());
         }
-
+        [OverrideAuthorization()]
         [Authorize(Roles = "Estudiante")]
         public ActionResult IndexEstudiante()
         {
-            var Usuario = (from U in db.Usuario where U.usuario == User.Identity.Name select U).FirstOrDefault();
+            var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             var l = from dm in db.DetalleMatriculas.ToList()
                     join gc in db.GestionCursos.ToList() on dm.idgestionCurso equals gc.idGestionCurso
                     join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
                     join a in db.Aulas.ToList() on gc.idAula equals a.idAula
                     join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
-                    where gc.idUsuario == Usuario.idUsuario
-                    select new
+                    where dm.usuarioCrea == User.Identity.Name
+                    select new Vista_CursoMatriculado
                     {
                         FechaInicio = gc.fechaInicio,
                         FechaFinal = gc.fechaFinal,

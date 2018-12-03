@@ -16,9 +16,23 @@ namespace Sinem.Controllers
         private SinemDBContext db = new SinemDBContext(); //conexion a la base de datos
 
         // GET: AsistenciaEstudiante
-        public ActionResult Index() // esta esel metodo en que se muestra en la pagina principal la lista de sistencia del estudiante que esta en la base de datos
+        [OverrideAuthorization()]
+        [Authorize(Roles = "Profesor")]
+        public ActionResult Index(int idGestionCurso) // esta esel metodo en que se muestra en la pagina principal la lista de sistencia del estudiante que esta en la base de datos
         {
-            return View(db.AsistenciaEstudiantes.ToList()); //Esta es la vista de la asistencia estudiante en forma de lista
+            var l = from dm in db.DetalleMatriculas
+                    join u in db.Usuario on dm.idEstudiante equals u.idUsuario
+                    where dm.idgestionCurso == idGestionCurso
+                    select new Vista_Asistencia {
+                        nombre = u.nombre, 
+                        apellidos = u.apellido,
+                        asistio = false,
+                        observaciones = " ",
+                        idUsuario = u.idUsuario
+
+                    };
+            return View(l); 
+            //return View(db.AsistenciaEstudiantes.ToList()); //Esta es la vista de la asistencia estudiante en forma de lista
         }
 
         // GET: AsistenciaEstudiante/Details/5

@@ -19,7 +19,12 @@ namespace Sinem.Controllers
         private void ListaDeDirecciones(object direccion=null) {
             ViewBag.ListaDirecciones = new SelectList(db.Direcciones.ToList(), "idDireccion", "descripcion",direccion);
         }
-        
+
+        private void ListaDeRoles(object rol = null)
+        {
+            ViewBag.ListaDeRoles = new SelectList(db.Roles.ToList(), "idRol", "nombre", rol);
+        }
+
         // GET: Usuarios
         [Authorize (Roles ="Administrador,Empleado")]
         public ActionResult Index()
@@ -46,6 +51,7 @@ namespace Sinem.Controllers
         public ActionResult Create()
         {
             ListaDeDirecciones();
+            ListaDeRoles();
             return View();
         }
 
@@ -53,11 +59,14 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "idDireccion,cedula,nombre,apellido,telefono,correo,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Usuario U)
+        public ActionResult Create([Bind(Include = "idDireccion,cedula,nombre,apellido,telefono,correo,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,idRol")] Usuario U)
         {
             if (ModelState.IsValid)
             {
                 db.Usuario.Add(U);
+                db.SaveChanges();
+                var U2 = db.Usuario.Where(x => x.cedula == U.cedula).FirstOrDefault();
+                db.Permisos.Add(new Permiso {idUsuario=U2.idUsuario,idRol=U.idRol });
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
