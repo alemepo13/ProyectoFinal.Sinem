@@ -6,6 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 using RazorPDF;
 using Sinem.Models;
 
@@ -42,6 +44,7 @@ namespace Sinem.Controllers
 
             var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             var gc = db.GestionCursos.Find(idGestionCurso);
+            var cu = db.Cursos.Find(gc.idCurso);
             var dm = new DetalleMatricula();
             dm.fechaModifica = DateTime.Today;
             dm.fechaRegistro = DateTime.Today;
@@ -52,6 +55,7 @@ namespace Sinem.Controllers
             dm.idHorario = gc.idHorario;
             dm.idProfesor = gc.idUsuario;
             dm.idCurso = gc.idCurso;
+            dm.costo = cu.costo;
             db.DetalleMatriculas.Add(dm);
             db.SaveChanges();
             var l = //from dm in db.DetalleMatriculas.ToList()
@@ -59,15 +63,21 @@ namespace Sinem.Controllers
                     join c in db.Cursos.ToList() on gc1.idCurso equals c.idCurso
                     join a in db.Aulas.ToList() on gc1.idAula equals a.idAula
                     join h in db.Horarios.ToList() on gc1.idHorario equals h.idHorario
+                    join e in db.Usuario.ToList() on Usuario.idUsuario equals e.idUsuario
+                    join p in db.Usuario.ToList() on gc1.idUsuario equals p.idUsuario
                     where gc1.idGestionCurso==idGestionCurso
                     select new Vista_CursoMatriculable()
                     {
                         FechaInicio = gc1.fechaInicio.ToString(),
                         FechaFinal = gc1.fechaFinal.ToString(),
-                        Aula = a.numeroAula + " " + a.tipoAula,
+                        Aula = a.numeroAula,
                         Horario = h.descripcion,
                         Curso = c.nombre,
-                        //idGC = gc.idGestionCurso
+                        fechaActual = dm.fechaRegistro.ToString(),
+                        idGC = dm.idgestionCurso,
+                        nombreE = e.nombrecompleto,
+                        cedula = e.cedula,
+                        profesor = p.nombrecompleto,
                     };
 
             return new PdfResult(l.FirstOrDefault(), "Comprobante");
@@ -93,6 +103,22 @@ namespace Sinem.Controllers
             ViewBag.ListaUsuarios = new SelectList(db.Usuario.ToList(), "idUsuario", "nombrecompleto", o);
         }
 
+        private void ListaDeProfesores(object o = null)
+        {
+            var l = //from dm in db.DetalleMatriculas.ToList()
+                    from u in db.Usuario.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
+                    join p in db.Permisos.ToList() on u.idUsuario equals p.idUsuario
+                    where p.idUsuario == 3
+                    select new Permiso2()
+                    {
+                        idUsuario = p.idUsuario,
+                        idRol = p.idRol,
+                        nombrecompleto = u.nombrecompleto,
+                    };
+
+            ViewBag.ListaProfesores = new SelectList(l, "idUsuario", "nombrecompleto", o);
+        }
+
         // GET: GestionCursos
         public ActionResult Index()//Metodo que permite visualizar la lista de gestion de cursos desde el menu principal
         {
@@ -111,7 +137,15 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();//devuelve una pantalla de error si el id es null
             }
-            return View(gestionCurso);//devuelve los datos de la gestion de curso 
+
+            GestionCurso2 gestionCurso2 = new GestionCurso2(gestionCurso.idGestionCurso, gestionCurso.fechaInicio, 
+                gestionCurso.fechaFinal, gestionCurso.fechaRegistro, gestionCurso.usuarioCrea, gestionCurso.fechaModifica, 
+                gestionCurso.usuarioModifica, db.GestionCursos.Find(gestionCurso.idGestionCurso).cupo,
+                db.Aulas.Find(gestionCurso.idAula).numeroAula, db.Cursos.Find(gestionCurso.idCurso).nombre, 
+                db.Cursos.Find(gestionCurso.idCurso).descripcion, db.Cursos.Find(gestionCurso.idCurso).costo,
+                db.Horarios.Find(gestionCurso.idHorario).dia, db.Horarios.Find(gestionCurso.idHorario).hora,
+                db.Horarios.Find(gestionCurso.idHorario).tiempoDuracion, db.Usuario.Find(gestionCurso.idUsuario).nombrecompleto);
+            return View(gestionCurso2);//devuelve los datos de la gestion de curso 
         }
 
         // GET: GestionCursos/Create
@@ -120,7 +154,7 @@ namespace Sinem.Controllers
             ListaDeAulas();
             ListaDeCursos();
             ListaDeHorarios();
-            ListaDeUsuarios();
+            ListaDeProfesores();
             return View();//devuelve la vista 
         }
 
@@ -129,7 +163,7 @@ namespace Sinem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//realiza la peticion al servidor
         //Metodo para mostrar los nuevos datos de gestion de curso, usa como parametros los datos ingresados por el usuario
-        public ActionResult Create([Bind(Include = "idGestionCurso,idAula,idHorario,idCurso,idUsuario,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] GestionCurso gestionCurso)
+        public ActionResult Create([Bind(Include = "idGestionCurso,idAula,idHorario,idCurso,idUsuario,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,cupo")] GestionCurso gestionCurso)
         {
             if (ModelState.IsValid)//si el post al servidor se hizo
             {
@@ -166,7 +200,7 @@ namespace Sinem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//realiza la peticion al servidor
         //Metodo para mostrar los datos actualizados de gestion de curso, usa como parametros los datos ingresados por el usuario
-        public ActionResult Edit([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] GestionCurso gestionCur)
+        public ActionResult Edit([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,cupo")] GestionCurso gestionCur)
         {
             if (ModelState.IsValid)//si el post al servidor se hizo
             {

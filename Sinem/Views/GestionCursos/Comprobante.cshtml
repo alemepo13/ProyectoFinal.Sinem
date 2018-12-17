@@ -8,10 +8,56 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Matricular</title>
 </head>
 <body>
-    <h2>Comprobante de matricula</h2>
-    <h3>Nombre: @Model.Curso</h3>
+    <img alt="Brand" src="@Context.Server.MapPath("~/Content/descarga.png")" align="left" width="55" height="55">
+    <h4 align="center">Escuela de Música del Sistema Nacional de Educación Musical</h4>
+    <h4 align="center">en Parque la Libertad, Desamparados</h4>
+    <h5 align="center">Comprobante de matricula</h5>
+    <table>
+        <tr>
+            <td>Fecha:</td>
+            <td>@Model.fechaActual</td>
+        </tr>
+        <tr>
+            <td>Cedula del Estudiante:</td>
+            <td>@Model.cedula</td>
+        </tr>
+        <tr>
+            <td>Nombre del Estudiante:</td>
+            <td>@Model.nombreE</td>
+        </tr>
+    </table>
+
+    <table border="1" cellpadding="2">
+        <tr>
+            <td>Codigo del Curso:</td>
+            <td>@Model.idGC</td>
+        </tr>
+        <tr>
+            <td>Nombre del Curso:</td>
+            <td>@Model.Curso</td>
+        </tr>
+        <tr>
+            <td>Horario:</td>
+            <td>@Model.Horario</td>
+        </tr>
+        <tr>
+            <td>Numero de Aula:</td>
+            <td>@Model.Aula</td>
+        </tr>
+        <tr>
+            <td>Nombre del Profesor:</td>
+            <td>@Model.profesor</td>
+        </tr>
+        <tr>
+            <td>Fecha de Inicio:</td>
+            <td>@Model.FechaInicio</td>
+        </tr>
+        <tr>
+            <td>Fecha Final:</td>
+            <td>@Model.FechaFinal</td>
+        </tr>
+    </table>
 </body>
 </html>

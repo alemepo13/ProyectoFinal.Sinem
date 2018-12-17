@@ -30,6 +30,5 @@ namespace Sinem.Models
         public DbSet<Salario> Salarios { get; set; }
         public DbSet<DetalleMatricula> DetalleMatriculas { get; set; }
         public DbSet<Direccion> Direcciones { get; set; }
-     
     }
 }

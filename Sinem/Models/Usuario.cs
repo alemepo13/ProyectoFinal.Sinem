@@ -58,5 +58,11 @@ namespace Sinem.Models
         [NotMapped()]
         public int idRol { get; set;  }
     }
+
+    public class PermisoDelete
+    {
+        public int idUsuario { get; set; }
+        public int idRol { get; set; }
+    }
 }
 
