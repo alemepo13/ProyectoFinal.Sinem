@@ -18,4 +18,14 @@ namespace Sinem.Models
         [Key, Column(Order = 1)]//indica que es la llave de la tabla
         public int idRol { get; set; }
     }
+
+    public class Permiso2
+    {
+        //propiedades automaticas para cada uno de los campos de la tabla
+        [Key, Column(Order = 0)]//indica que es la llave de la tabla
+        public int idUsuario { get; set; }
+        [Key, Column(Order = 1)]//indica que es la llave de la tabla
+        public int idRol { get; set; }
+        public string nombrecompleto { get; set; }
+    }
 }

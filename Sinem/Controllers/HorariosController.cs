@@ -18,7 +18,7 @@ namespace Sinem.Controllers
 
         private void ListaDeDias(object eldia = null)
         {
-            var l = new List<string> { "Lunes","Martes","Miercoles","Jueves","Viernes","Sabado" };
+            var l = new List<string> { "Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"};
             ViewBag.Listadias = new SelectList(l, eldia);
         }
 

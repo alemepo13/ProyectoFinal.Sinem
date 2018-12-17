@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using MySql.Data.MySqlClient;
 using Sinem.Models;
 
 
@@ -127,6 +128,21 @@ namespace Sinem.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Usuario usuario = db.Usuario.Find(id);
+
+            var l = //from dm in db.DetalleMatriculas.ToList()
+                    from u in db.Usuario.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
+                    join p in db.Permisos.ToList() on u.idUsuario equals p.idUsuario
+                    where p.idUsuario == id
+                    select new PermisoDelete()
+                    {
+                        idUsuario = p.idUsuario,
+                        idRol = p.idRol,
+                    };
+
+            Permiso permiso = db.Permisos.Find(usuario.idUsuario, l.FirstOrDefault().idRol);
+            db.Permisos.Remove(permiso);
+            db.SaveChanges();
+
             db.Usuario.Remove(usuario);
             db.SaveChanges();
             return RedirectToAction("Index");
