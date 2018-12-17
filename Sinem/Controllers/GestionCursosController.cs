@@ -19,12 +19,16 @@ namespace Sinem.Controllers
 
         [Authorize(Roles = "Estudiante")]
         public ActionResult Matricula() {
-            var Usuario = (from U in db.Usuario where U.usuario == User.Identity.Name select U).FirstOrDefault();
+            
+            var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            var listaMatriculados = from k in db.DetalleMatriculas.ToList() where k.idEstudiante == Usuario.idUsuario select k.idgestionCurso;
             var l = //from dm in db.DetalleMatriculas.ToList()
                     from gc in db.GestionCursos.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
                     join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
                     join a in db.Aulas.ToList() on gc.idAula equals a.idAula
                     join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
+                    join cup in db.Cupos.ToList() on gc.idGestionCurso equals cup.idGestionCurso
+
                     //where gc.idUsuario == Usuario.idUsuario
                     select new Vista_CursoMatriculable ()
                     {
@@ -33,12 +37,79 @@ namespace Sinem.Controllers
                         Aula = a.numeroAula + " " + a.tipoAula,
                         Horario = h.descripcion,
                         Curso = c.nombre,
+                        Cupo=cup.cupo,
+                        YaMatriculado=listaMatriculados.Contains(gc.idGestionCurso),
                         idGC = gc.idGestionCurso
                     };
 
             return View(l.ToList());
         }
 
+        [HttpPost]
+        public ActionResult Matricula(string[] selectedCourses)
+        {
+            var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            List<int> idDetalleMatricula = new List<int>();
+            foreach (var item in selectedCourses)
+            {
+                var gc = db.GestionCursos.Find(Convert.ToInt32(item));
+                var cu = db.Cursos.Find(gc.idCurso);
+                var dm = new DetalleMatricula();
+                dm.fechaModifica = DateTime.Today;
+                dm.fechaRegistro = DateTime.Today;
+                dm.usuarioCrea = User.Identity.Name;
+                dm.usuarioModifica = User.Identity.Name;
+                dm.idgestionCurso = gc.idGestionCurso;
+                dm.idEstudiante = Usuario.idUsuario;
+                dm.idHorario = gc.idHorario;
+                dm.idProfesor = gc.idUsuario;
+                dm.idCurso = gc.idCurso;
+                dm.costo = cu.costo;
+                db.DetalleMatriculas.Add(dm);
+                db.SaveChanges();
+                 idDetalleMatricula.Add(dm.idDetalleMatricula);
+                // buscar el cupo correspindiente 
+                Cupo cup = (from cupos in db.Cupos where cupos.idGestionCurso == gc.idGestionCurso select cupos).FirstOrDefault();
+                // si no existe lo creamos
+                if (cup == null) {
+                    cup = new Cupo();
+                    cup.fechaModifica = DateTime.Today;
+                    cup.fechaRegistro = DateTime.Today;
+                    cup.usuarioCrea = User.Identity.Name;
+                    cup.usuarioModifica = User.Identity.Name;
+                    cup.idGestionCurso = gc.idGestionCurso;
+                    cup.cupo = gc.cupo;
+                    db.Cupos.Add(cup); ;
+                    db.SaveChanges();
+                }
+                cup.cupo = cup.cupo - 1;
+                db.SaveChanges();
+            }
+            var l = from dm in db.DetalleMatriculas.ToList()
+                    join gc1 in db.GestionCursos.ToList() on dm.idgestionCurso equals gc1.idGestionCurso // on dm.idgestionCurso equals gc.idGestionCurso
+                    join c in db.Cursos.ToList() on dm.idCurso equals c.idCurso
+                    join a in db.Aulas.ToList() on gc1.idAula equals a.idAula
+                    join h in db.Horarios.ToList() on dm.idHorario equals h.idHorario
+                    join e in db.Usuario.ToList() on Usuario.idUsuario equals e.idUsuario
+                    join p in db.Usuario.ToList() on dm.idProfesor equals p.idUsuario
+                    where idDetalleMatricula.Contains(dm.idDetalleMatricula)
+                    select new Vista_CursoMatriculable()
+                    {
+                        FechaInicio = gc1.fechaInicio.ToString(),
+                        FechaFinal = gc1.fechaFinal.ToString(),
+                        Aula = a.numeroAula,
+                        Horario = h.descripcion,
+                        Curso = c.nombre,
+                        fechaActual = dm.fechaRegistro.ToString(),
+                        idGC = dm.idgestionCurso,
+                        nombreE = e.nombrecompleto,
+                        cedula = e.cedula,
+                        profesor = p.nombrecompleto,
+                    };
+
+            return new PdfResult(l.ToList(), "Comprobante");
+
+        }
         [Authorize(Roles = "Estudiante")]
         public ActionResult Matricular(int idGestionCurso) {
 
@@ -65,6 +136,7 @@ namespace Sinem.Controllers
                     join h in db.Horarios.ToList() on gc1.idHorario equals h.idHorario
                     join e in db.Usuario.ToList() on Usuario.idUsuario equals e.idUsuario
                     join p in db.Usuario.ToList() on gc1.idUsuario equals p.idUsuario
+                    join cup in db.Cupos.ToList() on gc1.idGestionCurso equals cup.idGestionCurso
                     where gc1.idGestionCurso==idGestionCurso
                     select new Vista_CursoMatriculable()
                     {
@@ -73,6 +145,7 @@ namespace Sinem.Controllers
                         Aula = a.numeroAula,
                         Horario = h.descripcion,
                         Curso = c.nombre,
+                        Cupo=cup.cupo,
                         fechaActual = dm.fechaRegistro.ToString(),
                         idGC = dm.idgestionCurso,
                         nombreE = e.nombrecompleto,
@@ -122,7 +195,25 @@ namespace Sinem.Controllers
         // GET: GestionCursos
         public ActionResult Index()//Metodo que permite visualizar la lista de gestion de cursos desde el menu principal
         {
-            return View(db.GestionCursos.ToList());//Vista de los datos de gestion de cursos en forma de lista 
+            var l = //from dm in db.DetalleMatriculas.ToList()
+                   from gc in db.GestionCursos.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
+                    join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
+                   join a in db.Aulas.ToList() on gc.idAula equals a.idAula
+                   join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
+                   join cup in db.Cupos.ToList() on gc.idGestionCurso equals cup.idGestionCurso
+
+                    //where gc.idUsuario == Usuario.idUsuario
+                    select new Vista_CursoMatriculable()
+                   {
+                       FechaInicio = gc.fechaInicio.ToString(),
+                       FechaFinal = gc.fechaFinal.ToString(),
+                       Aula = a.numeroAula + " " + a.tipoAula,
+                       Horario = h.descripcion,
+                       Curso = c.nombre,
+                       Cupo = cup.cupo,
+                       idGC = gc.idGestionCurso
+                   };
+            return View(l);//Vista de los datos de gestion de cursos en forma de lista 
         }
 
         // GET: GestionCursos/Details/5
@@ -167,11 +258,26 @@ namespace Sinem.Controllers
         {
             if (ModelState.IsValid)//si el post al servidor se hizo
             {
+
                 db.GestionCursos.Add(gestionCurso);//se agrega la gestion de curso a la bd
                 db.SaveChanges();//y guarda los cambios en la db 
+                Cupo cu = new Cupo();
+                cu.fechaModifica = DateTime.Today;
+                cu.fechaRegistro = DateTime.Today;
+                cu.usuarioCrea = User.Identity.Name;
+                cu.usuarioModifica = User.Identity.Name;
+                cu.idGestionCurso = gestionCurso.idGestionCurso;
+                cu.cupo = gestionCurso.cupo;
+                db.Cupos.Add(cu); ;
+                db.SaveChanges();
+                
                 return RedirectToAction("Index");//devuelve al usuario al inicio 
             }
-
+            ListaDeAulas();
+            ListaDeCursos();
+            ListaDeHorarios();
+            ListaDeProfesores();
+            ListaDeProfesores();
             return View(gestionCurso);//devuelve los datos de la gestion de curso creada
         }
 

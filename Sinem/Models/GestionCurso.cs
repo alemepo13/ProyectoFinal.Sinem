@@ -34,7 +34,7 @@ namespace Sinem.Models
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
         [DisplayName("Cupo Maximo:")]
-        public string cupo { get; set; }
+        public int cupo { get; set; }
         [DisplayName("Aula")]
         public int idAula { get; set; }
         [DisplayName("curso")]
@@ -48,7 +48,7 @@ namespace Sinem.Models
     public partial class GestionCurso2
     {
         public GestionCurso2(int idGestionCurso, DateTime fechaInicio, DateTime fechaFinal, DateTime fechaRegistro, 
-            string usuarioCrea, DateTime fechaModifica, string usuarioModifica, string cupo, string numeroAula,
+            string usuarioCrea, DateTime fechaModifica, string usuarioModifica, int cupo, string numeroAula,
             string nombre, string descripcion, double costo, string dia, TimeSpan hora, string duracion, string nombrecompleto)
         {
             this.idGestionCurso = idGestionCurso;
@@ -90,7 +90,7 @@ namespace Sinem.Models
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
         [DisplayName("Cupo Maximo:")]
-        public string cupo2 { get; set; }
+        public int cupo2 { get; set; }
         [DisplayName("Aula:")]
         public string aula2 { get; set; }
         [DisplayName("Nombre del curso:")]

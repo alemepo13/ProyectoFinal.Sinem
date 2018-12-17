@@ -1,6 +1,7 @@
-﻿@model Sinem.Models.Vista_CursoMatriculable
+﻿@model List<Sinem.Models.Vista_CursoMatriculable>
 @{
     Layout = null;
+    var primero = Model.First();
 }
 
 <!DOCTYPE html>
@@ -17,47 +18,49 @@
     <table>
         <tr>
             <td>Fecha:</td>
-            <td>@Model.fechaActual</td>
+            <td>@primero.fechaActual</td>
         </tr>
         <tr>
             <td>Cedula del Estudiante:</td>
-            <td>@Model.cedula</td>
+            <td>@primero.cedula</td>
         </tr>
         <tr>
             <td>Nombre del Estudiante:</td>
-            <td>@Model.nombreE</td>
+            <td>@primero.nombreE</td>
         </tr>
     </table>
 
+    @foreach (var  i in Model) { 
     <table border="1" cellpadding="2">
         <tr>
             <td>Codigo del Curso:</td>
-            <td>@Model.idGC</td>
+            <td>@i.idGC</td>
         </tr>
         <tr>
             <td>Nombre del Curso:</td>
-            <td>@Model.Curso</td>
+            <td>@i.Curso</td>
         </tr>
         <tr>
             <td>Horario:</td>
-            <td>@Model.Horario</td>
+            <td>@i.Horario</td>
         </tr>
         <tr>
             <td>Numero de Aula:</td>
-            <td>@Model.Aula</td>
+            <td>@i.Aula</td>
         </tr>
         <tr>
             <td>Nombre del Profesor:</td>
-            <td>@Model.profesor</td>
+            <td>@i.profesor</td>
         </tr>
         <tr>
             <td>Fecha de Inicio:</td>
-            <td>@Model.FechaInicio</td>
+            <td>@i.FechaInicio</td>
         </tr>
         <tr>
             <td>Fecha Final:</td>
-            <td>@Model.FechaFinal</td>
+            <td>@i.FechaFinal</td>
         </tr>
     </table>
+    }
 </body>
 </html>

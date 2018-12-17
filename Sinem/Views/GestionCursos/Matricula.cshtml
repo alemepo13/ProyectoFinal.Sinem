@@ -1,33 +1,62 @@
 ﻿@model List<Sinem.Models.Vista_CursoMatriculable>
 @{
-    ViewBag.Title = "Matricula de cursos";
+                /**/
+
+                ViewBag.Title = "Matricula de cursos";
 }
 
 <h2>Selecciona el curso a matricular</h2>
 
-<table class="table table-striped">
-    <tr>
-        <th>Curso</th>
-        <th>Aula</th>
-        <th>Horario</th>
-        <th>Fecha inicio</th>
-        <th>Fecha fin</th>
+@using (Html.BeginForm())
+{
+    <table class="table table-striped">
+        <tr>
+            <th>Curso</th>
+            <th>Aula</th>
+            <th>Horario</th>
+            <th>Fecha inicio</th>
+            <th>Fecha fin</th>
 
-        <th> </th>
-    </tr>
-    @foreach (var i in Model)
-    {
-    <tr>
-        <td>@i.Curso</td>
-        <td>@i.Aula</td>
-        <td>@i.Horario</td>
-        <td>@i.FechaInicio</td>
-        <td>@i.FechaFinal</td>
+            <th> </th>
+        </tr>
+        @foreach (var i in Model)
+        {
+            <tr>
+                <td>@i.Curso</td>
+                <td>@i.Aula</td>
+                <td>@i.Horario</td>
+                <td>@i.FechaInicio</td>
+                <td>@i.FechaFinal</td>
 
-        <td>@Html.ActionLink("Matricular", "Matricular", new { idGestionCurso = i.idGC }) </td>
+                <td>
+                    @if (i.YaMatriculado)
+                    {
+                        <text>Ya Matriculado</text>
+                    }
+                    else
+                    {
+                        if (i.Cupo > 0)
+                        {
+                            <input type="checkbox"
+                                   name="selectedCourses"
+                                   value="@i.idGC" />
+                        }
+                        else
+                        {
+                            <text>No hay cupo</text>
+                        }
+                    }
+                    </td>
 
-    </tr>
-    }
+            </tr>
+        }
 
-</table>
-
+    </table>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Matricular" class="btn btn-default" />
+        </div>
+    </div>
+  
+   
+}

@@ -34,6 +34,42 @@ namespace Sinem.Controllers
            // return View(db.AsistenciaProfesores.ToList());  //Esta es la vista de la asistencia profesor en forma de lista
         }
 
+        [HttpPost]
+        public ActionResult Index(FormCollection f) // esta esel metodo en que se muestra en la pagina principal la lista de sistencia del estudiante que esta en la base de datos
+        {
+            int idGestionCurso = Convert.ToInt32(f["idGestionCurso"]);
+            var l = from dm in db.GestionCursos.ToList()
+                    join u in db.Usuario.ToList() on dm.idUsuario equals u.idUsuario
+                    where dm.fechaInicio <= DateTime.Today && dm.fechaFinal >= DateTime.Today
+                    select new Vista_Asistencia
+                    {
+                        nombre = u.nombre,
+                        apellidos = u.apellido,
+                        asistio = false,
+                        observaciones = " ",
+                        idUsuario = u.idUsuario,
+                        idGestionCurso=dm.idGestionCurso
+
+                    }; ;
+            foreach (var i in l)
+            {
+                string asistio = f["Asistio" + i.idUsuario];
+                string obs = f["Obs" + i.idUsuario];
+                var d = new AsistenciaProfesor();
+                d.idGestionCurso = idGestionCurso;
+                d.asistio = asistio != null;
+                d.observaciones = obs;
+                d.idUsuario = i.idUsuario;
+                d.fechaModifica = DateTime.Today;
+                d.Fecha = DateTime.Today;
+                d.usuarioModifica = User.Identity.Name;
+                db.AsistenciaProfesores.Add(d);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "Home");
+
+        }
+
         // GET: AsistenciaProfesor/Details/5
         public ActionResult Details(int? id) //Este es el metodo que recibe como parametro un numero de asistencia profesor para buscarlo en la base de datos
         // aparte de  mostrar tambien en una pagina nueva con sus respectivos detalles

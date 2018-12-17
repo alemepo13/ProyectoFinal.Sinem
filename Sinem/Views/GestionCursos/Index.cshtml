@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Sinem.Models.GestionCurso>
+﻿@model IEnumerable<Sinem.Models.Vista_CursoMatriculable>
 
 @{
     ViewBag.Title = "Index";
@@ -9,31 +9,33 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-striped">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaInicio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.fechaFinal)
-        </th>
-        <th></th>
-    </tr>
+        <th>Curso</th>
+        <th>Aula</th>
+        <th>Horario</th>
+        <th>Fecha inicio</th>
+        <th>Fecha fin</th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaInicio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.fechaFinal)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idGestionCurso }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idGestionCurso }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idGestionCurso })
-        </td>
+        <th> </th>
     </tr>
-}
+    @foreach (var i in Model)
+    {
+        <tr>
+            <td>@i.Curso</td>
+            <td>@i.Aula</td> 
+            <td>@i.Horario</td>
+            <td>@i.FechaInicio</td>
+            <td>@i.FechaFinal</td>
+
+            
+            <td> 
+                @Html.ActionLink("Edit", "Edit", new { id = i.idGC }) |
+                @Html.ActionLink("Asistencia", "IndexAdmin","AsistenciaEstudiante", new { id = i.idGC },null) |
+                @Html.ActionLink("Details", "Details", new { id = i.idGC  }) |
+                @Html.ActionLink("Delete", "Delete", new { id = i.idGC })
+            </td>
+        </tr>
+    }
 
 </table>

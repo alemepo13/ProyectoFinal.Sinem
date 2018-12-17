@@ -216,6 +216,7 @@
     <Compile Include="Models\AsistenciaProfesor.cs" />
     <Compile Include="Models\Aula.cs" />
     <Compile Include="Models\AuthenticationService.cs" />
+    <Compile Include="Models\Cupo.cs" />
     <Compile Include="Models\Curso.cs" />
     <Compile Include="Models\DetalleMatricula.cs" />
     <Compile Include="Models\Direccion.cs" />
@@ -498,6 +499,7 @@
     <Content Include="Views\Cursos\IndexEstudiante.cshtml" />
     <Content Include="Views\GestionCursos\Matricula.cshtml" />
     <Content Include="Views\GestionCursos\Comprobante.cshtml" />
+    <Content Include="Views\AsistenciaEstudiante\IndexAdmin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -13,7 +13,8 @@ namespace Sinem.Models
         public string Aula { get; internal set; }
         public string Horario { get; internal set; }
         public string Curso { get; internal set; }
-
+        public int Cupo { get; set; }
+        public bool YaMatriculado { get; set; }
         public string fechaActual { get; internal set; }
         public string nombreE { get; internal set; }
         public string cedula { get; internal set; }
@@ -35,5 +36,6 @@ namespace Sinem.Models
         public string observaciones { get; set; }
         public Boolean asistio { get; set; }
         public int idUsuario { get; set; }
+        public int idGestionCurso { get; internal set; }
     }
 }

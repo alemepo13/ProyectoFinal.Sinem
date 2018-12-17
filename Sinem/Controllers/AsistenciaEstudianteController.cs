@@ -15,6 +15,33 @@ namespace Sinem.Controllers
     {
         private SinemDBContext db = new SinemDBContext(); //conexion a la base de datos
 
+        public ActionResult IndexAdmin(int id) {
+            var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == id select u.fecha).Distinct();
+            ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult IndexAdmin(int id, long ticks)
+        {
+            DateTime d = new DateTime(ticks);
+            var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == id select u.fecha).Distinct();
+            ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
+            var l= from ae in db.AsistenciaEstudiantes.ToList()
+                   join u in db.Usuario on ae.idUsuario equals u.idUsuario
+                   where ae.idGestionCurso == id && ae.fecha.Date==d
+                   select new Vista_Asistencia
+                   {
+                       nombre = u.nombre,
+                       apellidos = u.apellido,
+                       asistio = ae.asistio,
+                       observaciones = ae.observaciones,
+                       idGestionCurso=id,
+                       idUsuario = u.idUsuario
+
+                   };
+            return View(l);
+
+        }
         // GET: AsistenciaEstudiante
         [OverrideAuthorization()]
         [Authorize(Roles = "Profesor")]
@@ -24,19 +51,57 @@ namespace Sinem.Controllers
                     join u in db.Usuario on dm.idEstudiante equals u.idUsuario
                     where dm.idgestionCurso == idGestionCurso
                     select new Vista_Asistencia {
-                        nombre = u.nombre, 
+                        nombre = u.nombre,
                         apellidos = u.apellido,
                         asistio = false,
                         observaciones = " ",
+                        idGestionCurso=idGestionCurso,
                         idUsuario = u.idUsuario
 
                     };
+            ViewBag.idGestionCurso = idGestionCurso;
             return View(l); 
             //return View(db.AsistenciaEstudiantes.ToList()); //Esta es la vista de la asistencia estudiante en forma de lista
         }
+        [HttpPost]
+        [OverrideAuthorization()]
+        [Authorize(Roles = "Profesor")]
+        public ActionResult Index(FormCollection f) // esta esel metodo en que se muestra en la pagina principal la lista de sistencia del estudiante que esta en la base de datos
+        {
+            int idGestionCurso = Convert.ToInt32(f["idGestionCurso"]);
+            var l = from dm in db.DetalleMatriculas.ToList()
+                    join u in db.Usuario.ToList() on dm.idEstudiante equals u.idUsuario
+                    where dm.idgestionCurso == idGestionCurso
+                    select new Vista_Asistencia
+                    {
+                        nombre = u.nombre,
+                        apellidos = u.apellido,
+                        asistio = false,
+                        observaciones = " ",
+                        idGestionCurso = idGestionCurso,
+                        idUsuario = u.idUsuario
 
-        // GET: AsistenciaEstudiante/Details/5
-        public ActionResult Details(int? id) //Este es el metodo que recibe como parametro un numero de asistencia estudiante para buscarlo en la base de datos
+                    };
+            foreach (var i in l)
+            {
+                string asistio = f["Asistio" + i.idUsuario];
+                string obs = f["Obs" + i.idUsuario];
+                var d = new AsistenciaEstudiante();
+                d.idGestionCurso = idGestionCurso;
+                d.asistio = asistio != null;
+                d.observaciones = obs;
+                d.idUsuario = i.idUsuario;
+                d.fechaModifica = DateTime.Today;
+                d.fecha = DateTime.Today;
+                d.usuarioModifica = User.Identity.Name;
+                db.AsistenciaEstudiantes.Add(d);
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", "Home");
+
+        }
+            // GET: AsistenciaEstudiante/Details/5
+            public ActionResult Details(int? id) //Este es el metodo que recibe como parametro un numero de asistencia estudiante para buscarlo en la base de datos
              // aparte de  mostrar tambien en una pagina nueva con sus respectivos detalles
         {
             if (id == null) // aqui se puede ver si el numero es nulo
