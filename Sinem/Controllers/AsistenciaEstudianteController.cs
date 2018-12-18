@@ -18,6 +18,7 @@ namespace Sinem.Controllers
         public ActionResult IndexAdmin(int id) {
             var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == id select u.fecha).Distinct();
             ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
+            ViewBag.id = id;
             return View();
         }
         [HttpPost]
