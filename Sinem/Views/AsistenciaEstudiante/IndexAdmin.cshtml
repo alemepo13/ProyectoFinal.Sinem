@@ -3,19 +3,18 @@
     ViewBag.Title = "IndexAdmin";
 }
 
-<h2>IndexAdmin</h2>
+<h2>Asistencia Estudiantes</h2>
 
 
 @using (Html.BeginForm())
 {
 
     <div class="form-horizontal">
-        <h4>GestionCurso</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            Fecha: <div class="col-md-10">
+            <div class="col-md-10">
+                Fecha:
                 @Html.DropDownList("ticks", ViewBag.ListaFechas as SelectList, new { @class = "form-control" })
             </div>
         </div>

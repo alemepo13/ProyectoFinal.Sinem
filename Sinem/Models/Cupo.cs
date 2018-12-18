@@ -24,8 +24,6 @@ namespace Sinem.Models
         public DateTime fechaModifica { get; set; }
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
-
-
         [DisplayName("GestionCurso")]
         public int idGestionCurso { get; set; }
     }

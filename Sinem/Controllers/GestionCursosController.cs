@@ -338,6 +338,21 @@ namespace Sinem.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             GestionCurso gestionCurso = db.GestionCursos.Find(id);//busca el numero de la gestion de curso en la bd 
+
+            var l = //from dm in db.DetalleMatriculas.ToList()
+                    from g in db.GestionCursos.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
+                    join c in db.Cupos.ToList() on g.idGestionCurso equals c.idGestionCurso
+                    where c.idGestionCurso == id
+                    select new CupoDelete()
+                    {
+                        idGestionCurso = c.idGestionCurso,
+                        idCupo = c.idCupo,
+                    };
+
+            Cupo cupo = db.Cupos.Find(l.FirstOrDefault().idCupo);
+            db.Cupos.Remove(cupo);
+            db.SaveChanges();
+
             db.GestionCursos.Remove(gestionCurso);//elimina los datos de dicha gestion de curso de la bd 
             db.SaveChanges();//guarda los cambios en la bd
             return RedirectToAction("Index");//devuelve al usuario al inicio 

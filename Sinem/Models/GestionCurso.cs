@@ -109,5 +109,9 @@ namespace Sinem.Models
         public string usuario2 { get; set; }
     }
 
-
+    public class CupoDelete
+    {
+        public int idGestionCurso { get; set; }
+        public int idCupo { get; set; }
+    }
 }
