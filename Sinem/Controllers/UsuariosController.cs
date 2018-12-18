@@ -62,6 +62,8 @@ namespace Sinem.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "idDireccion,cedula,nombre,apellido,telefono,correo,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,idRol")] Usuario U)
         {
+            ListaDeDirecciones();
+            ListaDeRoles();
             if (ModelState.IsValid)
             {
                 db.Usuario.Add(U);

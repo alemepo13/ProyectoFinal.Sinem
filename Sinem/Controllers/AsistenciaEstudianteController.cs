@@ -88,7 +88,7 @@ namespace Sinem.Controllers
                 string obs = f["Obs" + i.idUsuario];
                 var d = new AsistenciaEstudiante();
                 d.idGestionCurso = idGestionCurso;
-                d.asistio = asistio != null;
+                d.asistio = asistio == null;
                 d.observaciones = obs;
                 d.idUsuario = i.idUsuario;
                 d.fechaModifica = DateTime.Today;

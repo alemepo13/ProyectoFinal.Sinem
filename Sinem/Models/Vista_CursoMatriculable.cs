@@ -8,14 +8,14 @@ namespace Sinem.Models
     public class Vista_CursoMatriculable
     {
         public int idGC { get; set; }
-        public string FechaInicio { get; internal set; }
-        public string FechaFinal { get; internal set; }
+        public DateTime FechaInicio { get; internal set; }
+        public DateTime FechaFinal { get; internal set; }
         public string Aula { get; internal set; }
         public string Horario { get; internal set; }
         public string Curso { get; internal set; }
         public int Cupo { get; set; }
         public bool YaMatriculado { get; set; }
-        public string fechaActual { get; internal set; }
+        public DateTime fechaActual { get; internal set; }
         public string nombreE { get; internal set; }
         public string cedula { get; internal set; }
         public string profesor { get; internal set; }
@@ -24,8 +24,8 @@ namespace Sinem.Models
     public class Vista_CursoMatriculado
     {
         public int idGC { get; set; }
-        public string FechaInicio { get; internal set; }
-        public string FechaFinal { get; internal set; }
+        public DateTime FechaInicio { get; internal set; }
+        public DateTime FechaFinal { get; internal set; }
         public string Aula { get; internal set; }
         public string Horario { get; internal set; }
         public string Curso { get; internal set; }

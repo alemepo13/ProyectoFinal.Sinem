@@ -24,8 +24,8 @@ namespace Sinem.Controllers
                     join a in db.Aulas.ToList() on gc.idAula equals a.idAula
                     join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
                     where gc.idUsuario== Usuario.idUsuario
-                    select new Vista_CursoMatriculado { FechaInicio = gc.fechaInicio.ToString(),
-                        FechaFinal = gc.fechaFinal.ToString(),
+                    select new Vista_CursoMatriculado { FechaInicio = gc.fechaInicio,
+                        FechaFinal = gc.fechaFinal,
                         Aula = a.numeroAula + " " + a.tipoAula,
                         Horario = h.descripcion,
                         Curso = c.nombre, idGC = gc.idGestionCurso };
@@ -45,8 +45,8 @@ namespace Sinem.Controllers
                     where dm.usuarioCrea == User.Identity.Name
                     select new Vista_CursoMatriculado
                     {
-                        FechaInicio = gc.fechaInicio.ToString(),
-                        FechaFinal = gc.fechaFinal.ToString(),
+                        FechaInicio = gc.fechaInicio,
+                        FechaFinal = gc.fechaFinal,
                         Aula = a.numeroAula + " " + a.tipoAula,
                         Horario = h.descripcion,
                         Curso = c.nombre,

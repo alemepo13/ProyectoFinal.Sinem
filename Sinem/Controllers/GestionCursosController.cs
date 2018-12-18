@@ -6,8 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using RazorPDF;
 using Sinem.Models;
 
@@ -32,8 +30,8 @@ namespace Sinem.Controllers
                     //where gc.idUsuario == Usuario.idUsuario
                     select new Vista_CursoMatriculable ()
                     {
-                        FechaInicio = gc.fechaInicio.ToString(),
-                        FechaFinal = gc.fechaFinal.ToString(),
+                        FechaInicio = gc.fechaInicio,
+                        FechaFinal = gc.fechaFinal,
                         Aula = a.numeroAula + " " + a.tipoAula,
                         Horario = h.descripcion,
                         Curso = c.nombre,
@@ -95,12 +93,12 @@ namespace Sinem.Controllers
                     where idDetalleMatricula.Contains(dm.idDetalleMatricula)
                     select new Vista_CursoMatriculable()
                     {
-                        FechaInicio = gc1.fechaInicio.ToString(),
-                        FechaFinal = gc1.fechaFinal.ToString(),
+                        FechaInicio = gc1.fechaInicio,
+                        FechaFinal = gc1.fechaFinal,
                         Aula = a.numeroAula,
                         Horario = h.descripcion,
                         Curso = c.nombre,
-                        fechaActual = dm.fechaRegistro.ToString(),
+                        fechaActual = dm.fechaRegistro,
                         idGC = dm.idgestionCurso,
                         nombreE = e.nombrecompleto,
                         cedula = e.cedula,
@@ -140,13 +138,13 @@ namespace Sinem.Controllers
                     where gc1.idGestionCurso==idGestionCurso
                     select new Vista_CursoMatriculable()
                     {
-                        FechaInicio = gc1.fechaInicio.ToString(),
-                        FechaFinal = gc1.fechaFinal.ToString(),
+                        FechaInicio = gc1.fechaInicio,
+                        FechaFinal = gc1.fechaFinal,
                         Aula = a.numeroAula,
                         Horario = h.descripcion,
                         Curso = c.nombre,
                         Cupo=cup.cupo,
-                        fechaActual = dm.fechaRegistro.ToString(),
+                        fechaActual = dm.fechaRegistro,
                         idGC = dm.idgestionCurso,
                         nombreE = e.nombrecompleto,
                         cedula = e.cedula,
@@ -205,8 +203,8 @@ namespace Sinem.Controllers
                     //where gc.idUsuario == Usuario.idUsuario
                     select new Vista_CursoMatriculable()
                    {
-                       FechaInicio = gc.fechaInicio.ToString(),
-                       FechaFinal = gc.fechaFinal.ToString(),
+                       FechaInicio = gc.fechaInicio,
+                       FechaFinal = gc.fechaFinal,
                        Aula = a.numeroAula + " " + a.tipoAula,
                        Horario = h.descripcion,
                        Curso = c.nombre,
@@ -306,8 +304,12 @@ namespace Sinem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//realiza la peticion al servidor
         //Metodo para mostrar los datos actualizados de gestion de curso, usa como parametros los datos ingresados por el usuario
-        public ActionResult Edit([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,cupo")] GestionCurso gestionCur)
+        public ActionResult Edit([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,idAula,idCurso,idHorario,idUsuario,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,cupo")] GestionCurso gestionCur)
         {
+            ListaDeAulas(gestionCur.idAula);
+            ListaDeCursos(gestionCur.idCurso);
+            ListaDeHorarios(gestionCur.idHorario);
+            ListaDeUsuarios(gestionCur.idUsuario);
             if (ModelState.IsValid)//si el post al servidor se hizo
             {
                 db.Entry(gestionCur).State = EntityState.Modified;//se modifican los datos de la gestion de curso

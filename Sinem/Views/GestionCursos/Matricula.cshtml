@@ -25,8 +25,8 @@
                 <td>@i.Curso</td>
                 <td>@i.Aula</td>
                 <td>@i.Horario</td>
-                <td>@i.FechaInicio</td>
-                <td>@i.FechaFinal</td>
+                <td>@i.FechaInicio.ToShortDateString()</td>
+                <td>@i.FechaFinal.ToShortDateString()</td>
 
                 <td>
                     @if (i.YaMatriculado)
