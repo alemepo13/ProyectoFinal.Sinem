@@ -20,7 +20,7 @@ namespace Sinem.Models
         [DisplayName("Fecha:")]//nombre que aparece en la pagina
         public DateTime fecha { get; set; }
         [DisplayName("Asistio:")]//nombre que aparece en la pagina
-        public bool asistio { get; set; }
+        public bool asistio { get; set; } //se pasa a "string"
         [DisplayName("Observaciones")]//nombre que aparece en la pagina
         public string observaciones { get; set; }
 

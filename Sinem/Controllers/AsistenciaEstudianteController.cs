@@ -77,7 +77,7 @@ namespace Sinem.Controllers
                     {
                         nombre = u.nombre,
                         apellidos = u.apellido,
-                        asistio = false,
+                        asistio = false, 
                         observaciones = " ",
                         idGestionCurso = idGestionCurso,
                         idUsuario = u.idUsuario
@@ -89,7 +89,7 @@ namespace Sinem.Controllers
                 string obs = f["Obs" + i.idUsuario];
                 var d = new AsistenciaEstudiante();
                 d.idGestionCurso = idGestionCurso;
-                d.asistio = asistio == null;
+                d.asistio = asistio == null; // cambiar a un valor entre comillas, para el estado correspomdiente y en el false de arriba 
                 d.observaciones = obs;
                 d.idUsuario = i.idUsuario;
                 d.fechaModifica = DateTime.Today;

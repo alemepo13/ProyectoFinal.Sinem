@@ -16,12 +16,14 @@ namespace Sinem.Models
         [Key()]//indica que es la llave de la tabla
         [DisplayName("Id gestion curso: ")]//nombre que aparece en la pagina
         public int idGestionCurso { get; set; }
-        [Required()]
+        //[Required()]
         [DisplayName("Fecha de inicio: ")]
+        [Required(ErrorMessage = "La {0} es requerida")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime fechaInicio { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de finalizacion: ")]//nombre que aparece en la pagina
+        [Required(ErrorMessage = "La  {0} es requerida")]
         public DateTime fechaFinal { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro: ")]//nombre que aparece en la pagina
@@ -34,6 +36,7 @@ namespace Sinem.Models
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
         [DisplayName("Cupo Maximo:")]
+        [Required(ErrorMessage = "El {0} es requerido")]
         public int cupo { get; set; }
         [DisplayName("Aula")]
         public int idAula { get; set; }

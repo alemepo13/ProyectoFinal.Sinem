@@ -14,6 +14,13 @@ namespace Sinem.Controllers
     {
         private SinemDBContext db = new SinemDBContext();//conexion a la base de datos 
 
+        public ActionResult ConsultaSalarioProfesor()
+        {
+            var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            var L = db.Salarios.Where(x => x.idUsuario == Usuario.idUsuario);
+            return View(L);
+        }
+
         // GET: Salarios
         public ActionResult Index()//metodo que muestra en pantalla la lista de salarios que se encuentra en la DB
         {

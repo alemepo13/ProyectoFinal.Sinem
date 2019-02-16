@@ -20,6 +20,8 @@ namespace Sinem.Controllers
             
             var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             var listaMatriculados = from k in db.DetalleMatriculas.ToList() where k.idEstudiante == Usuario.idUsuario select k.idgestionCurso;
+            var listaHorarios = from k in db.DetalleMatriculas.ToList() where k.idEstudiante == Usuario.idUsuario select k.idHorario;
+
             var l = //from dm in db.DetalleMatriculas.ToList()
                     from gc in db.GestionCursos.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
                     join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
@@ -37,6 +39,7 @@ namespace Sinem.Controllers
                         Curso = c.nombre,
                         Cupo=cup.cupo,
                         YaMatriculado=listaMatriculados.Contains(gc.idGestionCurso),
+                        horarioOcupado=listaHorarios.Contains(gc.idHorario),
                         idGC = gc.idGestionCurso
                     };
 
@@ -254,7 +257,9 @@ namespace Sinem.Controllers
         //Metodo para mostrar los nuevos datos de gestion de curso, usa como parametros los datos ingresados por el usuario
         public ActionResult Create([Bind(Include = "idGestionCurso,idAula,idHorario,idCurso,idUsuario,fechaInicio,fechaFinal,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,cupo")] GestionCurso gestionCurso)
         {
-            if (ModelState.IsValid)//si el post al servidor se hizo
+            var cursos = db.GestionCursos.Where(x => x.idAula == gestionCurso.idAula && x.idHorario == gestionCurso.idHorario).Count();
+
+            if (ModelState.IsValid  && cursos==0)//si el post al servidor se hizo
             {
 
                 db.GestionCursos.Add(gestionCurso);//se agrega la gestion de curso a la bd
@@ -310,7 +315,9 @@ namespace Sinem.Controllers
             ListaDeCursos(gestionCur.idCurso);
             ListaDeHorarios(gestionCur.idHorario);
             ListaDeUsuarios(gestionCur.idUsuario);
-            if (ModelState.IsValid)//si el post al servidor se hizo
+            var cursos = db.GestionCursos.Where(x => x.idAula == gestionCur.idAula && x.idHorario == gestionCur.idHorario).Count();
+
+            if (ModelState.IsValid && cursos == 0)//si el post al servidor se hizo
             {
                 db.Entry(gestionCur).State = EntityState.Modified;//se modifican los datos de la gestion de curso
                 db.SaveChanges();//y se guardan los cambios en la bd
@@ -331,6 +338,9 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();//devuelve una pantalla de error si no se encuentra la gestion de curso 
             }
+            var cantidaddematricula = db.DetalleMatriculas.Where(x => x.idgestionCurso == id).Count();
+            if (cantidaddematricula > 0)
+                return View("Noeliminar");
             return View(gestionCurso);//devuelve los datos de la gestion de curso 
         }
 

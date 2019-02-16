@@ -44,6 +44,15 @@ namespace Sinem.Controllers
             return View();//devuelve la vista
         }
 
+        //En esta seccion es donde está desarrollado los metodos de cada una de las clases con los respectivos atributos 
+
+        public JsonResult NumAula(string numeroAula)
+        {
+            return Json(!db.Aulas.Any(x => x.numeroAula == numeroAula),
+                                                 JsonRequestBehavior.AllowGet);
+        }
+
+
         // POST: Aulas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -107,6 +116,9 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();
             }
+            var gestion = db.GestionCursos.Where(x => x.idAula == id).Count();
+            if (gestion > 0)
+                return View("Noeliminar");
             return View(aula);//devuelve los datos de esa aula
         }
 

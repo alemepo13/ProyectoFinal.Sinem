@@ -4,6 +4,19 @@
     ViewBag.Title = "Edit";
 }
 
+@*Este el el codigo desarrollado para que no se puedan teclear las letras y que solo los numeros se puedan usar*@
+<script language='JavaScript'>
+    function SomenteNumero(e) {
+        var tecla = (window.event) ? event.keyCode : e.which;
+        if ((tecla > 47 && tecla < 58)) return true;
+        else {
+            if (tecla == 8 || tecla == 0) return true;
+            else return false;
+        }
+    }
+</script>
+
+
 <h2>Edit</h2>
 
 
@@ -35,7 +48,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.costo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.costo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.costo, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
+                @*@Html.EditorFor(model => model.costo, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.costo, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -14,12 +14,14 @@ namespace Sinem.Models
         //propiedades automaticas para cada uno de los campos de la tabla
         [Key()]//indica que es la llave de la tabla
         public int idDireccion { get; set; }
-        [Required()]//indica que es un campo requerido
+        [Required(ErrorMessage ="Indica correctamente su provincia")]// valida su pronvincia 
         [DisplayName("Provincia:")]//nombre que aparece en la pagina
         public string provincia { get; set; }
         [DisplayName("Distrito:")]
+        [Required(ErrorMessage = "Indica correctamente su distrito")]//valida su distrito
         public string distrito { get; set; }
         [DisplayName("Canton:")]
+        [Required(ErrorMessage = "Indica correctamente su canton")]//valida su canton
         public string canton { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro:")]

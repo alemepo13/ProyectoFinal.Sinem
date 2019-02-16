@@ -1,12 +1,36 @@
 ﻿@model Sinem.Models.Usuario
 
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Create";
+    ViewBag.Title = "Create";
 }
 
+
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+@*Este el el codigo desarrollado para que no se puedan teclear las letras y que solo los numeros se puedan usar*@
+<script language='JavaScript'>
+    function SomenteNumero(e) {
+        var tecla = (window.event) ? event.keyCode : e.which;
+        if ((tecla > 47 && tecla < 58)) return true;
+        else {
+            if (tecla == 8 || tecla == 0) return true;
+            else return false;
+        }
+    }
+</script>
+
+@*<input type='text' size='10' value='' onkeypress='return SomenteNumero(event)'>*@
+
+
 <h2>Create</h2>
+
 
 
 @using (Html.BeginForm())
@@ -19,15 +43,15 @@
         <div class="form-group">
             @Html.LabelFor(model => model.idDireccion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idDireccion",ViewBag.ListaDirecciones as SelectList, new { @class = "form-control"  })
+                @Html.DropDownList("idDireccion", ViewBag.ListaDirecciones as SelectList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idDireccion, "", new { @class = "text-danger" })
             </div>
         </div>
 
-         <div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.idRol, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idRol",ViewBag.ListaDeRoles as SelectList, new { @class = "form-control"  })
+                @Html.DropDownList("idRol", ViewBag.ListaDeRoles as SelectList, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idRol, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +59,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.cedula, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
+                @*  @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.cedula, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -59,7 +84,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.telefono, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
+                @*@Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -74,12 +100,12 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.fechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
-                
+
             <div class="form-group">
                 <input type="text" class="form-control date-picker" value="" data-datepicker-color="primary" id="fechaNacimiento" name="fechaNacimiento">
             </div>
-                    
-                @Html.ValidationMessageFor(model => model.fechaNacimiento, "", new { @class = "text-danger" })
+
+            @Html.ValidationMessageFor(model => model.fechaNacimiento, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
@@ -87,8 +113,8 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.usuario, "", new { @class = "text-danger" })
-    
-         </div>
+
+            </div>
         </div>
 
         <div class="form-group">
@@ -99,8 +125,6 @@
             </div>
         </div>
 
-     
- 
 
 
         <div class="form-group">
@@ -119,11 +143,12 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Regresar", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")*@
+
 <script>
     $('.date-picker').each(function () {
         $(this).datepicker({
@@ -144,4 +169,4 @@
         });
     });
 </script>
-}
+

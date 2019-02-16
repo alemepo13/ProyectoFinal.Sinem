@@ -15,7 +15,7 @@ namespace Sinem.Models
         [Key()]//indica wue es la llave de la tabla 
         public int idSalario { get; set; }
         public int idUsuario { get; set; }
-        [Required()]//indica que es un campo requerido 
+        [Required(ErrorMessage ="Se le indica el monto")]//Valida el monto correcto
         [DisplayName("Monto:")]//indica el nombre que aparece en la pagina 
         public double monto { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]

@@ -112,6 +112,9 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();
             }
+            var gestion = db.GestionCursos.Where(x => x.idHorario == id).Count();
+            if (gestion > 0)
+                return View("Noeliminar");
             return View(horario);//devuelve los datos de ese horario
         }
 

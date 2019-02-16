@@ -15,9 +15,10 @@ namespace Sinem.Models
         //propiedades automaticas para cada uno de los campos de la tabla
         [Key()]//indica que es la llave de la tabla
         public int idRol { get; set; }
-        [Required()]//indica que es un campo requerido
+        [Required(ErrorMessage ="digita su nombre segun se indica")]//Valida su nombre correctamente
         [DisplayName("Nombre:")]//nombre que aparece en la pagina
         public string nombre { get; set; }
+        [Required(ErrorMessage = "Indica una descripcion")]//Valida una descripcion
         [DisplayName("descripcion:")]
         public string descripcion { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]

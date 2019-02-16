@@ -15,12 +15,15 @@ namespace Sinem.Models
         //propiedades automaticas para cada uno de los campos de la tabla
         [Key()]//indica que es la llave de la tabla
         public int idHorario { get; set; }
-        [Required()]//indica que es un campo requerido
+        //[Required()]//indica que es un campo requerido
         [DisplayName("Día:")]//nombre que aparece en la pagina
+        [Required(ErrorMessage = "La {0} es requerido")]
         public string dia { get; set; }
         [DisplayName("Hora:")]
+        [Required(ErrorMessage = "La {0} es requerida")]
         public System.TimeSpan hora { get; set; }
         [DisplayName("Tiempo de duración:")]
+        [Required(ErrorMessage = "La {0} es requerido")]
         public string tiempoDuracion { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro:")]//nombre que aparece en la pagina

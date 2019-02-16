@@ -15,6 +15,7 @@ namespace Sinem.Models
         public string Curso { get; internal set; }
         public int Cupo { get; set; }
         public bool YaMatriculado { get; set; }
+        public bool horarioOcupado { get; set; }
         public DateTime fechaActual { get; internal set; }
         public string nombreE { get; internal set; }
         public string cedula { get; internal set; }
