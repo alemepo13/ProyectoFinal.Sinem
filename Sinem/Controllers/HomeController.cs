@@ -13,14 +13,19 @@ namespace Sinem.Controllers
     public class HomeController : Controller
     {
 
-       
+
 
         public ActionResult Index()
         {
             return View();
         }
 
-      
+        public ActionResult Confirmacion(string mensaje, string cont) {
+            ViewBag.mensaje = mensaje;
+            ViewBag.cont = cont;
+            return View();
+        }
+       
 
         public ActionResult About()
         {

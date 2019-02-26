@@ -108,6 +108,7 @@ namespace Sinem.Controllers
                 var U2 = db.Usuario.Where(x => x.cedula == U.cedula).FirstOrDefault();
                 db.Permisos.Add(new Permiso { idUsuario = U2.idUsuario, idRol = U.idRol });
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -142,7 +143,7 @@ namespace Sinem.Controllers
                 user.fechaModifica = DateTime.Now;
                 user.usuarioModifica = User.Identity.Name;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Confirmacion","Home",new { mensaje="El usuario ha sido modificado", cont="Usuarios" });
             }
             return View(user);
         }

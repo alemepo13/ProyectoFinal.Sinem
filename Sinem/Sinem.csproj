@@ -508,6 +508,7 @@
     <Content Include="Views\Aulas\Noeliminar.cshtml" />
     <Content Include="Views\Usuarios\Noeliminar.cshtml" />
     <Content Include="Views\AsistenciaProfesor\ListaAsistencia.cshtml" />
+    <Content Include="Views\Home\Confirmacion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
