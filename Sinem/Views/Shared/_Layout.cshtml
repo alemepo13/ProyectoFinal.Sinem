@@ -30,7 +30,6 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         if (User.IsInRole("Administrador"))
@@ -43,10 +42,12 @@
                             <li>@Html.ActionLink("Asistencia Profesores", "Index", "AsistenciaProfesor")</li>
                             <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
                             <li>@Html.ActionLink("Gestion de cursos", "Index", "GestionCursos")</li>
+                            <li>@Html.ActionLink("Salarios", "Create", "Salarios")</li>
                         }
                         else if (User.IsInRole("Profesor"))
                         {
                             <li>@Html.ActionLink("Mis Cursos", "IndexProfesor", "Cursos")</li>
+                            <li>@Html.ActionLink("Mi Salario", "ConsultaSalarioProfesor", "Salarios")</li>
 
                         }
                         else if (User.IsInRole("Estudiante"))
@@ -104,5 +105,21 @@
     <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     @RenderSection("scripts", required: false)
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script>
+            (function () {
+                const idle = 120;// tiempo de inactividad en segundos
+                const url = '/Account/Logout';
+                let time1;
+                const resetIdle = function () {
+                    if (time1) clearTimeout(time1);
+                    time1 = setTimeout(()=> location.href=url,idle*1000);
+                };
+                resetIdle();
+                ['click', 'touchstart', 'mousemove'].forEach(evt=> document.addEventListener(evt,resetIdle,false));
+            })();
+        </script>
+    }
 </body>
 </html>

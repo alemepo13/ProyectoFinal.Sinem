@@ -12,13 +12,16 @@ using Sinem.Models;
 
 namespace Sinem.Controllers
 {
-    [Authorize(Roles ="Administrador")]
+    [Authorize(Roles = "Administrador")]
     public class UsuariosController : Controller
     {
+
+
         private SinemDBContext db = new SinemDBContext();
 
-        private void ListaDeDirecciones(object direccion=null) {
-            ViewBag.ListaDirecciones = new SelectList(db.Direcciones.ToList(), "idDireccion", "descripcion",direccion);
+        private void ListaDeDirecciones(object direccion = null)
+        {
+            ViewBag.ListaDirecciones = new SelectList(db.Direcciones.ToList(), "idDireccion", "descripcion", direccion);
         }
 
         private void ListaDeRoles(object rol = null)
@@ -27,11 +30,45 @@ namespace Sinem.Controllers
         }
 
         // GET: Usuarios
-        [Authorize (Roles ="Administrador,Empleado")]
+        [Authorize(Roles = "Administrador,Empleado")]
         public ActionResult Index()
         {
             return View(db.Usuario.ToList());
         }
+
+        //En esta seccion es donde está desarrollado los metodos de cada una de las clases con los respectivos atributos 
+
+         public JsonResult IsUserNameAvailable(string usuario)
+        {
+            return Json(!db.Usuario.Any(x => x.usuario == usuario),
+                                                 JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Cedulas(string cedula)
+        {
+            return Json(!db.Usuario.Any(x => x.cedula == cedula),
+                                                 JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Telefonos(int telefono)
+        {
+            return Json(!db.Usuario.Any(x => x.telefono == telefono),
+                                                 JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Correos(string correo)
+        {
+            return Json(!db.Usuario.Any(x => x.correo == correo),
+                                                 JsonRequestBehavior.AllowGet);
+        }
+
+/*
+        public JsonResult logines(string login)
+        {
+            return Json(!db.Usuario.Any(x => x.login == login),
+                                                 JsonRequestBehavior.AllowGet);
+        }
+*/
 
         // GET: Usuarios/Details/5
         public ActionResult Details(int? id)
@@ -69,7 +106,7 @@ namespace Sinem.Controllers
                 db.Usuario.Add(U);
                 db.SaveChanges();
                 var U2 = db.Usuario.Where(x => x.cedula == U.cedula).FirstOrDefault();
-                db.Permisos.Add(new Permiso {idUsuario=U2.idUsuario,idRol=U.idRol });
+                db.Permisos.Add(new Permiso { idUsuario = U2.idUsuario, idRol = U.idRol });
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -122,6 +159,10 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();
             }
+            var matriculas = db.DetalleMatriculas.Where(x => x.idEstudiante == id || x.idProfesor == id).Count();
+            //var cursos= db.GestionCursos.Where(x=>x.)
+            if (matriculas > 0)
+                return View("Noeliminar");
             return View(usuario);
         }
 

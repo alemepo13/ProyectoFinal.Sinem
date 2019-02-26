@@ -13,6 +13,8 @@ namespace Sinem.Models
     {
         [Key()]//indica que es la llave de la tabla
         public int idCupo { get; set; }
+        [Required(ErrorMessage = "El {0} es requerido")]//validacion de cantidad de cupos
+        [Range(1,60,ErrorMessage ="El cupo tiene que estar entre 1 - 60")]// Valida que el cupo este dentro de un rango permitido
         public int cupo { get; set; }
         [DisplayName("Fecha de registro: ")]//nombre que aparece en la pagina
         public DateTime fechaRegistro { get; set; }

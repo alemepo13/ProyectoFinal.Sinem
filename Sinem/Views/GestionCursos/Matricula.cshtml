@@ -29,6 +29,11 @@
                 <td>@i.FechaFinal.ToShortDateString()</td>
 
                 <td>
+                    @if (i.horarioOcupado)
+                    {
+                        <text>Horario no disponible </text>
+                    }
+
                     @if (i.YaMatriculado)
                     {
                         <text>Ya Matriculado</text>

@@ -4,6 +4,25 @@
     ViewBag.Title = "Create";
 }
 
+
+<link href="~/Content/Site.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@*Este el el codigo desarrollado para que no se puedan teclear las letras y que solo los numeros se puedan usar*@
+<script language='JavaScript'>
+    function SomenteNumero(e) {
+        var tecla = (window.event) ? event.keyCode : e.which;
+        if ((tecla > 47 && tecla < 58)) return true;
+        else {
+            if (tecla == 8 || tecla == 0) return true;
+            else return false;
+        }
+    }
+</script>
+
+@*<input type='text' size='10' value='' onkeypress='return SomenteNumero(event)'>*@
+
 <h2>Create</h2>
 
 
@@ -17,7 +36,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.numeroAula, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.numeroAula, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.numeroAula, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
+                @*  @Html.EditorFor(model => model.numeroAula, new { htmlAttributes = new { @class = "form-control" } }) *@
                 @Html.ValidationMessageFor(model => model.numeroAula, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -37,8 +57,8 @@
         </div>
     </div>
     <Input type="hidden" name="fechaRegistro" value="@DateTime.Today.ToShortDateString()" />
-    @*Html.Hidden("fechaRegistro", 
-    DateTime.Today.ToShortDateString())*@
+    @*Html.Hidden("fechaRegistro",
+        DateTime.Today.ToShortDateString())*@
     @Html.Hidden("usuarioCrea", User.Identity.Name)
 
     @Html.Hidden("fechaModifica", DateTime.Today.ToShortDateString())
@@ -49,13 +69,15 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script>
-        $(function () {
-            $('#fechaRegistro').datetimepicker({
-                format: 'L'
-            });
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")*@
+
+<script>
+    $(function () {
+        $('#fechaRegistro').datetimepicker({
+            format: 'L'
         });
-    </script>
-}
+    });
+</script>
+

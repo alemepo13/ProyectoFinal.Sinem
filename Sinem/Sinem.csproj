@@ -230,6 +230,7 @@
     <Compile Include="Models\Vista_CursoMatriculable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="validarFecha.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker.css" />
@@ -500,6 +501,13 @@
     <Content Include="Views\GestionCursos\Matricula.cshtml" />
     <Content Include="Views\GestionCursos\Comprobante.cshtml" />
     <Content Include="Views\AsistenciaEstudiante\IndexAdmin.cshtml" />
+    <Content Include="Views\Salarios\ConsultasalarioProfesor.cshtml" />
+    <Content Include="Views\Cursos\Noeliminar.cshtml" />
+    <Content Include="Views\GestionCursos\Noeliminar.cshtml" />
+    <Content Include="Views\Horarios\Noeliminar.cshtml" />
+    <Content Include="Views\Aulas\Noeliminar.cshtml" />
+    <Content Include="Views\Usuarios\Noeliminar.cshtml" />
+    <Content Include="Views\AsistenciaProfesor\ListaAsistencia.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -24,6 +24,9 @@ namespace Sinem.Controllers
         [HttpPost]
         public ActionResult IndexAdmin(int id, long ticks)
         {
+
+            //asitio=ae.asistio
+               //asistio=ae.asistio=="no asistio"? false : true
             DateTime d = new DateTime(ticks);
             var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == id select u.fecha).Distinct();
             ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
@@ -34,7 +37,7 @@ namespace Sinem.Controllers
                    {
                        nombre = u.nombre,
                        apellidos = u.apellido,
-                       asistio = ae.asistio,
+                       asistio = ae.asistio =="true",
                        observaciones = ae.observaciones,
                        idGestionCurso=id,
                        idUsuario = u.idUsuario
@@ -48,6 +51,13 @@ namespace Sinem.Controllers
         [Authorize(Roles = "Profesor")]
         public ActionResult Index(int idGestionCurso) // esta esel metodo en que se muestra en la pagina principal la lista de sistencia del estudiante que esta en la base de datos
         {
+            ViewBag.Permitir = true;
+            var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == idGestionCurso select u.fecha).Distinct();
+            foreach (var f in fechas)
+            {
+                if(f.Date==DateTime.Today)
+                    ViewBag.Permitir = false;
+            }
             var l = from dm in db.DetalleMatriculas
                     join u in db.Usuario on dm.idEstudiante equals u.idUsuario
                     where dm.idgestionCurso == idGestionCurso
@@ -77,7 +87,7 @@ namespace Sinem.Controllers
                     {
                         nombre = u.nombre,
                         apellidos = u.apellido,
-                        asistio = false,
+                        asistio = false, 
                         observaciones = " ",
                         idGestionCurso = idGestionCurso,
                         idUsuario = u.idUsuario
@@ -89,7 +99,8 @@ namespace Sinem.Controllers
                 string obs = f["Obs" + i.idUsuario];
                 var d = new AsistenciaEstudiante();
                 d.idGestionCurso = idGestionCurso;
-                d.asistio = asistio == null;
+                //d.asistio = asistio == null;
+                d.asistio = asistio == null ? "false" : "true";// cambiar a un valor entre comillas, para el estado correspomdiente y en el false de arriba 
                 d.observaciones = obs;
                 d.idUsuario = i.idUsuario;
                 d.fechaModifica = DateTime.Today;

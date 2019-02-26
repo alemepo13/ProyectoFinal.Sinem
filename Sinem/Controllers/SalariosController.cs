@@ -14,10 +14,54 @@ namespace Sinem.Controllers
     {
         private SinemDBContext db = new SinemDBContext();//conexion a la base de datos 
 
+        public ActionResult ConsultaSalarioProfesor()
+        {
+            var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            var L = db.Salarios.Where(x => x.idUsuario == Usuario.idUsuario);
+            return View(L);
+        }
+
         // GET: Salarios
         public ActionResult Index()//metodo que muestra en pantalla la lista de salarios que se encuentra en la DB
         {
             return View(db.Salarios.ToList());//Vista de los salarios en forma de lista
+        }
+        private void ListaDeProfesores(object o = null)
+        {
+            var l = //from dm in db.DetalleMatriculas.ToList()
+                    from u in db.Usuario.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
+                    join p in db.Permisos.ToList() on u.idUsuario equals p.idUsuario
+                    where p.idUsuario == 3
+                    select new Permiso2()
+                    {
+                        idUsuario = p.idUsuario,
+                        idRol = p.idRol,
+                        nombrecompleto = u.nombrecompleto,
+                    };
+
+            ViewBag.ListaProfesores = new SelectList(l, "idUsuario", "nombrecompleto", o);
+        }
+
+
+        public ActionResult Create() {
+            ListaDeProfesores();
+            return View();
+
+        }
+        [HttpPost]
+        public ActionResult Create(Salario m) {
+            if (ModelState.IsValid) {
+
+                m.fechaModifica = DateTime.Today;
+                m.fechaRegistro = DateTime.Today;
+                m.usuarioCrea = User.Identity.Name;
+                m.usuarioModifica = User.Identity.Name;
+                db.Salarios.Add(m);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ListaDeProfesores();
+            return View(m);
         }
 
         // GET: Salarios/Details/5

@@ -18,6 +18,15 @@ namespace Sinem.Controllers
         // GET: AsistenciaProfesor
         public ActionResult Index() // esta esel metodo en que se muestra en la pagina principal la lista de asistencia profesor que esta en la base de datos
         {
+            var fechas = (from u in db.AsistenciaProfesores select u.Fecha).Distinct();
+            ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
+            ;
+            ViewBag.Permitir = true;
+            foreach (var f in fechas)
+            {
+                if (f.Date == DateTime.Today)
+                    ViewBag.Permitir = false;
+            }
             var l = from dm in db.GestionCursos
                     join u in db.Usuario on dm.idUsuario equals u.idUsuario
                     where dm.fechaInicio<= DateTime.Today && dm.fechaFinal>= DateTime.Today
@@ -32,6 +41,31 @@ namespace Sinem.Controllers
                     };
             return View(l);
            // return View(db.AsistenciaProfesores.ToList());  //Esta es la vista de la asistencia profesor en forma de lista
+        }
+        [HttpPost]
+        public ActionResult ListaAsistencia(long ticks)
+        {
+
+            //asitio=ae.asistio
+            //asistio=ae.asistio=="no asistio"? false : true
+            DateTime d = new DateTime(ticks);
+            var fechas = (from u in db.AsistenciaProfesores select u.Fecha).Distinct();
+            ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
+            var l = from ae in db.AsistenciaProfesores.ToList()
+                    join u in db.Usuario on ae.idUsuario equals u.idUsuario
+                    where ae.Fecha.Date == d
+                    select new Vista_Asistencia
+                    {
+                        nombre = u.nombre,
+                        apellidos = u.apellido,
+                        asistio = ae.asistio == "true",
+                        observaciones = ae.observaciones,
+                        idGestionCurso = 0,
+                        idUsuario = u.idUsuario
+
+                    };
+            return View(l);
+
         }
 
         [HttpPost]
@@ -57,7 +91,7 @@ namespace Sinem.Controllers
                 string obs = f["Obs" + i.idUsuario];
                 var d = new AsistenciaProfesor();
                 d.idGestionCurso = idGestionCurso;
-                d.asistio = asistio != null;
+                d.asistio = asistio == null ? "false" : "true";
                 d.observaciones = obs;
                 d.idUsuario = i.idUsuario;
                 d.fechaModifica = DateTime.Today;

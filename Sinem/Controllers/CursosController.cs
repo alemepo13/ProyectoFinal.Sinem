@@ -144,6 +144,9 @@ namespace Sinem.Controllers
 
                 return HttpNotFound();
             }
+            var GestionCurso = db.GestionCursos.Where(x => x.idCurso == id).Count();
+            if (GestionCurso > 0)
+                return View("Noeliminar");
             return View(curso);//devuelve los datos de ese curso
         }
 

@@ -21,7 +21,7 @@ namespace Sinem.Models
         [DisplayName("Fecha:")]//nombre que aparece en la pagina
         public DateTime Fecha { get; set; }
         [DisplayName("Asistio:")]//nombre que aparece en la pagina
-        public bool asistio { get; set; }
+        public string asistio { get; set; }
         [DisplayName("Observaciones")]//nombre que aparece en la pagina
         public string observaciones { get; set; }
 

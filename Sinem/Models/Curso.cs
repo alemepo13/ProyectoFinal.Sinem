@@ -15,12 +15,16 @@ namespace Sinem.Models
         //propiedades automaticas para cada uno de los campos de la tabla
         [Key()]//indica que es la llave de la tabla
         public int idCurso { get; set; }
-        [Required()]//indica que es un campo requerido
+        //[Required()]//indica que es un campo requerido
         [DisplayName("Nombre:")]//nombre que aparece en la pagina
+        [Required(ErrorMessage = "El {0} es requerido")]//validacion de nombre
         public string nombre { get; set; }
         [DisplayName("Descripción:")]
+        [Required(ErrorMessage = "La {0} es requerida")] //validacion de la descripcion
         public string descripcion { get; set; }
         [DisplayName("Costo:")]
+        [Required(ErrorMessage = "El {0} es requerido")] //validacion de costo
+        [Range(5000, 15000, ErrorMessage = "El campo {0} debe ser un numero entre {1} y {2}")]//validacion para ver cual es el rango del costo o el maximo
         public double costo { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro:")]
@@ -32,5 +36,8 @@ namespace Sinem.Models
         public DateTime fechaModifica{ get; set; }
         [DisplayName("Usuario modifica:")]
         public string usuarioModifica { get; set; }
+
+
+
     }
 }
