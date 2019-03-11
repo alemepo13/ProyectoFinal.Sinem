@@ -191,6 +191,74 @@ namespace Sinem.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult ListaProvincias(string id) {
+            string s = "";
+            string sel;
+            Dictionary<string,string> sl = new Dictionary<string, string>();
+            int id1;
+            int.TryParse(id, out id1);
+            Direccion d = id?.Length > 0 ? db.Direcciones.Where(x => x.idDireccion == id1).FirstOrDefault() : null;
+            var lista = db.Direcciones.ToList();
+            foreach (var l in lista) {
+                if (sl.Keys.Contains(l.provincia)) continue;
+                if (d == null) sel = "";
+                else sel = d.provincia == l.provincia ? "selected='selected'" : "";
+                sl.Add(l.provincia, $"<option value='{l.provincia}' {sel}>{l.provincia}</option>");
+            }
+            foreach (var i in sl) s += i.Value;
+            return Content("<option value=''>Selecciona</option>"+s);
+        }
+
+        public ActionResult ListaCantones(string id, string idProv)
+        {
+            string s = "";
+            string sel;
+            Dictionary<string, string> sl = new Dictionary<string, string>();
+            int id1;
+            int.TryParse(id, out id1);
+            Direccion d = id?.Length > 0 ? db.Direcciones.Where(x => x.idDireccion == id1).FirstOrDefault() : null;
+
+            if (d == null && idProv.Length <= 0) return Content("");
+            var lista = db.Direcciones.ToList();
+            foreach (var l in lista)
+            {
+                if ((d == null && (l.provincia == idProv))
+                   || ((d != null) && (l.provincia == d.provincia)))
+                {
+                    if (sl.Keys.Contains(l.provincia + "_" + l.canton)) continue;
+                    if (d == null) sel = "";
+                    else sel = d.canton == l.canton ? "selected='selected'" : "";
+                    sl.Add(l.provincia + "_" + l.canton, $"<option value='{l.canton}' {sel}>{l.canton}</option>");
+                }
+            }
+            foreach (var i in sl) s += i.Value;
+            return Content("<option value=''>Selecciona</option>" + s);
+        }
+        public ActionResult ListaDistritos(string id, string idProv, string idCant)
+        {
+            string s = "";
+            string sel;
+            Dictionary<string, string> sl = new Dictionary<string, string>();
+            int id1;
+            int.TryParse(id, out id1);
+            Direccion d = id?.Length > 0 ? db.Direcciones.Where(x => x.idDireccion == id1).FirstOrDefault() : null;
+            if (d == null && idProv.Length <= 0) return Content("");
+            var lista = db.Direcciones.ToList();
+            foreach (var l in lista)
+            {
+                if ((d == null && (l.provincia == idProv && l.canton == idCant) ) 
+                   || ((d != null) && ((l.provincia == d.provincia && l.canton == d.canton))))
+                {
+                    if (sl.Keys.Contains(l.provincia + "_" + l.canton + "_" + l.distrito)) continue;
+                    if (d == null) sel = "";
+                    else sel = d.canton == l.canton ? "selected='selected'" : "";
+                    sl.Add(l.provincia + "_" + l.canton + "_" + l.distrito, $"<option value='{l.idDireccion}' {sel}>{l.distrito}</option>");
+                }
+            }
+            foreach (var i in sl) s += i.Value;
+            return Content("<option value=''>Selecciona</option>" + s);
+        }
+
 
         protected override void Dispose(bool disposing)
         {
