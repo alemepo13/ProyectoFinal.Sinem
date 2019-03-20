@@ -33,10 +33,10 @@
 
 
 
-@using (Html.BeginForm())
-{
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Formulario" }))
+            {
 
-<div class="form-horizontal">
+< div class="form-horizontal">
     <h4>Usuario</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -135,7 +135,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.contraseña, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.contraseña, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.contraseña, new { htmlAttributes = new {id="contraseña",  @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.contraseña, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -165,6 +165,22 @@
     @*Scripts.Render("~/bundles/jqueryval")*@
 
 <script>
+    function hash(algo, str) {
+        return crypto.subtle.digest(algo, new TextEncoder().encode(str));
+    }
+    function enconde64(buff) {
+        return btoa(new Uint8Array(buff).reduce((s, b) => s + String.fromCharCode(b), ''));
+    }
+    $("#Formulario").submit(function (e) {
+        e.preventDefault();
+        var form = this;
+        hash('SHA-256', form.contraseña.value).then(hashed => {
+            form.contraseña.value = enconde64(hashed);
+            $("#contraseña").hide();
+            form.submit();
+        });
+    });
+
     $(document).ready(function () {
         var idDireccion = $("#idDireccion").val();
         var initial = true;

@@ -31,13 +31,16 @@ namespace Sinem.Models
         [Remote("Cedulas", "Usuarios", ErrorMessage = "La cedula ya está en uso")]//aqui se verifica si la cedula ya esta en uso
         public string cedula { get; set; }
         [DisplayName("Nombre:")]
+        [RegularExpression("^[-_ ,A-Za-z0-9]*$", ErrorMessage = "Caracteres no permitidos")] // Acepta letras, numeros, guion y espacio.
         [Required(ErrorMessage = "El {0} es requerido")]//aqui se puede ver la validacion de nombre
         public string nombre { get; set; }
         [Required(ErrorMessage = "Los {0} son requeridos")] //aqui se puede ver la validacion de apellidos
         [DisplayName("Apellidos:")]
+        [RegularExpression("^[-_ ,A-Za-z0-9]*$", ErrorMessage = "Caracteres no permitidos")] // Acepta letras, numeros, guion y espacio.
         public string apellido { get; set; }
         [DataType(DataType.PhoneNumber)]
         [DisplayName("Teléfono:")]//nombre que aparece en la pagina
+        [RegularExpression("^[- 0-9]*$", ErrorMessage = "Caracteres no permitidos")] // Acepta letras, numeros, guion y espacio.
         [Required(ErrorMessage = "El {0} es requerido")]//validacion de telefono
         //[StringLength(15, MinimumLength = 8, ErrorMessage = "El campo {0} debe de tener una longitud minima de {2} y una longitud maxima {1}")] // hay que hacer un updated database
         [Remote("Telefonos", "Usuarios", ErrorMessage = "Este telefono ya está en uso")] //validacion de telefono que ya esta en uso
@@ -61,6 +64,7 @@ namespace Sinem.Models
 
 
         [DisplayName("Contraseña:")]//nombre que aparece en la pagina
+
         [Required(ErrorMessage = "La {0} es requerida")]
         public string contraseña { get; set; }
             [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]

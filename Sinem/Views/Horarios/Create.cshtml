@@ -59,4 +59,9 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+<script>
+    $(document).ready(function () {
+        $("#Hora").rules('remove', 'range');
+    });
+    </script>
 }

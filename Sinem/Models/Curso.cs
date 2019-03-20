@@ -17,14 +17,17 @@ namespace Sinem.Models
         public int idCurso { get; set; }
         //[Required()]//indica que es un campo requerido
         [DisplayName("Nombre:")]//nombre que aparece en la pagina
+        [MaxLength(20,ErrorMessage ="El nombre del curso debe de ser menor a 20 caracteres")]
+        [RegularExpression ("^[A-Za-z][-_ ,A-Za-z0-9]*$", ErrorMessage ="Caracteres no permitidos")]// Acepta letras, numeros, guion y espacio.
         [Required(ErrorMessage = "El {0} es requerido")]//validacion de nombre
         public string nombre { get; set; }
         [DisplayName("Descripción:")]
+        [RegularExpression("^[-_ ,A-Za-z0-9]*$", ErrorMessage = "Caracteres no permitidos")] // Acepta letras, numeros, guion y espacio.
         [Required(ErrorMessage = "La {0} es requerida")] //validacion de la descripcion
         public string descripcion { get; set; }
         [DisplayName("Costo:")]
         [Required(ErrorMessage = "El {0} es requerido")] //validacion de costo
-        [Range(5000, 15000, ErrorMessage = "El campo {0} debe ser un numero entre {1} y {2}")]//validacion para ver cual es el rango del costo o el maximo
+        [Range(0, 15000, ErrorMessage = "El campo {0} debe ser un numero entre {1} y {2}")]//validacion para ver cual es el rango del costo o el maximo
         public double costo { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro:")]

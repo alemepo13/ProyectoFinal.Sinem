@@ -22,6 +22,7 @@ namespace Sinem.Models
         [DisplayName("Asistio:")]//nombre que aparece en la pagina
         public string asistio { get; set; } //se pasa a "string"
         [DisplayName("Observaciones")]//nombre que aparece en la pagina
+        [RegularExpression("^[-_ ,A-Za-z0-9]*$", ErrorMessage = "Caracteres no permitidos")] // Acepta letras, numeros, guion y espacio.
         public string observaciones { get; set; }
 
         

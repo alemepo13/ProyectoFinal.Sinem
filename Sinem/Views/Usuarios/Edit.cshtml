@@ -21,110 +21,110 @@
 <h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Formulario" }))
 {
 
 
-<div class="form-horizontal">
-    <h4>Usuario</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.idUsuario)
-    <div class="form-group">
-        @Html.Label("Provincia", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <select id="provincias"></select>
+    <div class="form-horizontal">
+        <h4>Usuario</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.idUsuario)
+        <div class="form-group">
+            @Html.Label("Provincia", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="provincias"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Canton", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="cantones"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Distrito", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="distritos"></select>
+            </div>
+        </div>
+
+
+        @Html.Hidden("idDireccion", Model?.idDireccion)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.cedula, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @data_val = false, @readonly = true, @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
+                @*  @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.cedula, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.apellido, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.apellido, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.apellido, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.telefono, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @data_val = false, @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
+                @*  @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.correo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @data_val = false, @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.fechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.fechaNacimiento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.fechaNacimiento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.usuario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @data_val = false, @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.usuario, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.contraseña, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.contraseña, new { htmlAttributes = new {@type="password", id = "contraseña", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.contraseña, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        @Html.Hidden("pass", Model.contraseña);
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
         </div>
     </div>
-
-    <div class="form-group">
-        @Html.Label("Canton", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <select id="cantones"></select>
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.Label("Distrito", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <select id="distritos"></select>
-        </div>
-    </div>
-
-
-    @Html.Hidden("idDireccion", Model?.idDireccion)
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.cedula, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @data_val = false, @readonly = true, @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
-            @*  @Html.EditorFor(model => model.cedula, new { htmlAttributes = new { @class = "form-control" } })*@
-            @Html.ValidationMessageFor(model => model.cedula, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.apellido, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.apellido, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.apellido, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.telefono, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @data_val = false, @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
-            @*  @Html.EditorFor(model => model.telefono, new { htmlAttributes = new { @class = "form-control" } })*@
-            @Html.ValidationMessageFor(model => model.telefono, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.correo, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.correo, new { htmlAttributes = new { @data_val = false, @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.fechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.fechaNacimiento, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.fechaNacimiento, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.usuario, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @data_val = false, @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.usuario, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.contraseña, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.contraseña, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.contraseña, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
-        </div>
-    </div>
-</div>
     @Html.HiddenFor(model => model.usuarioCrea)
     @Html.Hidden("fechaRegistro", Model.fechaRegistro.ToShortDateString())
     @Html.Hidden("fechaModifica", DateTime.Today.ToShortDateString())
@@ -135,59 +135,86 @@
     @Html.ActionLink("Regresar", "Index")
 </div>
 @section Scripts {
-@*Scripts.Render("~/bundles/jqueryval")*@
+    @*Scripts.Render("~/bundles/jqueryval")*@
 
-<script>
-    $(document).ready(function () {
-        var idDireccion = $("#idDireccion").val();
-        var initial = true;
-        $.get("/Usuarios/ListaProvincias", { id: idDireccion }, function (data) { $("#provincias").html(data); });
-        $.get("/Usuarios/ListaCantones", { id: idDireccion, idProv: '' }, function (data) { $("#cantones").html(data); });
-        $.get("/Usuarios/ListaDistritos", { id: idDireccion, idProv: '', idCant: '' }, function (data) { $("#distritos").html(data); });
-        $("#provincias").change(function () {
-            if (initial) return;
-            var valor = $("#provincias option:selected").val();
-            if (valor == null) return;
-            $("#cantones").html("");
-            $("#distritos").html("");
-            $.get("/Usuarios/ListaCantones", { id: null, idProv: valor }, function (data) { $("#cantones").html(data); });
+    <script>
+        function hash(algo, str) {
+            return crypto.subtle.digest(algo, new TextEncoder().encode(str));
+        }
+        function enconde64(buff) {
+            return btoa(new Uint8Array(buff).reduce((s, b) => s + String.fromCharCode(b), ''));
+        }
+        $("#contraseña").click(function () {
+            $(this).select();
         });
-        $("#cantones").change(function () {
-            if (initial) return;
-
-            var valorProv = $("#provincias option:selected").val();
-            var valor = $("#cantones option:selected").val();
-            if (valor == null) return;
-            $("#distritos").html("");
-            $.get("/Usuarios/ListaDistritos", { id: null, idProv: valorProv, idCant: valor }, function (data) { $("#distritos").html(data); });
-        });
-
-        $("#distritos").change(function () {
-            if (initial) return;
-            var valor = $("#distritos option:selected").val();
-            if (valor == null) return;
-            $("#idDireccion").val(valor);;
-        });
-        setTimeout(function () { initial = false; }, 500);
-    });
-    $('.date-picker').each(function () {
-        $(this).datepicker({
-            format: 'dd/mm/yyyy',
-            templates: {
-                leftArrow: '<i class="now-ui-icons arrows-1_minimal-left"></i>',
-                rightArrow: '<i class="now-ui-icons arrows-1_minimal-right"></i>'
+        $("#Formulario").submit(function (e) {
+            e.preventDefault();
+            var form = this;
+            if (form.pass.value == form.contraseña.value) {
+                form.submit();
             }
-        }).on('show', function () {
-            $('.datepicker').addClass('open');
-
-            datepicker_color = $(this).data('datepicker-color');
-            if (datepicker_color.length != 0) {
-                $('.datepicker').addClass('datepicker-' + datepicker_color + '');
+            else {
+                if (confirm("Desea cambiar la contraseña")) {
+                    hash('SHA-256', form.contraseña.value).then(hashed => {
+                        form.contraseña.value = enconde64(hashed);
+                        $("#contraseña").hide();
+                        form.submit();
+                    });
+                }
             }
-        }).on('hide', function () {
-            $('.datepicker').removeClass('open');
+
         });
-    });
-</script>
+
+        $(document).ready(function () {
+            var idDireccion = $("#idDireccion").val();
+            var initial = true;
+            $.get("/Usuarios/ListaProvincias", { id: idDireccion }, function (data) { $("#provincias").html(data); });
+            $.get("/Usuarios/ListaCantones", { id: idDireccion, idProv: '' }, function (data) { $("#cantones").html(data); });
+            $.get("/Usuarios/ListaDistritos", { id: idDireccion, idProv: '', idCant: '' }, function (data) { $("#distritos").html(data); });
+            $("#provincias").change(function () {
+                if (initial) return;
+                var valor = $("#provincias option:selected").val();
+                if (valor == null) return;
+                $("#cantones").html("");
+                $("#distritos").html("");
+                $.get("/Usuarios/ListaCantones", { id: null, idProv: valor }, function (data) { $("#cantones").html(data); });
+            });
+            $("#cantones").change(function () {
+                if (initial) return;
+
+                var valorProv = $("#provincias option:selected").val();
+                var valor = $("#cantones option:selected").val();
+                if (valor == null) return;
+                $("#distritos").html("");
+                $.get("/Usuarios/ListaDistritos", { id: null, idProv: valorProv, idCant: valor }, function (data) { $("#distritos").html(data); });
+            });
+
+            $("#distritos").change(function () {
+                if (initial) return;
+                var valor = $("#distritos option:selected").val();
+                if (valor == null) return;
+                $("#idDireccion").val(valor);;
+            });
+            setTimeout(function () { initial = false; }, 500);
+        });
+        $('.date-picker').each(function () {
+            $(this).datepicker({
+                format: 'dd/mm/yyyy',
+                templates: {
+                    leftArrow: '<i class="now-ui-icons arrows-1_minimal-left"></i>',
+                    rightArrow: '<i class="now-ui-icons arrows-1_minimal-right"></i>'
+                }
+            }).on('show', function () {
+                $('.datepicker').addClass('open');
+
+                datepicker_color = $(this).data('datepicker-color');
+                if (datepicker_color.length != 0) {
+                    $('.datepicker').addClass('datepicker-' + datepicker_color + '');
+                }
+            }).on('hide', function () {
+                $('.datepicker').removeClass('open');
+            });
+        });
+    </script>
 
 }

@@ -14,6 +14,7 @@ namespace Sinem.Controllers
         // GET: Account
         public ActionResult Login() // en este metodo aqui se puede visualizar  la pantalla del login con sus respectivos campos que son el usuario y la contraseña que esta en la DB
         {
+            ViewBag.mensaje = "";
             return View();
         }
 
@@ -68,12 +69,17 @@ namespace Sinem.Controllers
             if (ModelState.IsValid) // aqui se puede ver si los datos son validos
             {
                 var Usuario = (from U in db.Usuario where U.usuario == user select U).FirstOrDefault();
-                if(Usuario!= null && Usuario.contraseña==pass)
+                if (Usuario != null && Usuario.contraseña == pass)
                 {
                     acs.SignIn(Usuario);
                     return RedirectToAction("Index", "Home");
                 }
+                else {
+                    ViewBag.mensaje = "La contraseña es incorrecta.";
+                    return View();
+                }
             }
+            ViewBag.mensaje = "";
             return View(); // devuelve los datos
         }
         public ActionResult Logout() // aqui se puede cerrar sesion

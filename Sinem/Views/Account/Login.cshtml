@@ -9,7 +9,11 @@
         <div class="col-md-4 col-sm-1"></div>
         <div class="col-md-4 col-sm-10">
             <h2 style="color:white;">Login</h2>@* aqui se vizualiza lo que es el nombre del login con su respectivo color y tamaño *@
-            <form action="/Account/Login" method="post">
+            @if(ViewBag.mensaje!="")
+            {
+                <div class="alert alert-danger" role="alert">@ViewBag.mensaje</div>
+            }
+            <form action="/Account/Login" method="post" id="Formulario">
                 <div class="form-group">
                     @* En esta seccion aqui podemos ver  el tipo de usuario del login *@
                     <label for="user" style="color:white;">Usuario</label>
@@ -32,30 +36,27 @@
 
 </div>
 
-@*
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
         <script type="text/jscript">
-            $('#user').blur(function () {
-                var url = "/Account/CheckUserName";
-                var name = $('#user').val();
-                $.get(url, { input: name }, function (data) {
-                    if (data == "Available") {
-                        $("#result").html("<span style='color:green'>Available</span>");
-                        $("#user").css('background-color', '');
-                    }
-                    else {
-                        $("#result").html("<span style='color:red'>Not Available</span>");
-                        $("#user").css('background-color', '#e97878');
-                    }
+            function hash(algo, str) {
+                return crypto.subtle.digest(algo, new TextEncoder().encode(str));
+            }
+            function enconde64(buff) {
+                return btoa(new Uint8Array(buff).reduce((s, b) => s + String.fromCharCode(b), ''));
+            }
+            $("#Formulario").submit(function (e) {
+                e.preventDefault();
+                var form = this;
+                hash('SHA-256', form.pass.value).then(hashed => {
+                    form.pass.value = enconde64(hashed);
+                    $("#pass").hide();
+                    form.submit();
                 });
-            })
+            });
+         
         </script>
     }
-
-
-*@
-
 
 
 

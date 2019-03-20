@@ -33,7 +33,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.numeroAula, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.numeroAula, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
+                @Html.EditorFor(model => model.numeroAula, new { htmlAttributes = new { @data_val = false, @readonly = true, @class = "form-control", @onkeypress = "return SomenteNumero(event)" } })
                 @* @Html.EditorFor(model => model.numeroAula, new { htmlAttributes = new { @class = "form-control" } })*@
                 @Html.ValidationMessageFor(model => model.numeroAula, "", new { @class = "text-danger" })
             </div>
