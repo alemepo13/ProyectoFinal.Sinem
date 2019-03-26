@@ -24,6 +24,15 @@ namespace Sinem.Controllers
         // GET: Salarios
         public ActionResult Index()//metodo que muestra en pantalla la lista de salarios que se encuentra en la DB
         {
+            ViewBag.ListaProfesores = //from dm in db.DetalleMatriculas.ToList()
+                    from u in db.Usuario.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
+                    join p in db.Permisos.ToList() on u.idUsuario equals p.idUsuario
+                    select new Permiso2()
+                    {
+                        idUsuario = p.idUsuario,
+                        idRol = p.idRol,
+                        nombrecompleto = u.nombrecompleto,
+                    };
             return View(db.Salarios.ToList());//Vista de los salarios en forma de lista
         }
         private void ListaDeProfesores(object o = null)
@@ -31,7 +40,7 @@ namespace Sinem.Controllers
             var l = //from dm in db.DetalleMatriculas.ToList()
                     from u in db.Usuario.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
                     join p in db.Permisos.ToList() on u.idUsuario equals p.idUsuario
-                    where p.idUsuario == 3
+                    where p.idRol == 4
                     select new Permiso2()
                     {
                         idUsuario = p.idUsuario,

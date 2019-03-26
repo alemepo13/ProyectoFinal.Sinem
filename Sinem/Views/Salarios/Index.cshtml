@@ -12,8 +12,9 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.idUsuario)
+            Nombre 
         </th>
+        <th>Fecha dde pago</th>
         <th>
             @Html.DisplayNameFor(model => model.monto)
         </th>
@@ -23,16 +24,14 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.idUsuario)
+            @((ViewBag.ListaProfesores as IEnumerable<Sinem.Models.Permiso2>).Where(x=>x.idUsuario==item.idUsuario).FirstOrDefault().nombrecompleto)
         </td>
+        <td>@Html.DisplayFor(modelItem=>item.fechaRegistro)</td>
         <td>
             @Html.DisplayFor(modelItem => item.monto)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idSalario }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idSalario }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idSalario })
-        </td>
+             </td>
     </tr>
 }
 

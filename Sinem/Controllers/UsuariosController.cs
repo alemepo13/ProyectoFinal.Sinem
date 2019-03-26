@@ -33,6 +33,8 @@ namespace Sinem.Controllers
         [Authorize(Roles = "Administrador,Empleado")]
         public ActionResult Index()
         {
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            ViewBag.Direcciones = db.Direcciones.ToList();
             return View(db.Usuario.ToList());
         }
 
@@ -82,6 +84,8 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Direcciones = db.Direcciones.ToList();
             return View(usuario);
         }
 
@@ -106,7 +110,8 @@ namespace Sinem.Controllers
                 db.Usuario.Add(U);
                 db.SaveChanges();
                 var U2 = db.Usuario.Where(x => x.cedula == U.cedula).FirstOrDefault();
-                db.Permisos.Add(new Permiso { idUsuario = U2.idUsuario, idRol = U.idRol });
+                foreach(int i in U.idRol) 
+                    db.Permisos.Add(new Permiso { idUsuario = U2.idUsuario, idRol = i });
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -127,6 +132,8 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();
             }
+
+            ListaDeRoles();
             ListaDeDirecciones(usuario.idDireccion);
             return View(usuario);
         }
@@ -135,13 +142,22 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "idUsuario,idDireccion,cedula,nombre,apellido,telefono,correo,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Usuario user)
+        public ActionResult Edit([Bind(Include = "idUsuario,idDireccion,cedula,nombre,apellido,telefono,correo,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,idRol")] Usuario user)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
                 user.fechaModifica = DateTime.Now;
                 user.usuarioModifica = User.Identity.Name;
+                var p = db.Permisos.Where(x => x.idUsuario == user.idUsuario).ToList();
+                foreach (var i in p) { db.Permisos.Remove(i); }
+                foreach (int i in user.idRol) 
+                    db.Permisos.Add(new Permiso { idUsuario = user.idUsuario, idRol = i });
+
+                //var U2 = db.Usuario.Where(x => x.cedula == U.cedula).FirstOrDefault();
+                //var p = db.Permisos.Where(x => x.idUsuario == user.idUsuario).FirstOrDefault();
+                //if (p != null) p.idRol = user.idRol;
+                //db.Permisos.Add(new Permiso { idUsuario = U2.idUsuario, idRol = U.idRol });
                 db.SaveChanges();
                 return RedirectToAction("Confirmacion","Home",new { mensaje="El usuario ha sido modificado", cont="Usuarios" });
             }
@@ -151,15 +167,19 @@ namespace Sinem.Controllers
         // GET: Usuarios/Delete/5
         public ActionResult Delete(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Usuario usuario = db.Usuario.Find(id);
+
             if (usuario == null)
             {
                 return HttpNotFound();
             }
+            var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if (usuario.idUsuario == Usuario.idUsuario) return View("Noeliminar");
             var matriculas = db.DetalleMatriculas.Where(x => x.idEstudiante == id || x.idProfesor == id).Count();
             //var cursos= db.GestionCursos.Where(x=>x.)
             if (matriculas > 0)
@@ -182,11 +202,12 @@ namespace Sinem.Controllers
                         idUsuario = p.idUsuario,
                         idRol = p.idRol,
                     };
-
-            Permiso permiso = db.Permisos.Find(usuario.idUsuario, l.FirstOrDefault().idRol);
-            db.Permisos.Remove(permiso);
-            db.SaveChanges();
-
+            if (l.Count() > 0)
+            {
+                Permiso permiso = db.Permisos.Find(usuario.idUsuario, l.FirstOrDefault().idRol);
+                db.Permisos.Remove(permiso);
+                db.SaveChanges();
+            }
             db.Usuario.Remove(usuario);
             db.SaveChanges();
             return RedirectToAction("Index");

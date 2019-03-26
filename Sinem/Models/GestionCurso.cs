@@ -110,6 +110,8 @@ namespace Sinem.Models
         public string duracion2 { get; set; }
         [DisplayName("Nombre del profesor:")]
         public string usuario2 { get; set; }
+
+        public List<Vista_Asistencia> Estudiantes { get; set; }
     }
 
     public class CupoDelete

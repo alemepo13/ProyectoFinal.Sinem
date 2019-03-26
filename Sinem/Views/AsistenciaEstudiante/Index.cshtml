@@ -7,60 +7,66 @@
 <h2>Asistencia @DateTime.Today.ToLongDateString()</h2> @*tamaño*@
 @if (ViewBag.Permitir)
 {
-using (Html.BeginForm())
-{
-    <input type="hidden" name="idGestionCurso" value="@ViewBag.idGestionCurso" />
-    <table class="table">
-        <tr>
-            <th>
-                @*encabezado de la tabla que lo pone en negrita *@
-
-                nombre
-            </th>
-            <th>
-                apellidos
-            </th>
-            <th>
-                asistencia @*muestra la etiqueta asistio *@
-            </th>
-            <th>
-                observaciones @*muestra la etiqueta observaciones *@
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    using (Html.BeginForm())
+    {
+        <input type="hidden" name="idGestionCurso" value="@ViewBag.idGestionCurso" />
+        <table class="table">
             <tr>
-                <td>
-                    @*Es cada celda*@
-                    @Html.DisplayFor(modelItem => item.nombre) @*muestra la etiqueta  idGestionCurso *@
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.apellidos) @*muestra la etiqueta fecha *@
-                </td>
-                <td>
-                    <input type="checkbox"  name="Asistio@(item.idUsuario)" /> @*muestra la etiqueta asistio *@
-                </td>
-                <td>
-                    <input type="text" name="Obs@(item.idUsuario)" /> @*muestra la etiqueta observaciones *@
-                </td> 
+                <th>
+                    @*encabezado de la tabla que lo pone en negrita *@
+
+                    nombre
+                </th>
+                <th>
+                    apellidos
+                </th>
+                <th>
+                    asistencia @*muestra la etiqueta asistio *@
+                </th>
+                <th>
+                    observaciones @*muestra la etiqueta observaciones *@
+                </th>
+                <th></th>
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @*Es cada celda*@
+                        @Html.DisplayFor(modelItem => item.nombre) @*muestra la etiqueta  idGestionCurso *@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.apellidos) @*muestra la etiqueta fecha *@
+                    </td>
+                    <td>
+                        <input type="checkbox" name="Asistio@(item.idUsuario)" /> @*muestra la etiqueta asistio *@
+                    </td>
+                    <td>
+                        <input type="text" name="Obs@(item.idUsuario)" /> @*muestra la etiqueta observaciones *@
+                    </td>
+                </tr>
+            }
+
+        </table>
 
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Confirmar" class="btn btn-default" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Confirmar" class="btn btn-default" />
+            </div>
         </div>
-    </div>
 
 
+        <div>
+            @Html.ActionLink("Regresar", "IndexProfesor","Cursos")
+        </div>
+
+
+
+    }
 }
-}
-else 
+else
 {
     <h2>La asistencia de hoy ya fue tomada</h2>
 }

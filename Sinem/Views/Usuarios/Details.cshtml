@@ -11,11 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.idDireccion)
+            Dirección
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.idDireccion)
+            @((ViewBag.Direcciones as List<Sinem.Models.Direccion>).Where(x => x.idDireccion == Model.idDireccion).FirstOrDefault().descripcion)
         </dd>
 
         <dt>

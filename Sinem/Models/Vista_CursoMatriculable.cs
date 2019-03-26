@@ -5,6 +5,7 @@ using System.Web;
 
 namespace Sinem.Models
 {
+   
     public class Vista_CursoMatriculable
     {
         public int idGC { get; set; }

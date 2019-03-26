@@ -42,8 +42,9 @@ namespace Sinem.Models
         [DisplayName("Teléfono:")]//nombre que aparece en la pagina
         [RegularExpression("^[- 0-9]*$", ErrorMessage = "Caracteres no permitidos")] // Acepta letras, numeros, guion y espacio.
         [Required(ErrorMessage = "El {0} es requerido")]//validacion de telefono
-        //[StringLength(15, MinimumLength = 8, ErrorMessage = "El campo {0} debe de tener una longitud minima de {2} y una longitud maxima {1}")] // hay que hacer un updated database
-        [Remote("Telefonos", "Usuarios", ErrorMessage = "Este telefono ya está en uso")] //validacion de telefono que ya esta en uso
+                                                        //[StringLength(8, MinimumLength = 8, ErrorMessage = "El campo {0} debe de tener una longitud minima de {2} y una longitud maxima {1}")] // hay que hacer un updated database
+        [Range(40000000,89999999)]
+        [Remote("Telef<onos", "Usuarios", ErrorMessage = "Este telefono ya está en uso")] //validacion de telefono que ya esta en uso
         public int telefono { get; set; }
         [DisplayName("Correo:")]
         [Required(ErrorMessage = "El {0} es requerido")] //aqui se puede ver la validacion de correo
@@ -86,7 +87,7 @@ namespace Sinem.Models
 
         [DisplayName ("Rol")]
         [NotMapped()]
-        public int idRol { get; set;  }
+        public int[] idRol { get; set;  }
     }
 
     public class PermisoDelete

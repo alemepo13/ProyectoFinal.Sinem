@@ -29,13 +29,28 @@
             <td>@i.FechaFinal.ToShortDateString()</td>
 
             
-            <td> 
-                @Html.ActionLink("Edit", "Edit", new { id = i.idGC }) |
-                @Html.ActionLink("Asistencia", "IndexAdmin","AsistenciaEstudiante", new { id = i.idGC },null) |
-                @Html.ActionLink("Details", "Details", new { id = i.idGC  }) |
-                @Html.ActionLink("Delete", "Delete", new { id = i.idGC })
+            <td>
+                @if (ViewBag.Asistencia)
+                {
+                    @Html.ActionLink("Asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null)
+                    <text>|</text>
+                    @Html.ActionLink("Details", "Details", new { id = i.idGC })
+
+                }
+                else
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = i.idGC }) <text>|</text>
+
+                    @Html.ActionLink("Asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null) <text>|</text>
+
+                    @Html.ActionLink("Details", "Details", new { id = i.idGC }) <text>|</text>
+
+                    @Html.ActionLink("Delete", "Delete", new { id = i.idGC })
+
+                }
             </td>
         </tr>
     }
 
 </table>
+

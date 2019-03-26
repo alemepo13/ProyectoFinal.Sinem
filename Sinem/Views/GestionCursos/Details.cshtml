@@ -132,6 +132,41 @@
 
     </dl>
 </div>
+<h4>Estudiantes matriculados</h4>
+<table class="table">
+    <tr>
+        <th>
+            @*encabezado de la tabla que lo pone en negrita *@
+
+            nombre
+        </th>
+        <th>
+            apellidos
+        </th>
+        <th>
+ 
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Estudiantes)
+    {
+        <tr>
+            <td>
+                @*Es cada celda*@
+                @Html.DisplayFor(modelItem => item.nombre) @*muestra la etiqueta  idGestionCurso *@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.apellidos) @*muestra la etiqueta fecha *@
+            </td>
+          
+            <td>
+               @Html.ActionLink("Desmatricular","Desmatricular", new { idGestionCurso=Model.idGestionCurso, idEstudiante=item.idUsuario  })
+            </td>
+        </tr>
+    }
+
+</table>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.idGestionCurso }) |
     @Html.ActionLink("Back to List", "Index")

@@ -12,7 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.idDireccion)
+            Direccion
         </th>
         <th>
             @Html.DisplayNameFor(model => model.cedula)
@@ -42,7 +42,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.idDireccion)
+            @((ViewBag.Direcciones as List<Sinem.Models.Direccion>).Where(x => x.idDireccion == item.idDireccion).FirstOrDefault().descripcion)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.cedula)
@@ -66,10 +66,18 @@
             @Html.DisplayFor(modelItem => item.usuario)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idUsuario }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idUsuario }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idUsuario })
+            @if (ViewBag.Usuario.idUsuario != item.idUsuario)
+            {
+                @Html.ActionLink("Edit", "Edit", new { id = item.idUsuario })
+                    }
+            |
+            @Html.ActionLink("Details", "Details", new { id = item.idUsuario }) |
+            @if (ViewBag.Usuario.idUsuario != item.idUsuario)
+                {
+                    @Html.ActionLink("Delete", "Delete", new { id = item.idUsuario })
+                            }
         </td>
+
     </tr>
 }
 
