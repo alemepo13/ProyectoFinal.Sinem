@@ -69,13 +69,15 @@ namespace Sinem.Controllers
             if (ModelState.IsValid) // aqui se puede ver si los datos son validos
             {
                 var Usuario = (from U in db.Usuario where U.usuario == user select U).FirstOrDefault();
-                if (Usuario != null && Usuario.contraseña == pass)
+                if (Usuario != null && Usuario.contraseña == pass && Usuario.estado=="activo")
                 {
+                    Usuario.conexion = "conectado";
+                    db.SaveChanges();
                     acs.SignIn(Usuario);
                     return RedirectToAction("Index", "Home");
                 }
                 else {
-                    ViewBag.mensaje = "La contraseña es incorrecta.";
+                    ViewBag.mensaje = "La contraseña es incorrecta o el usuario esta inactivo.";
                     return View();
                 }
             }
@@ -84,6 +86,12 @@ namespace Sinem.Controllers
         }
         public ActionResult Logout() // aqui se puede cerrar sesion
         {
+            var db = new SinemDBContext(); // se envian o verifican los datos en la db
+
+
+            var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            Usuario.conexion = "no conectado";
+            db.SaveChanges();
             var acs =new  AuthenticationService(ControllerContext.HttpContext);
             acs.SignOut();
             return RedirectToAction("Login"); 

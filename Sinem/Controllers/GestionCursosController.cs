@@ -104,7 +104,7 @@ namespace Sinem.Controllers
                         fechaActual = dm.fechaRegistro,
                         idGC = dm.idgestionCurso,
                         nombreE = e.nombrecompleto,
-                        cedula = e.cedula,
+                        cedula = e.identificacion,
                         profesor = p.nombrecompleto,
                     };
             var sl = string.Join("|", idDetalleMatricula);
@@ -135,7 +135,7 @@ namespace Sinem.Controllers
                         fechaActual = dm.fechaRegistro,
                         idGC = dm.idgestionCurso,
                         nombreE = e.nombrecompleto,
-                        cedula = e.cedula,
+                        cedula = e.identificacion,
                         profesor = p.nombrecompleto,
                     };
             return new PdfResult(l.ToList(), "Comprobante");
@@ -182,7 +182,7 @@ namespace Sinem.Controllers
                         fechaActual = dm.fechaRegistro,
                         idGC = dm.idgestionCurso,
                         nombreE = e.nombrecompleto,
-                        cedula = e.cedula,
+                        cedula = e.identificacion,
                         profesor = p.nombrecompleto,
                     };
 

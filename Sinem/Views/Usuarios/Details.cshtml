@@ -19,11 +19,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.cedula)
+            @Html.DisplayNameFor(model => model.tipoIdentificacion)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.cedula)
+            @Html.DisplayFor(model => model.tipoIdentificacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.identificacion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.identificacion)
         </dd>
 
         <dt>
@@ -41,23 +49,23 @@
         <dd>
             @Html.DisplayFor(model => model.apellido)
         </dd>
+        @*
+            <dt>
+                @Html.DisplayNameFor(model => model.telefono)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.telefono)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.telefono)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.telefono)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.correo)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.correo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.correo)
-        </dd>
-
+            <dd>
+                @Html.DisplayFor(model => model.correo)
+            </dd>
+        *@
         <dt>
             @Html.DisplayNameFor(model => model.fechaNacimiento)
         </dt>
@@ -107,8 +115,37 @@
         </dd>
 
     </dl>
+    <h3>Informacion de contacto</h3>
+
+    <table class="table">
+        <tr>
+            <th>
+                Dato
+            </th>
+
+            <th>
+                Valor
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in ViewBag.Contactos)
+        {
+            <tr>
+                <td>
+                    @item.tipoDato
+                </td>
+
+                <td>
+                    @item.dato
+                </td>
+                <td>
+                    @Html.ActionLink("editar", "EditContactDetail", new { id = item.idContacto })
+                </td>
+            </tr>
+        }
+    </table>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.idUsuario }) |
+    @Html.ActionLink("Editar", "Edit", new { id = Model.idUsuario }) |
     @Html.ActionLink("Regresar", "Index")
 </p>

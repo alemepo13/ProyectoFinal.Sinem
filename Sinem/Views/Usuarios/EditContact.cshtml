@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Sinem.Models.Contacto>
+
+@{
+    /**/
+
+    ViewBag.Title = "EditContact";
+}
+
+<h3>Informacion de contacto</h3>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Formulario" }))
+{
+
+
+    <table class="table">
+        <tr>
+            <th>
+                Dato
+            </th>
+
+            <th>
+                Valor
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.tipoDato
+                </td>
+
+                <td>
+                    @item.dato
+                </td>
+                <td>
+                    @Html.ActionLink("editar", "EditContactDetail", new { id = item.idContacto })
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+
+                @Html.DropDownList("tipoDato", ViewBag.ListaDeTiposContacto as SelectList, new { @class = "form-control" })
+            </td>
+
+            <td>
+               @Html.Hidden("idContacto",0)
+               @InputExtensions.Hidden(Html,"idUsuario", ViewBag.idUsuario.ToString())
+                @Html.Editor("dato", new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td>
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </td>
+        </tr>
+    </table>
+}

@@ -510,6 +510,8 @@
     <Content Include="Views\AsistenciaProfesor\ListaAsistencia.cshtml" />
     <Content Include="Views\Home\Confirmacion.cshtml" />
     <Content Include="Views\GestionCursos\ResultadoMatricula.cshtml" />
+    <Content Include="Views\Usuarios\EditContact.cshtml" />
+    <Content Include="Views\Usuarios\EditContactDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

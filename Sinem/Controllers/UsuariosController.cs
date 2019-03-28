@@ -19,6 +19,11 @@ namespace Sinem.Controllers
 
         private SinemDBContext db = new SinemDBContext();
 
+        private void ListaDeTipos(string tipo = null)
+        {
+            ViewBag.ListaDeTipos = new SelectList(new List<string> { "cedula de identificacion", "cedula de residencia", "pasaporte", "documento migratorio" }, "", "", tipo);
+        }
+
         private void ListaDeDirecciones(object direccion = null)
         {
             ViewBag.ListaDirecciones = new SelectList(db.Direcciones.ToList(), "idDireccion", "descripcion", direccion);
@@ -33,7 +38,9 @@ namespace Sinem.Controllers
         [Authorize(Roles = "Administrador,Empleado")]
         public ActionResult Index()
         {
+            
             ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             ViewBag.Direcciones = db.Direcciones.ToList();
             return View(db.Usuario.ToList());
         }
@@ -48,11 +55,12 @@ namespace Sinem.Controllers
 
         public JsonResult Cedulas(string cedula)
         {
-            return Json(!db.Usuario.Any(x => x.cedula == cedula),
+            return Json(!db.Usuario.Any(x => x.identificacion == cedula),
                                                  JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Telefonos(int telefono)
+        /*
+         * public JsonResult Telefonos(int telefono)
         {
             return Json(!db.Usuario.Any(x => x.telefono == telefono),
                                                  JsonRequestBehavior.AllowGet);
@@ -62,7 +70,7 @@ namespace Sinem.Controllers
         {
             return Json(!db.Usuario.Any(x => x.correo == correo),
                                                  JsonRequestBehavior.AllowGet);
-        }
+        }*/
 
 /*
         public JsonResult logines(string login)
@@ -84,7 +92,7 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();
             }
-
+            ViewBag.Contactos=db.Contactos.Where(x => x.idUsuario == id).ToList();
             ViewBag.Direcciones = db.Direcciones.ToList();
             return View(usuario);
         }
@@ -92,6 +100,7 @@ namespace Sinem.Controllers
         // GET: Usuarios/Create
         public ActionResult Create()
         {
+            ListaDeTipos();
             ListaDeDirecciones();
             ListaDeRoles();
             return View();
@@ -101,23 +110,66 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create([Bind(Include = "idDireccion,cedula,nombre,apellido,telefono,correo,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,idRol")] Usuario U)
+        public ActionResult Create([Bind(Include = "idDireccion,identificacion,nombre,apellido,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,idRol,tipoIdentificacion")] Usuario U)
         {
             ListaDeDirecciones();
             ListaDeRoles();
+            ListaDeTipos();
             if (ModelState.IsValid)
             {
+                U.fechaSesion = DateTime.Now;
+                U.estado = "activo";
+                U.conexion = "no conectado";
                 db.Usuario.Add(U);
                 db.SaveChanges();
-                var U2 = db.Usuario.Where(x => x.cedula == U.cedula).FirstOrDefault();
+                var U2 = db.Usuario.Where(x => x.identificacion == U.identificacion).FirstOrDefault();
                 foreach(int i in U.idRol) 
                     db.Permisos.Add(new Permiso { idUsuario = U2.idUsuario, idRol = i });
                 db.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("EditContact",new {id=U.idUsuario });
             }
 
             return View(U);
+        }
+
+        public ActionResult EditContact(int id)
+        {
+            ViewBag.idUsuario = id;
+            var d = db.Contactos.Where(x => x.idUsuario == id);
+            ViewBag.ListaDeTiposContacto = new SelectList(new List<string> { "correo", "telefono" }, null);
+            return View(d);
+        }
+        [HttpPost]
+        public ActionResult EditContact(Contacto d)
+        {
+
+            //var d = db.Contactos.Where(x => x.idUsuario == id);
+            //ViewBag.ListaDeTiposContacto = new SelectList(new List<string> { "correo", "telefono" }, null);
+            db.Contactos.Add(new Contacto() { dato=d.dato, tipoDato=d.tipoDato, idUsuario=d.idUsuario });
+            db.SaveChanges();
+            return RedirectToAction("EditContact",new { id=d.idUsuario});
+        }
+
+        public ActionResult EditContactDetail(int id)
+        {
+
+            var d = db.Contactos.Where(x => x.idContacto == id).FirstOrDefault();
+            ViewBag.ListaDeTiposContacto = new SelectList(new List<string> { "correo", "telefono" }, null);
+            return View(d);
+        }
+
+        [HttpPost]
+        public ActionResult EditContactDetail(Contacto d) {
+            ViewBag.ListaDeTiposContacto = new SelectList(new List<string> { "correo", "telefono" }, null);
+            if (ModelState.IsValid) {
+                var d1 = db.Contactos.Where(x => x.idContacto == d.idContacto).FirstOrDefault();
+                d1.dato = d.dato;
+                d1.tipoDato = d.tipoDato;
+                db.SaveChanges();
+                return RedirectToAction("EditContact", new { id = d.idUsuario });
+            }
+            return View(d);
         }
 
         // GET: Usuarios/Edit/5
@@ -132,7 +184,7 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();
             }
-
+            ListaDeTipos(usuario.tipoIdentificacion);
             ListaDeRoles();
             ListaDeDirecciones(usuario.idDireccion);
             return View(usuario);
@@ -142,13 +194,18 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "idUsuario,idDireccion,cedula,nombre,apellido,telefono,correo,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,idRol")] Usuario user)
+        public ActionResult Edit([Bind(Include = "idUsuario,idDireccion,identificacion,nombre,apellido,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,idRol,tipoIdentificacion")] Usuario user)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
                 user.fechaModifica = DateTime.Now;
                 user.usuarioModifica = User.Identity.Name;
+
+                user.fechaSesion = DateTime.Now;
+                user.estado = "activo";
+                user.conexion = "no conectado";
+
                 var p = db.Permisos.Where(x => x.idUsuario == user.idUsuario).ToList();
                 foreach (var i in p) { db.Permisos.Remove(i); }
                 foreach (int i in user.idRol) 
@@ -184,7 +241,12 @@ namespace Sinem.Controllers
             //var cursos= db.GestionCursos.Where(x=>x.)
             if (matriculas > 0)
                 return View("Noeliminar");
-            return View(usuario);
+            if (Usuario.estado == "activo") 
+                Usuario.estado = "inactivo";
+            else Usuario.estado = "activo";
+            Usuario.conexion = "no conectado";
+            db.SaveChanges();
+            return RedirectToAction("Index"); //View(usuario);
         }
 
         // POST: Usuarios/Delete/5
