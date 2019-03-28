@@ -15,6 +15,10 @@ namespace Sinem.Controllers
     public class HorariosController : Controller
     {
         private SinemDBContext db = new SinemDBContext();//conexion a la base de datos
+        private void ListaDeTipos(string tipo = null)
+        {
+            ViewBag.ListaDeTipos = new SelectList(new List<string> { "min", "h" }, "", "", tipo);
+        }
 
         private void ListaDeDias(object eldia = null)
         {
@@ -48,6 +52,7 @@ namespace Sinem.Controllers
         public ActionResult Create()//metodo para crear una pagina, con los campos para crear un nuevo horario
         {
             ListaDeDias();
+            ListaDeTipos();
             return View();//devuelve la vista
         }
 
@@ -61,6 +66,7 @@ namespace Sinem.Controllers
             if (ModelState.IsValid)//si el post al servidor se hizo 
             {
                 db.Horarios.Add(horario);//agrega el horario a la DB
+                horario.estado = "activo";
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index");//lo devuelve al inicio
             }
@@ -71,12 +77,13 @@ namespace Sinem.Controllers
         // GET: Horarios/Edit/5
         public ActionResult Edit(int? id)//metodo que recibe como parametro un numero de horario para buscarlo en la DB
         {
-            ListaDeDias();
             if (id == null)// si el numero es nulo
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Horario horario = db.Horarios.Find(id);//busca el numero de horario en la DB
+            ListaDeDias(horario.dia);
+            ListaDeTipos(horario.tipo);
             if (horario == null)// si el numero es nulo
             {
                 return HttpNotFound();
@@ -88,15 +95,18 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        public ActionResult Edit([Bind(Include = "idHorario,dia,hora,tiempoDuracion,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario schedule)
+        public ActionResult Edit([Bind(Include = "idHorario,dia,hora,tipo,tiempoDuracion,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario schedule)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del horario,
             //lleva como parametros los datos a editar del horario, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo 
             {
                 db.Entry(schedule).State = EntityState.Modified;//modifica los datos  del horario a la DB
+                schedule.estado = "activo";
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index");//lo devuelve al inicio
             }
+            ListaDeDias(schedule.dia);
+            ListaDeTipos(schedule.tipo);
             return View(schedule);//devuelve los datos de ese horario
         }
 
@@ -115,7 +125,11 @@ namespace Sinem.Controllers
             var gestion = db.GestionCursos.Where(x => x.idHorario == id).Count();
             if (gestion > 0)
                 return View("Noeliminar");
-            return View(horario);//devuelve los datos de ese horario
+            if (horario.estado == "activo")
+                horario.estado = "inactivo";
+            else horario.estado = "activo";
+            db.SaveChanges();
+            return RedirectToAction("Index"); 
         }
 
         // POST: Horarios/Delete/5

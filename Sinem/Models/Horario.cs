@@ -28,6 +28,9 @@ namespace Sinem.Models
         [DisplayName("Tiempo de duración:")]
         [Required(ErrorMessage = "La {0} es requerido")]
         public string tiempoDuracion { get; set; }
+        [DisplayName("Tipo de duracion")]
+        public string tipo { get; set; }
+        public string estado { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro:")]//nombre que aparece en la pagina
         public DateTime fechaRegistro { get; set; }

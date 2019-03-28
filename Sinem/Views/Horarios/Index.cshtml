@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Lista de horarios</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nuevo", "Create")
 </p>
 <table class="table">
     <tr>
@@ -16,6 +16,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.hora)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tipo)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.tiempoDuracion)
@@ -32,12 +35,15 @@
             @Html.DisplayFor(modelItem => item.hora)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.tipo)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.tiempoDuracion)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idHorario }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idHorario }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idHorario })
+            @Html.ActionLink("editar", "Edit", new { id = item.idHorario }) |
+            @Html.ActionLink("ver detalles", "Details", new { id = item.idHorario }) |
+            @Html.ActionLink(item.estado == "activo" ? "desactivar" : "activar", "Delete", new { id = item.idHorario })
         </td>
     </tr>
 }

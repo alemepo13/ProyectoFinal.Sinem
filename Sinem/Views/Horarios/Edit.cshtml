@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Editar horario</h2>
 
 
 @using (Html.BeginForm())
@@ -24,6 +24,7 @@
         </div>
     </div>
 
+
     <div class="form-group">
         @Html.LabelFor(model => model.hora, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -31,6 +32,15 @@
             @Html.ValidationMessageFor(model => model.hora, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.tipo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("tipo", ViewBag.ListaDeTipos as SelectList, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.tipo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
 
     <div class="form-group">
         @Html.LabelFor(model => model.tiempoDuracion, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -42,7 +52,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Guardar" class="btn btn-default" />
         </div>
     </div>
 </div>
@@ -56,7 +66,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Regresar", "Index")
 </div>
 
 @section Scripts {
