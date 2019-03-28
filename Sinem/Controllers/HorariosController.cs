@@ -29,6 +29,9 @@ namespace Sinem.Controllers
         // GET: Horarios
         public ActionResult Index()//metodo que muestra en la pagina principal una la lista de horarios que estan en la DB
         {
+
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             return View(db.Horarios.ToList());//vista de los horarios en forma de lista
         }
 

@@ -24,6 +24,9 @@ namespace Sinem.Controllers
         // GET: Salarios
         public ActionResult Index()//metodo que muestra en pantalla la lista de salarios que se encuentra en la DB
         {
+
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             ViewBag.ListaProfesores = //from dm in db.DetalleMatriculas.ToList()
                     from u in db.Usuario.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
                     join p in db.Permisos.ToList() on u.idUsuario equals p.idUsuario
@@ -53,6 +56,9 @@ namespace Sinem.Controllers
 
 
         public ActionResult Create() {
+
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             ListaDeProfesores();
             return View();
 

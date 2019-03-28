@@ -58,6 +58,8 @@ namespace Sinem.Controllers
         // GET: Cursos
         public ActionResult Index()//metodo que muestra en la pagina principal una la lista de cursos que estan en la DB
         {
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             return View(db.Cursos.ToList());//vista de los cursos en forma de lista
         }
 

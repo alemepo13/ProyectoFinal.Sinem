@@ -17,7 +17,9 @@ namespace Sinem.Controllers
 
         [Authorize(Roles = "Estudiante")]
         public ActionResult Matricula() {
-            
+
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             var listaMatriculados = from k in db.DetalleMatriculas.ToList() where k.idEstudiante == Usuario.idUsuario select k.idgestionCurso;
             var listaHorarios = from k in db.DetalleMatriculas.ToList() where k.idEstudiante == Usuario.idUsuario select k.idHorario;
@@ -50,6 +52,9 @@ namespace Sinem.Controllers
         [HttpPost]
         public ActionResult Matricula(string[] selectedCourses)
         {
+
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             List<int> idDetalleMatricula = new List<int>();
             foreach (var item in selectedCourses)
@@ -147,6 +152,8 @@ namespace Sinem.Controllers
         [Authorize(Roles = "Estudiante")]
         public ActionResult Matricular(int idGestionCurso) {
 
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             var Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             var gc = db.GestionCursos.Find(idGestionCurso);
             var cu = db.Cursos.Find(gc.idCurso);
@@ -229,6 +236,9 @@ namespace Sinem.Controllers
         // GET: GestionCursos
         public ActionResult Index()//Metodo que permite visualizar la lista de gestion de cursos desde el menu principal
         {
+
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             var l = //from dm in db.DetalleMatriculas.ToList()
                    from gc in db.GestionCursos.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
                     join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
@@ -256,6 +266,9 @@ namespace Sinem.Controllers
         // GET: GestionCursos
         public ActionResult IndexAsistencia()//Metodo que permite visualizar la lista de gestion de cursos desde el menu principal
         {
+
+            ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
+            if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             var l = //from dm in db.DetalleMatriculas.ToList()
                    from gc in db.GestionCursos.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
                    join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
