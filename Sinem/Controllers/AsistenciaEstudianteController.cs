@@ -59,11 +59,12 @@ namespace Sinem.Controllers
 
             ViewBag.Permitir = true;
             var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == idGestionCurso select u.fecha).Distinct();
-            foreach (var f in fechas)
+            ViewBag.Permitir = true;
+            /*foreach (var f in fechas)
             {
                 if(f.Date==DateTime.Today)
                     ViewBag.Permitir = false;
-            }
+            }*/
             var l = from dm in db.DetalleMatriculas
                     join u in db.Usuario on dm.idEstudiante equals u.idUsuario
                     where dm.idgestionCurso == idGestionCurso
@@ -76,6 +77,16 @@ namespace Sinem.Controllers
                         idUsuario = u.idUsuario
 
                     };
+            var ae = db.AsistenciaEstudiantes.Where(x => x.idGestionCurso == idGestionCurso && x.fecha == DateTime.Today).ToList();
+            foreach (var x in l) {
+                var ti = ae.Where(t => t.idUsuario == x.idUsuario).FirstOrDefault();
+                if (ti != null) {
+                    x.asistio = ti.asistio == "true";
+                    x.observaciones = ti.observaciones;
+                    //ViewData["Asistio" + x.idUsuario] = ti.asistio=="true";
+                    //ViewData["Obs" + x.idUsuario] = ti.observaciones;
+                }
+            }
             ViewBag.idGestionCurso = idGestionCurso;
             return View(l); 
             //return View(db.AsistenciaEstudiantes.ToList()); //Esta es la vista de la asistencia estudiante en forma de lista
@@ -102,20 +113,31 @@ namespace Sinem.Controllers
                         idUsuario = u.idUsuario
 
                     };
+
+            var ae = db.AsistenciaEstudiantes.Where(x => x.idGestionCurso == idGestionCurso && x.fecha == DateTime.Today);
             foreach (var i in l)
             {
                 string asistio = f["Asistio" + i.idUsuario];
                 string obs = f["Obs" + i.idUsuario];
-                var d = new AsistenciaEstudiante();
-                d.idGestionCurso = idGestionCurso;
-                //d.asistio = asistio == null;
-                d.asistio = asistio == null ? "false" : "true";// cambiar a un valor entre comillas, para el estado correspomdiente y en el false de arriba 
-                d.observaciones = obs;
-                d.idUsuario = i.idUsuario;
-                d.fechaModifica = DateTime.Today;
-                d.fecha = DateTime.Today;
-                d.usuarioModifica = User.Identity.Name;
-                db.AsistenciaEstudiantes.Add(d);
+                var ti = ae.Where(t => t.idUsuario == i.idUsuario).FirstOrDefault();
+                if (ti != null)
+                {
+                    d.asistio = asistio == null ? "false" : "true";// cambiar a un valor entre comillas, para el estado correspomdiente y en el false de arriba 
+                    d.observaciones = obs;
+                }
+                else
+                {
+                    var d = new AsistenciaEstudiante();
+                    d.idGestionCurso = idGestionCurso;
+                    //d.asistio = asistio == null;
+                    d.asistio = asistio == null ? "false" : "true";// cambiar a un valor entre comillas, para el estado correspomdiente y en el false de arriba 
+                    d.observaciones = obs;
+                    d.idUsuario = i.idUsuario;
+                    d.fechaModifica = DateTime.Today;
+                    d.fecha = DateTime.Today;
+                    d.usuarioModifica = User.Identity.Name;
+                    db.AsistenciaEstudiantes.Add(d);
+                }
                 db.SaveChanges();
             }
             return RedirectToAction("Index", "Home");
