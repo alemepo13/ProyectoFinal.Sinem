@@ -194,7 +194,7 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "idUsuario,idDireccion,identificacion,nombre,apellido,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,idRol,tipoIdentificacion")] Usuario user)
+        public ActionResult Edit([Bind(Include = "estado,idUsuario,idDireccion,identificacion,nombre,apellido,fechaNacimiento,usuario,contraseña,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,idRol,tipoIdentificacion")] Usuario user)
         {
             if (ModelState.IsValid)
             {
@@ -203,7 +203,7 @@ namespace Sinem.Controllers
                 user.usuarioModifica = User.Identity.Name;
 
                 user.fechaSesion = DateTime.Now;
-                user.estado = "activo";
+                //user.estado = "activo";
                 user.conexion = "no conectado";
 
                 var p = db.Permisos.Where(x => x.idUsuario == user.idUsuario).ToList();

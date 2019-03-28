@@ -28,7 +28,7 @@ namespace Sinem.Controllers
                     join a in db.Aulas.ToList() on gc.idAula equals a.idAula
                     join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
                     join cup in db.Cupos.ToList() on gc.idGestionCurso equals cup.idGestionCurso
-
+                    where gc.estado=="activo"
                     //where gc.idUsuario == Usuario.idUsuario
                     select new Vista_CursoMatriculable ()
                     {
@@ -38,6 +38,7 @@ namespace Sinem.Controllers
                         Horario = h.descripcion,
                         Curso = c.nombre,
                         Cupo=cup.cupo,
+                        estado=gc.estado,
                         YaMatriculado=listaMatriculados.Contains(gc.idGestionCurso),
                         horarioOcupado=listaHorarios.Contains(gc.idHorario),
                         idGC = gc.idGestionCurso
@@ -191,22 +192,22 @@ namespace Sinem.Controllers
         }
         private void ListaDeAulas(object o = null)
         {
-            ViewBag.ListaAulas = new SelectList(db.Aulas.ToList(), "idAula", "numeroAula", o);
+            ViewBag.ListaAulas = new SelectList(db.Aulas.Where(x=>x.estado=="activo").ToList(), "idAula", "numeroAula", o);
         }
 
         private void ListaDeHorarios(object o = null)
         {
-            ViewBag.ListaHorarios = new SelectList(db.Horarios.ToList(), "idHorario", "descripcion", o);
+            ViewBag.ListaHorarios = new SelectList(db.Horarios.Where(x => x.estado == "activo").ToList(), "idHorario", "descripcion", o);
         }
 
         private void ListaDeCursos(object o = null)
         {
-            ViewBag.ListaCursos = new SelectList(db.Cursos.ToList(), "idCurso", "nombre", o);
+            ViewBag.ListaCursos = new SelectList(db.Cursos.Where(x => x.estado == "activo").ToList(), "idCurso", "nombre", o);
         }
 
         private void ListaDeUsuarios(object o = null)
         {
-            ViewBag.ListaUsuarios = new SelectList(db.Usuario.ToList(), "idUsuario", "nombrecompleto", o);
+            ViewBag.ListaUsuarios = new SelectList(db.Usuario.Where(x => x.estado == "activo").ToList(), "idUsuario", "nombrecompleto", o);
         }
 
         private void ListaDeProfesores(object o = null)
@@ -243,6 +244,7 @@ namespace Sinem.Controllers
                        Aula = a.numeroAula + " " + a.tipoAula,
                        Horario = h.descripcion,
                        Curso = c.nombre,
+                       estado=gc.estado,
                        Cupo = cup.cupo,
                        idGC = gc.idGestionCurso
                    };
@@ -339,6 +341,7 @@ namespace Sinem.Controllers
             {
 
                 db.GestionCursos.Add(gestionCurso);//se agrega la gestion de curso a la bd
+                gestionCurso.estado = "activo";
                 db.SaveChanges();//y guarda los cambios en la db 
                 Cupo cu = new Cupo();
                 cu.fechaModifica = DateTime.Today;
@@ -352,9 +355,9 @@ namespace Sinem.Controllers
                 
                 return RedirectToAction("Index");//devuelve al usuario al inicio 
             }
-            ListaDeAulas();
-            ListaDeCursos();
-            ListaDeHorarios();
+            ListaDeAulas(gestionCurso.idAula);
+            ListaDeCursos(gestionCurso.idCurso);
+            ListaDeHorarios(gestionCurso.idHorario);
             ListaDeProfesores();
             ListaDeProfesores();
             return View(gestionCurso);//devuelve los datos de la gestion de curso creada
@@ -385,7 +388,7 @@ namespace Sinem.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//realiza la peticion al servidor
         //Metodo para mostrar los datos actualizados de gestion de curso, usa como parametros los datos ingresados por el usuario
-        public ActionResult Edit([Bind(Include = "idGestionCurso,fechaInicio,fechaFinal,idAula,idCurso,idHorario,idUsuario,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,cupo")] GestionCurso gestionCur)
+        public ActionResult Edit([Bind(Include = "estado,idGestionCurso,fechaInicio,fechaFinal,idAula,idCurso,idHorario,idUsuario,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica,cupo")] GestionCurso gestionCur)
         {
             ListaDeAulas(gestionCur.idAula);
             ListaDeCursos(gestionCur.idCurso);
@@ -396,6 +399,7 @@ namespace Sinem.Controllers
             if (ModelState.IsValid && cursos == 0)//si el post al servidor se hizo
             {
                 db.Entry(gestionCur).State = EntityState.Modified;//se modifican los datos de la gestion de curso
+               // gestionCur.estado = "activo";
                 db.SaveChanges();//y se guardan los cambios en la bd
                 return RedirectToAction("Index");//devuelve al usuario al inicio
             }
@@ -417,6 +421,10 @@ namespace Sinem.Controllers
             var cantidaddematricula = db.DetalleMatriculas.Where(x => x.idgestionCurso == id).Count();
             if (cantidaddematricula > 0)
                 return View("Noeliminar");
+            if (gestionCurso.estado == "activo")
+                gestionCurso.estado = "inactivo";
+            else gestionCurso.estado = "activo";
+            db.SaveChanges();
             return View(gestionCurso);//devuelve los datos de la gestion de curso 
         }
 

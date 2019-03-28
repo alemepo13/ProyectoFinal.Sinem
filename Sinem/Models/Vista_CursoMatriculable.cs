@@ -20,6 +20,7 @@ namespace Sinem.Models
         public DateTime fechaActual { get; internal set; }
         public string nombreE { get; internal set; }
         public string cedula { get; internal set; }
+        public string estado { get; set; }
         public string profesor { get; internal set; }
     }
 

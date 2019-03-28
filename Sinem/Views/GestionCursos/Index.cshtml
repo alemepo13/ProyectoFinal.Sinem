@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Lista de cursos a gestionar</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Crear nuevo curso","Create")
 </p>
 <table class="table table-striped">
     <tr>
@@ -32,20 +32,21 @@
             <td>
                 @if (ViewBag.Asistencia)
                 {
-                    @Html.ActionLink("Asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null)
+                    @Html.ActionLink("ver asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null)
                     <text>|</text>
-                    @Html.ActionLink("Details", "Details", new { id = i.idGC })
+                    @Html.ActionLink("ver detalles", "Details", new { id = i.idGC })
 
                 }
                 else
                 {
-                    @Html.ActionLink("Edit", "Edit", new { id = i.idGC }) <text>|</text>
+                    @Html.ActionLink("editar", "Edit", new { id = i.idGC }) <text>|</text>
 
-                    @Html.ActionLink("Asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null) <text>|</text>
+                    @Html.ActionLink("ver asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null) <text>|</text>
 
-                    @Html.ActionLink("Details", "Details", new { id = i.idGC }) <text>|</text>
+                    @Html.ActionLink("ver detalles", "Details", new { id = i.idGC }) <text>|</text>
 
-                    @Html.ActionLink("Delete", "Delete", new { id = i.idGC })
+
+                    @Html.ActionLink(i.estado == "activo" ? "desactivar" : "activar", "Delete", new { id = i.idGC })
 
                 }
             </td>

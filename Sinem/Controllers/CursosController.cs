@@ -23,7 +23,7 @@ namespace Sinem.Controllers
                     join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
                     join a in db.Aulas.ToList() on gc.idAula equals a.idAula
                     join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
-                    where gc.idUsuario== Usuario.idUsuario
+                    where gc.idUsuario== Usuario.idUsuario &&  gc.estado=="activo" && a.estado=="activo" && c.estado=="activo" && h.estado=="activo"
                     select new Vista_CursoMatriculado { FechaInicio = gc.fechaInicio,
                         FechaFinal = gc.fechaFinal,
                         Aula = a.numeroAula + " " + a.tipoAula,
@@ -42,7 +42,7 @@ namespace Sinem.Controllers
                     join c in db.Cursos.ToList() on gc.idCurso equals c.idCurso
                     join a in db.Aulas.ToList() on gc.idAula equals a.idAula
                     join h in db.Horarios.ToList() on gc.idHorario equals h.idHorario
-                    where dm.usuarioCrea == User.Identity.Name
+                    where dm.usuarioCrea == User.Identity.Name && gc.estado == "activo" && a.estado == "activo" && c.estado == "activo" && h.estado == "activo"
                     select new Vista_CursoMatriculado
                     {
                         FechaInicio = gc.fechaInicio,
@@ -93,6 +93,7 @@ namespace Sinem.Controllers
             if (ModelState.IsValid)//si el post al servidor se hizo 
             {
                 db.Cursos.Add(curso);//agrega el curso a la DB
+                curso.estado = "activo";
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index");//lo devuelve al inicio
             }
@@ -119,12 +120,13 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        public ActionResult Edit([Bind(Include = "idCurso,nombre,descripcion,costo,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Curso course)
+        public ActionResult Edit([Bind(Include = "estado,idCurso,nombre,descripcion,costo,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Curso course)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del curso,
             //lleva como parametros los datos a editar del curso, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo
             {
                 db.Entry(course).State = EntityState.Modified;//modifica los datos  del curso a la DB
+                //course.estado = "activo";
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index");//lo devuelve al inicio
             }
@@ -147,7 +149,12 @@ namespace Sinem.Controllers
             var GestionCurso = db.GestionCursos.Where(x => x.idCurso == id).Count();
             if (GestionCurso > 0)
                 return View("Noeliminar");
-            return View(curso);//devuelve los datos de ese curso
+
+            if (curso.estado == "activo")
+                curso.estado = "inactivo";
+            else curso.estado = "activo";
+            db.SaveChanges();
+            return RedirectToAction("Index");//devuelve los datos de ese curso
         }
 
         // POST: Cursos/Delete/5

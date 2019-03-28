@@ -95,13 +95,13 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        public ActionResult Edit([Bind(Include = "idHorario,dia,hora,tipo,tiempoDuracion,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario schedule)
+        public ActionResult Edit([Bind(Include = "estado,idHorario,dia,hora,tipo,tiempoDuracion,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario schedule)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del horario,
             //lleva como parametros los datos a editar del horario, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo 
             {
                 db.Entry(schedule).State = EntityState.Modified;//modifica los datos  del horario a la DB
-                schedule.estado = "activo";
+                //schedule.estado = "activo";
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index");//lo devuelve al inicio
             }

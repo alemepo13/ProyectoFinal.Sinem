@@ -31,6 +31,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.idUsuario)
 
+    @Html.HiddenFor(model => model.estado)
     <div class="form-group">
 
         @Html.Label("Provincia", htmlAttributes: new { @class = "control-label col-md-2" })

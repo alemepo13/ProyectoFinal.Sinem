@@ -63,6 +63,7 @@ namespace Sinem.Controllers
             if (ModelState.IsValid)//si el post al servidor se hizo 
             {
                 db.Aulas.Add(aula);//agrega el aula a la DB
+                aula.estado = "activo";
                 db.SaveChanges();//guarda los cambios de la DB
                 return RedirectToAction("Index");//lo devuelve al inicio
             }
@@ -89,7 +90,7 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        public ActionResult Edit([Bind(Include = "idAula,numeroAula,tipoAula,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Aula classes)
+        public ActionResult Edit([Bind(Include = "estado,idAula,numeroAula,tipoAula,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Aula classes)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos actualizados del aula,
             //lleva como parametros los datos a editar del aula, ingresados por un usuario
             //var NumerosAula = db.Aulas.Where(x => x.numeroAula == classes.numeroAula).Count();
@@ -97,6 +98,7 @@ namespace Sinem.Controllers
             if (ModelState.IsValid /*&& NumerosAula==1*/)//si el post al servidor se hizo 
             {
                 db.Entry(classes).State = EntityState.Modified;//modifica los datos  del aula a la DB
+                //classes.estado = "activo";
                 db.SaveChanges();//guarda los cambios de la DB
                 //aqui se debe agregar un manejo de error para los numeros de aula repetidos
                 return RedirectToAction("Index");//lo devuelve al inicio
@@ -119,7 +121,12 @@ namespace Sinem.Controllers
             var gestion = db.GestionCursos.Where(x => x.idAula == id).Count();
             if (gestion > 0)
                 return View("Noeliminar");
-            return View(aula);//devuelve los datos de esa aula
+            if (aula.estado == "activo")
+                aula.estado = "inactivo";
+            else aula.estado = "activo";
+            db.SaveChanges();
+            return RedirectToAction("Index");
+            //devuelve los datos de esa aula
         }
 
         // POST: Aulas/Delete/5

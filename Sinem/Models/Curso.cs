@@ -41,6 +41,8 @@ namespace Sinem.Models
         public string usuarioModifica { get; set; }
 
 
+        public string estado { get; set; }
+
 
     }
 }

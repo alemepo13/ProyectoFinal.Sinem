@@ -25,6 +25,8 @@ namespace Sinem.Models
         [DisplayName("Fecha de finalizacion: ")]//nombre que aparece en la pagina
         [Required(ErrorMessage = "La  {0} es requerida")]
         public DateTime fechaFinal { get; set; }
+
+        public string estado { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DisplayName("Fecha de registro: ")]//nombre que aparece en la pagina
         public DateTime fechaRegistro { get; set; }
