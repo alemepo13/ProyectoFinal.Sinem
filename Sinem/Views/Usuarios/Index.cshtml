@@ -67,13 +67,15 @@
         <td>
             @if (ViewBag.Usuario.idUsuario != item.idUsuario)
             {
+                <img src="/Content/Edit_16px.png" />
                 @Html.ActionLink("editar", "Edit", new { id = item.idUsuario })
 
             }
             |
-            @Html.ActionLink("editar datos de contacto", "EditContact", new { id = item.idUsuario })
+            <img src="/Content/Edit_16px.png" />
+            @Html.ActionLink("Editar datos de contacto", "EditContact", new { id = item.idUsuario })
             |
-            @Html.ActionLink("ver detalles", "Details", new { id = item.idUsuario }) |
+            @Html.ActionLink("Ver detalles", "Details", new { id = item.idUsuario }) |
             @if (ViewBag.Usuario.idUsuario != item.idUsuario)
             {
 

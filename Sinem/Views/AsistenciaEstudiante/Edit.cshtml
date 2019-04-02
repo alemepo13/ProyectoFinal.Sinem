@@ -1,10 +1,10 @@
 ﻿@model Sinem.Models.AsistenciaEstudiante
 
 @{
-    ViewBag.Title = "Edit"; @* titulo edit *@
+    ViewBag.Title = "Editar"; @* titulo edit *@
 }
 
-<h2>Edit</h2> @*tamaño titulo*@
+<h2>Editar</h2> @*tamaño titulo*@
 
 
 @using (Html.BeginForm())
@@ -70,7 +70,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index") @*Boton de regresar*@
+    @Html.ActionLink("Regresar", "Index") @*Boton de regresar*@
 </div>
 @*para genrar el codigo de scripts de javascript para que se muetre el lugar correcto de la pagina*@
 @section Scripts {

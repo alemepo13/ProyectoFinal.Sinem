@@ -122,8 +122,8 @@ namespace Sinem.Controllers
                 var ti = ae.Where(t => t.idUsuario == i.idUsuario).FirstOrDefault();
                 if (ti != null)
                 {
-                    d.asistio = asistio == null ? "false" : "true";// cambiar a un valor entre comillas, para el estado correspomdiente y en el false de arriba 
-                    d.observaciones = obs;
+                    ti.asistio = asistio == null ? "false" : "true";// cambiar a un valor entre comillas, para el estado correspomdiente y en el false de arriba 
+                    ti.observaciones = obs;
                 }
                 else
                 {

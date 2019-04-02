@@ -7,7 +7,10 @@
 <h2>Lista de cursos a gestionar</h2>
 
 <p>
-    @Html.ActionLink("Crear nuevo curso","Create")
+    @if (ViewBag.Asistencia == false)
+    {
+        @Html.ActionLink("Crear nuevo curso", "Create")
+    }
 </p>
 <table class="table table-striped">
     <tr>
@@ -39,11 +42,12 @@
                 }
                 else
                 {
-                    @Html.ActionLink("editar", "Edit", new { id = i.idGC }) <text>|</text>
+                    <img src = "/Content/Edit_16px.png" />
+                    @Html.ActionLink("Editar", "Edit", new { id = i.idGC }) <text>|</text>
 
-                    @Html.ActionLink("ver asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null) <text>|</text>
+                    @Html.ActionLink("Ver asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null) <text>|</text>
 
-                    @Html.ActionLink("ver detalles", "Details", new { id = i.idGC }) <text>|</text>
+                    @Html.ActionLink("Ver detalles", "Details", new { id = i.idGC }) <text>|</text>
 
 
                     @Html.ActionLink(i.estado == "activo" ? "desactivar" : "activar", "Delete", new { id = i.idGC })

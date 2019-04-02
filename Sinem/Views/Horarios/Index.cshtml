@@ -41,8 +41,9 @@
             @Html.DisplayFor(modelItem => item.tiempoDuracion)
         </td>
         <td>
-            @Html.ActionLink("editar", "Edit", new { id = item.idHorario }) |
-            @Html.ActionLink("ver detalles", "Details", new { id = item.idHorario }) |
+            <img src="/Content/Edit_16px.png" />
+            @Html.ActionLink("Editar", "Edit", new { id = item.idHorario }) |
+            @Html.ActionLink("Ver detalles", "Details", new { id = item.idHorario }) |
             @Html.ActionLink(item.estado == "activo" ? "desactivar" : "activar", "Delete", new { id = item.idHorario })
         </td>
     </tr>
