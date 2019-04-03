@@ -7,6 +7,7 @@
 <h2>Lista general de cursos</h2>
 
 <p>
+    <img src="/Content/Plus_16px.png" />
     @Html.ActionLink("Crear nuevo curso", "Create")
 </p>
 <table class="table">
@@ -37,6 +38,7 @@
         <td>
             <img src="/Content/Edit_16px.png" />
             @Html.ActionLink("Editar", "Edit", new { id = item.idCurso }) |
+            <img src="/Content/Identification Documents_16px.png" />
             @Html.ActionLink("Ver detalles", "Details", new { id = item.idCurso }) |
 
             @Html.ActionLink(item.estado == "activo" ? "desactivar" : "activar", "Delete", new { id = item.idCurso })

@@ -249,7 +249,9 @@
     <Content Include="Content\descarga.png" />
     <Content Include="Content\Edit_16px.png" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Identification Documents_16px.png" />
     <Content Include="Content\now-ui-kit.css" />
+    <Content Include="Content\People_16px.png" />
     <Content Include="Content\Plus_16px.png" />
     <Content Include="Content\s1.jpg" />
     <Content Include="Content\s2.jpg" />

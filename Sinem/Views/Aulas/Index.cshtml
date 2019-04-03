@@ -7,6 +7,7 @@
 <h2>Lista de aulas</h2>
 
 <p>
+    <img src="/Content/Plus_16px.png" />
     @Html.ActionLink("Crear nueva aula", "Create")
 </p>
 <table class="table">
@@ -30,6 +31,7 @@
         <td>
             <img src="/Content/Edit_16px.png" />
             @Html.ActionLink("Editar", "Edit", new { id = item.idAula }) |
+            <img src="/Content/Identification Documents_16px.png" />
             @Html.ActionLink("Ver detalles", "Details", new { id = item.idAula }) |
 
             @Html.ActionLink(item.estado == "activo" ? "desactivar" : "activar", "Delete", new { id = item.idAula })

@@ -7,7 +7,8 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <img src="/Content/Plus_16px.png" />
+    @Html.ActionLink("Crear nueva dirreción", "Create")
 </p>
 <table class="table">
     <tr>
@@ -37,8 +38,9 @@
         <td>
             <img src="/Content/Edit_16px.png" />
             @Html.ActionLink("Editar", "Edit", new { id = item.idDireccion }) |
+            <img src="/Content/Identification Documents_16px.png" />
             @Html.ActionLink("Detalles", "Details", new { id = item.idDireccion }) |
-           
+
         </td>
     </tr>
 }
