@@ -44,12 +44,12 @@
                             <li>@Html.ActionLink("Asistencia Profesores", "Index", "AsistenciaProfesor")</li>
                             <li>@Html.ActionLink("Usuarios", "Index", "Usuarios")</li>
                             <li>@Html.ActionLink("Gestion de cursos", "Index", "GestionCursos")</li>
-                            <li>@Html.ActionLink("Salarios", "Create", "Salarios")</li>
+                            <li>@Html.ActionLink("Pagos", "Index", "Salarios")</li>
                         }
                         if (User.IsInRole("Profesor"))
                         {
                             <li>@Html.ActionLink("Mis Cursos", "IndexProfesor", "Cursos")</li>
-                            <li>@Html.ActionLink("Mi Salario", "ConsultaSalarioProfesor", "Salarios")</li>
+                            <li>@Html.ActionLink("Mis Pagos", "ConsultaSalarioProfesor", "Salarios")</li>
 
                         }
                         if (User.IsInRole("Estudiante"))

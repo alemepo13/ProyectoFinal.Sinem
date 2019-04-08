@@ -15,21 +15,26 @@ namespace Sinem.Controllers
     {
         private SinemDBContext db = new SinemDBContext(); //conexion a la base de datos
 
-        public ActionResult IndexAdmin(int id) {
+        public ActionResult IndexAdmin(int id, bool asistencia) {
             var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == id select u.fecha).Distinct();
             ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
+            ViewBag.asistencia = asistencia;
             ViewBag.id = id;
             return View();
         }
         [HttpPost]
-        public ActionResult IndexAdmin(int id, long ticks)
+        public ActionResult IndexAdmin(int id, long? ticks)
         {
 
+            if (ticks.HasValue==false)
+            {
+                return RedirectToAction("IndexAdmin", new { id = id });
+            }
             ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             //asitio=ae.asistio
             //asistio=ae.asistio=="no asistio"? false : true
-            DateTime d = new DateTime(ticks);
+            DateTime d = new DateTime(ticks.Value);
             var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == id select u.fecha).Distinct();
             ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
             var l= from ae in db.AsistenciaEstudiantes.ToList()

@@ -37,23 +37,20 @@
                 @if (ViewBag.Asistencia)
                 {
                     <img src="/Content/People_16px.png" />
-                    @Html.ActionLink("ver asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null)
-                    <text>|</text>
-                    <img src="/Content/Identification Documents_16px.png" />
-                    @Html.ActionLink("ver detalles", "Details", new { id = i.idGC })
+                    @Html.ActionLink("ver asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC, asistencia=true }, null)
 
                 }
                 else
                 {
                     <img src="/Content/Edit_16px.png" />
-                    @Html.ActionLink("Editar", "Edit", new { id = i.idGC }) <text>|</text>
+                    @Html.ActionLink("Editar", "Edit", new { id = i.idGC }) <br>
                     <img src="/Content/People_16px.png" />
-                    @Html.ActionLink("Ver asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC }, null) <text>|</text>
+                    @Html.ActionLink("Ver asistencia", "IndexAdmin", "AsistenciaEstudiante", new { id = i.idGC, asistencia=false }, null) <br>
                     <img src="/Content/Identification Documents_16px.png" />
-                    @Html.ActionLink("Ver detalles", "Details", new { id = i.idGC }) <text>|</text>
+                    @Html.ActionLink("Ver detalles", "Details", new { id = i.idGC }) <br>
 
 
-                    @Html.ActionLink(i.estado == "activo" ? "desactivar" : "activar", "Delete", new { id = i.idGC })
+                    @Html.ActionLink(i.estado == "activo" ? "Desactivar" : "Activar", "Delete", new { id = i.idGC })
 
                 }
             </td>

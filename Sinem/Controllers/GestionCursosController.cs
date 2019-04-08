@@ -114,7 +114,7 @@ namespace Sinem.Controllers
                         profesor = p.nombrecompleto,
                     };
             var sl = string.Join("|", idDetalleMatricula);
-            return View("ResultadoMatricula",sl);//new PdfResult(l.ToList(), "Comprobante");
+            return View("ResultadoMatricula",model: sl);//new PdfResult(l.ToList(), "Comprobante");
 
         }
         public ActionResult Pdf(string id) {
@@ -407,7 +407,7 @@ namespace Sinem.Controllers
             ListaDeCursos(gestionCur.idCurso);
             ListaDeHorarios(gestionCur.idHorario);
             ListaDeUsuarios(gestionCur.idUsuario);
-            var cursos = db.GestionCursos.Where(x => x.idAula == gestionCur.idAula && x.idHorario == gestionCur.idHorario).Count();
+            var cursos = db.GestionCursos.Where(x => x.idAula == gestionCur.idAula && x.idHorario == gestionCur.idHorario && x.idGestionCurso !=gestionCur.idGestionCurso).Count();
 
             if (ModelState.IsValid && cursos == 0)//si el post al servidor se hizo
             {

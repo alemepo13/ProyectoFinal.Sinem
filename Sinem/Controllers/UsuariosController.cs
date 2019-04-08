@@ -184,6 +184,8 @@ namespace Sinem.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Contactos = db.Contactos.Where(x => x.idUsuario == id).ToList();
+            ViewBag.Direcciones = db.Direcciones.ToList();
             ListaDeTipos(usuario.tipoIdentificacion);
             ListaDeRoles();
             ListaDeDirecciones(usuario.idDireccion);
@@ -206,11 +208,12 @@ namespace Sinem.Controllers
                 //user.estado = "activo";
                 user.conexion = "no conectado";
 
-                var p = db.Permisos.Where(x => x.idUsuario == user.idUsuario).ToList();
-                foreach (var i in p) { db.Permisos.Remove(i); }
-                foreach (int i in user.idRol) 
-                    db.Permisos.Add(new Permiso { idUsuario = user.idUsuario, idRol = i });
-
+                if (user.idRol !=null) {
+                    var p = db.Permisos.Where(x => x.idUsuario == user.idUsuario).ToList();
+                    foreach (var i in p) { db.Permisos.Remove(i); }
+                    foreach (int i in user.idRol) 
+                        db.Permisos.Add(new Permiso { idUsuario = user.idUsuario, idRol = i });
+                }
                 //var U2 = db.Usuario.Where(x => x.cedula == U.cedula).FirstOrDefault();
                 //var p = db.Permisos.Where(x => x.idUsuario == user.idUsuario).FirstOrDefault();
                 //if (p != null) p.idRol = user.idRol;
@@ -241,10 +244,10 @@ namespace Sinem.Controllers
             //var cursos= db.GestionCursos.Where(x=>x.)
             if (matriculas > 0)
                 return View("Noeliminar");
-            if (Usuario.estado == "activo") 
-                Usuario.estado = "inactivo";
-            else Usuario.estado = "activo";
-            Usuario.conexion = "no conectado";
+            if (usuario.estado == "activo") 
+                usuario.estado = "inactivo";
+            else usuario.estado = "activo";
+            usuario.conexion = "no conectado";
             db.SaveChanges();
             return RedirectToAction("Index"); //View(usuario);
         }

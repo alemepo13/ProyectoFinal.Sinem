@@ -27,7 +27,15 @@
         </div>
 
         <div>
-            @Html.ActionLink("Regresar", "Index","GestionCursos")
+            @if (ViewBag.asistencia)
+            {
+                @Html.ActionLink("Regresar", "IndexAsistencia", "GestionCursos")
+
+            }
+            else
+            {
+                @Html.ActionLink("Regresar", "Index", "GestionCursos")
+            }
         </div>
 
     </div>

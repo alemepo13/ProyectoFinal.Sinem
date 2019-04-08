@@ -23,7 +23,7 @@ namespace Sinem.Models
         [Required(ErrorMessage = "La {0} es requerida")]
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode =true, DataFormatString ="{0:hh\\:mm}")]
-        [Range(typeof(TimeSpan),"00:00","23:59")]
+        //[Range(typeof(TimeSpan),"00:00","23:59")]
         public System.TimeSpan hora { get; set; }
         [DisplayName("Tiempo de duración:")]
         [Required(ErrorMessage = "La {0} es requerido")]

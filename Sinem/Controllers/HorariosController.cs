@@ -63,7 +63,7 @@ namespace Sinem.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]//para realizar la peticion al servidor
-        public ActionResult Create([Bind(Include = "idHorario,dia,hora,tiempoDuracion,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario horario)
+        public ActionResult Create([Bind(Include = "idHorario,dia,hora,tiempoDuracion, tipo,fechaRegistro,usuarioCrea,fechaModifica,usuarioModifica")] Horario horario)
         {//metodo para crear una pagina nueva en donde se van a mostrar los datos del nuevo horario,
             //lleva como parametros los datos del nuevo horario, ingresados por un usuario
             if (ModelState.IsValid)//si el post al servidor se hizo 

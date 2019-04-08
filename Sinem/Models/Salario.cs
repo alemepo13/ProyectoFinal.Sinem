@@ -14,6 +14,7 @@ namespace Sinem.Models
         //propiedades automaticas para cada uno de los campos de la tabla
         [Key()]//indica wue es la llave de la tabla 
         public int idSalario { get; set; }
+        [DisplayName("Profesor:")]
         public int idUsuario { get; set; }
         [Required(ErrorMessage ="Se le indica el monto")]//Valida el monto correcto
         [DisplayName("Monto:")]//indica el nombre que aparece en la pagina 
