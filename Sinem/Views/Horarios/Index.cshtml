@@ -46,6 +46,7 @@
             @Html.ActionLink("Editar", "Edit", new { id = item.idHorario }) |
             <img src="/Content/Identification Documents_16px.png" />
             @Html.ActionLink("Ver detalles", "Details", new { id = item.idHorario }) |
+            <img src="/Content/@(item.estado == "activo" ?"Cancel_16px.png":"Ok_16px.png")" />
             @Html.ActionLink(item.estado == "activo" ? "desactivar" : "activar", "Delete", new { id = item.idHorario })
         </td>
     </tr>
