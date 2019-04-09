@@ -35,6 +35,7 @@ namespace Sinem.Controllers
             //asitio=ae.asistio
             //asistio=ae.asistio=="no asistio"? false : true
             DateTime d = new DateTime(ticks.Value);
+            ViewBag.asistencia = true;
             var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == id select u.fecha).Distinct();
             ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
             var l= from ae in db.AsistenciaEstudiantes.ToList()

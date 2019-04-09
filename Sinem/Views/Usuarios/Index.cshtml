@@ -79,7 +79,7 @@
             @if (ViewBag.Usuario.idUsuario != item.idUsuario)
             {
                 <img src="/Content/@(item.estado == "activo" ?"Cancel_16px.png":"Ok_16px.png")" />
-                @Html.ActionLink(item.estado == "activo" ? "desactivar" : "activar", "Delete", new { id = item.idUsuario })
+                @Html.ActionLink(item.estado == "activo" ? "Desactivar" : "Activar", "Delete", new { id = item.idUsuario })
             }
         </td>
 
