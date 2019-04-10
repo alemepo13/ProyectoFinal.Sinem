@@ -28,7 +28,7 @@ namespace Sinem.Controllers
 
             if (ticks.HasValue==false)
             {
-                return RedirectToAction("IndexAdmin", new { id = id });
+                return RedirectToAction("IndexAdmin", new { id = id, asistencia=false });
             }
             ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
@@ -94,6 +94,7 @@ namespace Sinem.Controllers
                 }
             }
             ViewBag.idGestionCurso = idGestionCurso;
+            ViewBag.asistencia = true;
             return View(l); 
             //return View(db.AsistenciaEstudiantes.ToList()); //Esta es la vista de la asistencia estudiante en forma de lista
         }
@@ -102,7 +103,7 @@ namespace Sinem.Controllers
         [Authorize(Roles = "Profesor")]
         public ActionResult Index(FormCollection f) // esta esel metodo en que se muestra en la pagina principal la lista de sistencia del estudiante que esta en la base de datos
         {
-
+            ViewBag.asistencia = true;
             ViewBag.Usuario = (from U in db.Usuario where U.nombre == User.Identity.Name select U).FirstOrDefault();
             if ((ViewBag.Usuario as Usuario).conexion == "no conectado") return RedirectToAction("Logout", "Account");
             int idGestionCurso = Convert.ToInt32(f["idGestionCurso"]);
