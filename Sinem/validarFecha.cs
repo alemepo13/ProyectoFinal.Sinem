@@ -10,7 +10,7 @@ namespace Sinem
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            DateTime fecha = (DateTime)value;
+            //DateTime fecha = (DateTime)value;
             if (DateTime.Now.AddYears(-90).CompareTo(value)<=0 && DateTime.Now.AddYears(-3).CompareTo (value)>=0)
             {
                 return ValidationResult.Success;

@@ -222,7 +222,7 @@ namespace Sinem.Controllers
             var l = //from dm in db.DetalleMatriculas.ToList()
                     from u in db.Usuario.ToList() // on dm.idgestionCurso equals gc.idGestionCurso
                     join p in db.Permisos.ToList() on u.idUsuario equals p.idUsuario
-                    where p.idUsuario == 3
+                    where p.idRol == 4
                     select new Permiso2()
                     {
                         idUsuario = p.idUsuario,
