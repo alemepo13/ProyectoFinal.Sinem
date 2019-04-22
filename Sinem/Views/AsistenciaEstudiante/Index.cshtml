@@ -9,6 +9,8 @@
 {
     using (Html.BeginForm())
     {
+        if (Model.Count() > 0)
+        {
         <input type="hidden" name="idGestionCurso" value="@ViewBag.idGestionCurso" />
         <table class="table">
             <tr>
@@ -40,7 +42,7 @@
                         @Html.DisplayFor(modelItem => item.apellidos) @*muestra la etiqueta fecha *@
                     </td>
                     <td>
-                        <input type="checkbox" name="Asistio@(item.idUsuario)" @(item.asistio?"checked='checked'":"")/> @*muestra la etiqueta asistio *@
+                        <input type="checkbox" name="Asistio@(item.idUsuario)" @(item.asistio ? "checked='checked'" : "")/> @*muestra la etiqueta asistio *@
                     </td>
                     <td>
                         <input type="text" name="Obs@(item.idUsuario)" value="@item.observaciones" /> @*muestra la etiqueta observaciones *@
@@ -50,14 +52,17 @@
 
         </table>
 
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Confirmar" class="btn btn-default" />
             </div>
         </div>
 
-
+        }
+        else
+        {
+            <h3>No hay alumnos matriculados</h3>
+        }
         <div>
             @Html.ActionLink("Regresar", "IndexProfesor","Cursos")
         </div>

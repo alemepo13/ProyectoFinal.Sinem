@@ -8,6 +8,10 @@
 
 <h3>Informacion de contacto</h3>
 
+@if (ViewBag.msg != null)
+{
+    <div class="alert alert-danger" role="alert">@ViewBag.msg</div>
+}
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Formulario" }))
 {
 
@@ -38,23 +42,23 @@
                 </td>
             </tr>
         }
-            <tr>
-                <td>
+        <tr>
+            <td>
 
-                    @Html.DropDownList("tipoDato", ViewBag.ListaDeTiposContacto as SelectList, new { @class = "form-control" })
-                </td>
+                @Html.DropDownList("tipoDato", ViewBag.ListaDeTiposContacto as SelectList, new { @class = "form-control" })
+            </td>
 
-                <td>
-                    @Html.Hidden("idContacto", 0)
-                    @InputExtensions.Hidden(Html, "idUsuario", ViewBag.idUsuario.ToString())
-                    @Html.Editor("dato", new { htmlAttributes = new { @class = "form-control" } })
-                </td>
-                <td>
-                    <input type="submit" value="Guardar" class="btn btn-default" />
-                </td>
-                <div>
-                    @Html.ActionLink("Regresar", "Index")
-                </div>
-            </tr>
+            <td>
+                @Html.Hidden("idContacto", 0)
+                @InputExtensions.Hidden(Html, "idUsuario", ViewBag.idUsuario.ToString())
+                @Html.Editor("dato", new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td>
+                <input type="submit" value="Guardar" class="btn btn-default" />
+            </td>
+            <div>
+                @Html.ActionLink("Regresar", "Index")
+            </div>
+        </tr>
     </table>
 }

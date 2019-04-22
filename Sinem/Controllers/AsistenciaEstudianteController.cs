@@ -35,6 +35,7 @@ namespace Sinem.Controllers
             //asitio=ae.asistio
             //asistio=ae.asistio=="no asistio"? false : true
             DateTime d = new DateTime(ticks.Value);
+            ViewBag.id = id;
             ViewBag.asistencia = true;
             var fechas = (from u in db.AsistenciaEstudiantes where u.idGestionCurso == id select u.fecha).Distinct();
             ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
@@ -147,8 +148,13 @@ namespace Sinem.Controllers
                 }
                 db.SaveChanges();
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("IndexConfirmacion");
 
+        }
+        [OverrideAuthorization()]
+        [Authorize(Roles = "Profesor")]
+        public ActionResult IndexConfirmacion() {
+            return View();
         }
             // GET: AsistenciaEstudiante/Details/5
             public ActionResult Details(int? id) //Este es el metodo que recibe como parametro un numero de asistencia estudiante para buscarlo en la base de datos

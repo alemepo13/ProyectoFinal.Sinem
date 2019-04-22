@@ -31,11 +31,14 @@ namespace Sinem.Controllers
                     ViewBag.Permitir = false;
             }
             var l = from dm in db.GestionCursos
+                    join c in db.Cursos on dm.idCurso equals c.idCurso
                     join u in db.Usuario on dm.idUsuario equals u.idUsuario
                     where dm.fechaInicio<= DateTime.Today && dm.fechaFinal>= DateTime.Today
                     select new Vista_Asistencia
                     {
                         nombre = u.nombre,
+                        nombreCurso = c.nombre,
+                        idGestionCurso = dm.idGestionCurso,
                         apellidos = u.apellido,
                         asistio = false,
                         observaciones = " ",
@@ -54,9 +57,12 @@ namespace Sinem.Controllers
             //asitio=ae.asistio
             //asistio=ae.asistio=="no asistio"? false : true
             DateTime d = new DateTime(ticks);
+            
             var fechas = (from u in db.AsistenciaProfesores select u.Fecha).Distinct();
             ViewBag.ListaFechas = new SelectList(fechas, "Ticks", "Date");
             var l = from ae in db.AsistenciaProfesores.ToList()
+                    join c in db.GestionCursos on ae.idGestionCurso equals c.idGestionCurso
+                    join e in db.Cursos on c.idCurso equals e.idCurso 
                     join u in db.Usuario on ae.idUsuario equals u.idUsuario
                     where ae.Fecha.Date == d
                     select new Vista_Asistencia
@@ -66,6 +72,7 @@ namespace Sinem.Controllers
                         asistio = ae.asistio == "true",
                         observaciones = ae.observaciones,
                         idGestionCurso = 0,
+                        nombreCurso = e.nombre,
                         idUsuario = u.idUsuario
 
                     };
@@ -76,7 +83,7 @@ namespace Sinem.Controllers
         [HttpPost]
         public ActionResult Index(FormCollection f) // esta esel metodo en que se muestra en la pagina principal la lista de sistencia del estudiante que esta en la base de datos
         {
-            int idGestionCurso = Convert.ToInt32(f["idGestionCurso"]);
+           // int idGestionCurso = Convert.ToInt32(f["idGestionCurso"]);
             var l = from dm in db.GestionCursos.ToList()
                     join u in db.Usuario.ToList() on dm.idUsuario equals u.idUsuario
                     where dm.fechaInicio <= DateTime.Today && dm.fechaFinal >= DateTime.Today
@@ -92,10 +99,10 @@ namespace Sinem.Controllers
                     }; ;
             foreach (var i in l)
             {
-                string asistio = f["Asistio" + i.idUsuario];
-                string obs = f["Obs" + i.idUsuario];
+                string asistio = f["Asistio" + i.idUsuario+"_"+i.idGestionCurso];
+                string obs = f["Obs" + i.idUsuario+"_"+i.idGestionCurso];
                 var d = new AsistenciaProfesor();
-                d.idGestionCurso = idGestionCurso;
+                d.idGestionCurso = i.idGestionCurso;
                 d.asistio = asistio == null ? "false" : "true";
                 d.observaciones = obs;
                 d.idUsuario = i.idUsuario;

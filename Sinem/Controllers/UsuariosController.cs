@@ -133,9 +133,10 @@ namespace Sinem.Controllers
             return View(U);
         }
 
-        public ActionResult EditContact(int id)
+        public ActionResult EditContact(int id, string msg=null)
         {
             ViewBag.idUsuario = id;
+            ViewBag.msg = msg;
             var d = db.Contactos.Where(x => x.idUsuario == id);
             ViewBag.ListaDeTiposContacto = new SelectList(new List<string> { "correo", "telefono" }, null);
             return View(d);
@@ -143,7 +144,17 @@ namespace Sinem.Controllers
         [HttpPost]
         public ActionResult EditContact(Contacto d)
         {
-
+            if (d.tipoDato == "correo") {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(d.dato, @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")) {
+                    return RedirectToAction("EditContact", new { id = d.idUsuario, msg="Correo no valido" });
+                }
+            }
+            else if (d.tipoDato == "telefono") {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(d.dato, @"^[678][0-9]{3,}-[0-9]{4,}$"))
+                {
+                    return RedirectToAction("EditContact", new { id = d.idUsuario, msg = "Telefono no valido" });
+                }
+            }
             //var d = db.Contactos.Where(x => x.idUsuario == id);
             //ViewBag.ListaDeTiposContacto = new SelectList(new List<string> { "correo", "telefono" }, null);
             db.Contactos.Add(new Contacto() { dato=d.dato, tipoDato=d.tipoDato, idUsuario=d.idUsuario });

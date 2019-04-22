@@ -48,14 +48,14 @@
                         }
                         if (User.IsInRole("Profesor"))
                         {
-                            <li>@Html.ActionLink("Mis Cursos", "IndexProfesor", "Cursos")</li>
+                            <li>@Html.ActionLink("Cursos Impartidos", "IndexProfesor", "Cursos")</li>
                             <li>@Html.ActionLink("Mis Pagos", "ConsultaSalarioProfesor", "Salarios")</li>
 
                         }
                         if (User.IsInRole("Estudiante"))
                         {
 
-                            <li>@Html.ActionLink("Mis Cursos", "IndexEstudiante", "Cursos")</li>
+                            <li>@Html.ActionLink("Cursos Matriculados", "IndexEstudiante", "Cursos")</li>
 
                             <li>@Html.ActionLink("Matricular", "Matricula", "GestionCursos")</li>
                         }

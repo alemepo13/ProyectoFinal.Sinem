@@ -19,6 +19,9 @@
                 apellidos
             </th>
             <th>
+                curso
+            </th>
+            <th>
                 asistencia @*muestra la etiqueta asistio *@
             </th>
             <th>
@@ -38,10 +41,13 @@
                     @Html.DisplayFor(modelItem => item.apellidos) @*muestra la etiqueta fecha *@
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.nombreCurso) @*muestra la etiqueta fecha *@
+                </td>
+                <td>
                     <input type="checkbox" name="Asistio@(item.idUsuario)" disabled="disabled" checked="@item.asistio" /> @*muestra la etiqueta asistio *@
                 </td>
                 <td>
-                    <input type="text" name="Obs@(item.idUsuario)" value="@item.observaciones" /> @*muestra la etiqueta observaciones *@
+                    <input type="text" name="Obs@(item.idUsuario)" value="@item.observaciones" readonly="readonly"/> @*muestra la etiqueta observaciones *@
                 </td>
             </tr>
         }
@@ -50,3 +56,6 @@
 
 }
 
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>

@@ -39,6 +39,7 @@ namespace Sinem.Models
         public string observaciones { get; set; }
         public Boolean asistio { get; set; }
         public int idUsuario { get; set; }
+        public string nombreCurso { get; set; }
         public int idGestionCurso { get; internal set; }
     }
 }
